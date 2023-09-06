@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="260dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginEnd="20dp"
+    android:layout_marginBottom="6dp"
+    app:strokeWidth="0dp"
+    app:cardElevation="5dp"
+    app:cardCornerRadius="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_article"
+            android:layout_width="match_parent"
+            android:layout_height="146dp"
+            android:background="@color/greyNickel"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:id="@+id/titleArticle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingEnd="16dp"
+            android:paddingStart="8dp"
+            android:text="Trash Schedule Draws Complaints Over Service, Missed Pickups"
+            android:textSize="12dp"
+            android:maxLines="2"
+            android:textColor="@color/black"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/plusjakartasans_semibold"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="16dp"
+            android:paddingStart="8dp"
+            android:paddingBottom="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hanasta Loka"
+                android:textSize="12dp"
+                android:layout_marginEnd="4dp"
+                android:maxLines="1"
+                android:textColor="@color/ruddyBrown"
+                android:fontFamily="@font/plusjakartasans_light"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="•"
+                android:textSize="12dp"
+                android:maxLines="1"
+                android:layout_marginEnd="4dp"
+                android:textColor="@color/greyNickel"
+                android:fontFamily="@font/plusjakartasans_light"/>
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4 min ago"
+                android:textSize="12dp"
+                android:maxLines="1"
+                android:textColor="@color/greyNickel"
+                android:fontFamily="@font/plusjakartasans_light"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+</com.google.android.material.card.MaterialCardView>

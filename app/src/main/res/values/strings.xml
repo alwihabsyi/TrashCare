@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">TrashCare</string>
+
+    <!--  OnBoarding  -->
+    <string name="first_slide_title">Faktanya tiap tahun jumlah sampah mengalami kenaikan.</string>
+    <string name="second_slide_title">Faktanya Sampah Juga Bisa Diolah menjadi Barang Yang memilki nilai Jual</string>
+    <string name="third_slide_title">Mari Berikan Upaya &amp; Dukungan Guna Bumi Yang lebih baik</string>
+    <string name="get_started">Get Started </string>
+    <string name="next">Next </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

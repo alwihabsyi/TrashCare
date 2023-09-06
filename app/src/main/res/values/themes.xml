@@ -1,0 +1,52 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.TrashCare" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/softGreen</item>
+        <item name="colorSecondaryVariant">@color/greyNickel</item>
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+    
+    <style name="bottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="itemIconTint">@color/grey</item>
+        <item name="background">@color/white</item>
+        <item name="bottomNavigationStyle">@style/Widget.MaterialComponents.BottomNavigationView</item>
+    </style>
+
+    <style name="Widget.Design.TextInputLayout." parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/softGreen</item>
+        <item name="boxStrokeWidth">1dp</item>
+    </style>
+
+    <style name="Theme.AppCompat.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_in</item>
+        <item name="android:windowExitAnimation">@anim/slide_out</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.SelectedCornerRadius" parent="">
+        <item name="cornerSizeBottomLeft">15dp</item>
+        <item name="cornerSizeBottomRight">15dp</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+    </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="searchIcon">@drawable/ic_search</item>
+        <item name="queryBackground">@android:color/transparent</item>
+        <item name="queryHint">"search_hint"</item>
+        <item name="iconifiedByDefault">false</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:background">@drawable/bg_corner_search</item>
+    </style>
+
+    <style name="Theme.TrashCare" parent="Base.Theme.TrashCare" />
+</resources>
