@@ -205,8 +205,7 @@
                     <ImageView
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:src="@drawable/logo_bni"/>
+                        android:padding="8dp"/>
 
                 </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.card.MaterialCardView

@@ -4,54 +4,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@android:color/transparent"
     tools:context=".ui.main.MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_layout"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
-        android:layout_marginBottom="70dp"
-        app:navGraph="@navigation/nav_graph_btm"
-        android:name="androidx.navigation.fragment.NavHostFragment"/>
+        app:navGraph="@navigation/nav_graph_btm" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/menuBottom"
+        style="@style/Widget.MaterialComponents.BottomAppBar"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:elevation="2dp"
+        android:background="@android:color/transparent"
         android:clickable="false"
-        android:background="@color/white"
-        app:fabCradleMargin="10dp"
-        app:fabCradleRoundedCornerRadius="50dp"/>
+        app:elevation="5dp"
+        app:fabAlignmentMode="center"
+        app:fabCradleMargin="5dp"
+        app:fabCradleRoundedCornerRadius="50dp">
+
+    </com.google.android.material.bottomappbar.BottomAppBar>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
+        android:layout_gravity="bottom"
+        android:background="@android:color/transparent">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"
+            style="@style/Widget.MaterialComponents.BottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.BottomNavigationView"
+            android:background="@android:color/transparent"
+            app:itemIconSize="30dp"
             app:itemIconTint="@color/bottom_nav_icon_color"
             app:labelVisibilityMode="unlabeled"
-            app:itemIconSize="30dp"
             app:menu="@menu/menu_bottom" />
+
     </FrameLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/taCycleButton"
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/softGreen"
-        android:src="@drawable/ic_tacycle"
+        android:elevation="10dp"
         app:layout_anchor="@id/menuBottom"
         app:maxImageSize="40dp"
-        android:id="@+id/taCycleButton"
-        android:elevation="5dp"
+        app:srcCompat="@drawable/ic_tacycle"
         app:tint="@color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

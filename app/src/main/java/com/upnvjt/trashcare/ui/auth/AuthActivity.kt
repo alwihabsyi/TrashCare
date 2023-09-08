@@ -8,7 +8,9 @@ import com.google.android.material.tabs.TabLayout
 import com.upnvjt.trashcare.R
 import com.upnvjt.trashcare.databinding.ActivityAuthBinding
 import com.upnvjt.trashcare.databinding.ActivitySplashScreenBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AuthActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAuthBinding
@@ -50,7 +52,7 @@ class AuthActivity : AppCompatActivity() {
             }
         })
 
-        var myPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+        val myPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 tabLayout.selectTab(tabLayout.getTabAt(position))
             }

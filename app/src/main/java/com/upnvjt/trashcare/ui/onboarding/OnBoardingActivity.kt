@@ -14,10 +14,10 @@ import androidx.core.view.get
 import androidx.viewpager2.widget.ViewPager2
 import com.upnvjt.trashcare.R
 import com.upnvjt.trashcare.databinding.ActivityOnBoardingBinding
-import com.upnvjt.trashcare.databinding.ActivitySplashScreenBinding
 import com.upnvjt.trashcare.ui.auth.AuthActivity
-import com.upnvjt.trashcare.ui.main.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OnBoardingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityOnBoardingBinding
