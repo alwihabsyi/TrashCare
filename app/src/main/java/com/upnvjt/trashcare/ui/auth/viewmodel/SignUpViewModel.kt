@@ -1,4 +1,4 @@
-package com.upnvjt.trashcare.ui.auth
+package com.upnvjt.trashcare.ui.auth.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -30,8 +30,8 @@ class SignUpViewModel @Inject constructor(
     private val _validation = Channel<FieldsState>()
     val validation = _validation.receiveAsFlow()
 
-    fun signUpWithEmail(user: User, password: String) {
-        if (checkValidation(user, password)) {
+    fun signUpWithEmail(user: User, password: String, passwordConfirmation: String) {
+        if (checkValidation(user, password, passwordConfirmation)) {
             _register.value = State.Loading()
             auth.createUserWithEmailAndPassword(user.email, password)
                 .addOnSuccessListener {
@@ -43,7 +43,7 @@ class SignUpViewModel @Inject constructor(
                     _register.value = State.Error(it.message.toString())
                 }
         }else {
-            val registerFieldsState = FieldsState(validateEmail(user.email), validatePassword(password))
+            val registerFieldsState = FieldsState(validateEmail(user.email), validatePassword(password, passwordConfirmation))
             runBlocking { _validation.send(registerFieldsState) }
         }
     }
@@ -60,9 +60,9 @@ class SignUpViewModel @Inject constructor(
             }
     }
 
-    private fun checkValidation(user: User, password: String): Boolean {
+    private fun checkValidation(user: User, password: String, passwordConfirmation: String): Boolean {
         val emailValidation = validateEmail(user.email)
-        val passwordValidation = validatePassword(password)
+        val passwordValidation = validatePassword(password, passwordConfirmation)
 
         return emailValidation is Validation.Success &&
                 passwordValidation is Validation.Success

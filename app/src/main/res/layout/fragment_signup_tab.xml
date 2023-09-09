@@ -16,11 +16,73 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_firstname"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="30dp"
+                app:boxCornerRadiusBottomStart="30dp"
+                app:boxCornerRadiusTopEnd="30dp"
+                app:boxCornerRadiusTopStart="30dp"
+                app:boxStrokeWidth="2dp"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etFirstname"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/plusjakartasans"
+                    android:hint="First Name"
+                    android:textSize="14sp"
+                    android:inputType="textPersonName"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="30dp"
+                    android:paddingBottom="20dp"
+                    android:textColorHint="@color/black"
+                    android:textCursorDrawable="@null" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_lastname"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="30dp"
+                app:boxCornerRadiusBottomStart="30dp"
+                app:boxCornerRadiusTopEnd="30dp"
+                app:boxCornerRadiusTopStart="30dp"
+                app:boxStrokeWidth="2dp"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etLastname"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/plusjakartasans"
+                    android:hint="Last Name"
+                    android:textSize="14sp"
+                    android:inputType="textPersonName"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="30dp"
+                    android:paddingBottom="20dp"
+                    android:textColorHint="@color/black"
+                    android:textCursorDrawable="@null" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tl_emailaddress"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="20dp"
                 android:layout_gravity="center"
                 app:boxBackgroundMode="outline"
                 app:boxCornerRadiusBottomEnd="30dp"
@@ -67,7 +129,7 @@
                     android:fontFamily="@font/plusjakartasans"
                     android:hint="Username"
                     android:textSize="14sp"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textPersonName"
                     android:paddingStart="30dp"
                     android:paddingEnd="30dp"
                     android:paddingBottom="20dp"

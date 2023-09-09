@@ -9,5 +9,6 @@
     <string name="next">Next </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="kirim_ke_email">Kami akan mengirimkan link reset password ke email anda</string>
 
 </resources>

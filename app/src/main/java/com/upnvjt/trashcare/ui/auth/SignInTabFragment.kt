@@ -11,14 +11,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.snackbar.Snackbar
-import com.upnvjt.trashcare.R
 import com.upnvjt.trashcare.databinding.FragmentSigninTabBinding
+import com.upnvjt.trashcare.ui.auth.viewmodel.SignInViewModel
 import com.upnvjt.trashcare.ui.main.MainActivity
 import com.upnvjt.trashcare.util.State
 import com.upnvjt.trashcare.util.Validation
 import com.upnvjt.trashcare.util.hide
+import com.upnvjt.trashcare.util.setUpForgotPasswordDialog
 import com.upnvjt.trashcare.util.show
-import com.upnvjt.trashcare.util.snackbar
 import com.upnvjt.trashcare.util.string
 import com.upnvjt.trashcare.util.toast
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,6 +52,12 @@ class SignInTabFragment : Fragment() {
 
                 viewModel.login(email, password)
             }
+
+            tvForgotPassword.setOnClickListener {
+                setUpForgotPasswordDialog { email ->
+                    viewModel.resetPassword(email)
+                }
+            }
         }
 
         observer()
@@ -77,7 +83,20 @@ class SignInTabFragment : Fragment() {
                 is State.Error -> {
                     binding.signInProgressBar.hide()
                     binding.tvBtnNext.show()
-                    toast(it.data.toString())
+                    toast(it.message.toString())
+                }
+            }
+        }
+
+        viewModel.resetPassword.observe(viewLifecycleOwner) {
+            when (it) {
+                is State.Loading -> {
+                }
+                is State.Success -> {
+                    Snackbar.make(requireView(), it.data.toString(), Snackbar.LENGTH_SHORT).show()
+                }
+                is State.Error -> {
+                    Snackbar.make(requireView(), it.message.toString() , Snackbar.LENGTH_SHORT).show()
                 }
             }
         }
