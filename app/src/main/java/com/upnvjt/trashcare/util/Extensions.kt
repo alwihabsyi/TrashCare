@@ -1,12 +1,20 @@
 package com.upnvjt.trashcare.util
 
-import android.opengl.Visibility
+import android.app.Activity
+import android.app.Dialog
 import android.util.Patterns
+import android.view.Gravity
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.google.android.material.snackbar.Snackbar
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
+import com.upnvjt.trashcare.R
+import com.upnvjt.trashcare.ui.auth.AuthViewPagerAdapter
 
 
 fun View.show() {
@@ -16,12 +24,72 @@ fun View.show() {
 fun View.hide() {
     visibility = View.GONE
 }
+
+fun Activity.toast(msg: String) {
+    Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+}
+
 fun Fragment.toast(msg: String) {
     Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
 }
 
-fun Fragment.snackbar(view: View, msg: String) {
-    Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show()
+fun Fragment.setUpForgotPasswordDialog(
+    onSendClick: (String) -> Unit
+){
+    val dialog = Dialog(requireContext(), android.R.style.Theme_Dialog)
+    val view = layoutInflater.inflate(R.layout.reset_password_dialog, null)
+    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialog.setContentView(view)
+    dialog.window?.setGravity(Gravity.CENTER)
+    dialog.window?.setLayout(
+        WindowManager.LayoutParams.MATCH_PARENT,
+        WindowManager.LayoutParams.WRAP_CONTENT
+    )
+//    dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    dialog.show()
+
+    val etEmail = view.findViewById<EditText>(R.id.etEmailReset)
+    val btnCancel = view.findViewById<Button>(R.id.btnCancelReset)
+    val btnSend = view.findViewById<Button>(R.id.btnReset)
+
+    btnSend.setOnClickListener {
+        val email = etEmail.text.toString().trim()
+        onSendClick(email)
+        dialog.dismiss()
+    }
+
+    btnCancel.setOnClickListener {
+        dialog.dismiss()
+    }
+}
+
+fun setUpTabLayout(tabLayout: TabLayout, viewPager: ViewPager2, adapter: AuthViewPagerAdapter) {
+    tabLayout.addTab(tabLayout.newTab().setText("Login"))
+    tabLayout.addTab(tabLayout.newTab().setText("Sign Up"))
+    viewPager.adapter = adapter
+    tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        override fun onTabSelected(tab: TabLayout.Tab?) {
+            if (tab != null) {
+                viewPager.currentItem = tab.position
+            }
+
+        }
+
+        override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+        }
+
+        override fun onTabReselected(tab: TabLayout.Tab?) {
+
+        }
+    })
+
+    val myPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            tabLayout.selectTab(tabLayout.getTabAt(position))
+        }
+    }
+    viewPager.registerOnPageChangeCallback(myPageChangeCallback)
 }
 
 fun EditText.string(): String{
@@ -40,9 +108,15 @@ fun validateEmail(email: String): Validation{
     return Validation.Success
 }
 
-fun validatePassword(password: String): Validation{
+fun validatePassword(password: String, passwordConfirmation: String?): Validation{
     if(password.isEmpty()){
         return Validation.Failed("Password tidak boleh kosong")
+    }
+
+    if(passwordConfirmation != null) {
+        if(password != passwordConfirmation) {
+            return Validation.Failed("Password tidak sesuai")
+        }
     }
 
     if(password.length < 6){

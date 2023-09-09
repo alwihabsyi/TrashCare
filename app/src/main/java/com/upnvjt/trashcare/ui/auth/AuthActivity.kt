@@ -1,62 +1,113 @@
 package com.upnvjt.trashcare.ui.auth
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.FragmentActivity
-import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
-import com.upnvjt.trashcare.R
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.auth.api.identity.Identity
+import com.google.firebase.auth.FirebaseAuth
 import com.upnvjt.trashcare.databinding.ActivityAuthBinding
-import com.upnvjt.trashcare.databinding.ActivitySplashScreenBinding
+import com.upnvjt.trashcare.ui.auth.viewmodel.AuthViewModel
+import com.upnvjt.trashcare.ui.main.MainActivity
+import com.upnvjt.trashcare.util.GoogleAuthUiClient
+import com.upnvjt.trashcare.util.State
+import com.upnvjt.trashcare.util.setUpTabLayout
+import com.upnvjt.trashcare.util.toast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AuthActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityAuthBinding
-    private lateinit var tabLayout: TabLayout
-    private lateinit var viewPager2: ViewPager2
-    private lateinit var adapter: AuthViewPagerAdapter
+    private var _binding: ActivityAuthBinding? = null
+    private val binding get() = _binding!!
+    private val viewModel by viewModels<AuthViewModel>()
+    private lateinit var auth: FirebaseAuth
+
+    private val googleAuthUiClient by lazy {
+        GoogleAuthUiClient(
+            applicationContext,
+            Identity.getSignInClient(applicationContext)
+        )
+    }
+
+    private val launcher = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            lifecycleScope.launch {
+                val signInResult = googleAuthUiClient.signInWithIntent(it.data ?: return@launch)
+                signInResult.data?.let {
+                    viewModel.googleSignIn(signInResult)
+                }
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_auth)
-
-        binding = ActivityAuthBinding.inflate(layoutInflater)
+        _binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        auth = FirebaseAuth.getInstance()
 
-        tabLayout = binding.tabLayout
-        viewPager2 = binding.viewPagerAuth
+        setUpTabLayout(
+            binding.tabLayout,
+            binding.viewPagerAuth,
+            AuthViewPagerAdapter(supportFragmentManager, lifecycle)
+        )
 
-        adapter = AuthViewPagerAdapter(supportFragmentManager, lifecycle)
+        binding.btnGoogle.setOnClickListener {
+            googleSignIn()
+        }
 
-        tabLayout.addTab(tabLayout.newTab().setText("Login"))
-        tabLayout.addTab(tabLayout.newTab().setText("Sign Up"))
+        observer()
+    }
 
-        viewPager2.adapter = adapter
-
-        tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                if (tab!=null) {
-                    viewPager2.currentItem = tab.position
+    private fun observer() {
+        viewModel.google.observe(this) {
+            when (it) {
+                is State.Loading -> {
                 }
 
-            }
+                is State.Success -> {
+                    Intent(this, MainActivity::class.java).also { intent ->
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                    }
+                }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-
-            }
-        })
-
-        val myPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                tabLayout.selectTab(tabLayout.getTabAt(position))
+                is State.Error -> {
+                    toast(it.data.toString())
+                }
             }
         }
-        viewPager2.registerOnPageChangeCallback(myPageChangeCallback)
+    }
+
+    private fun googleSignIn() {
+        lifecycleScope.launch {
+            val signInIntentSender = googleAuthUiClient.signIn()
+            launcher.launch(
+                IntentSenderRequest.Builder(
+                    signInIntentSender ?: return@launch
+                ).build()
+            )
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (auth.currentUser != null) {
+            Intent(this, MainActivity::class.java).also { intent ->
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

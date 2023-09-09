@@ -11,11 +11,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.upnvjt.trashcare.data.User
 import com.upnvjt.trashcare.databinding.FragmentSignupTabBinding
+import com.upnvjt.trashcare.ui.auth.viewmodel.SignUpViewModel
 import com.upnvjt.trashcare.util.State
 import com.upnvjt.trashcare.util.Validation
 import com.upnvjt.trashcare.util.hide
 import com.upnvjt.trashcare.util.show
-import com.upnvjt.trashcare.util.snackbar
 import com.upnvjt.trashcare.util.string
 import com.upnvjt.trashcare.util.toast
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,23 +47,15 @@ class SignUpTabFragment : Fragment() {
         with(binding) {
             btnSignUp.setOnClickListener {
                 if (validateFields()) {
-                    if (etPassword.string() == etConfirmPassword.string()) {
-                        val user = User(
-                            etUsername.string().trim(),
-                            etEmail.string().trim()
-                        )
-                        val password = etPassword.string()
-                        viewModel.signUpWithEmail(user, password)
-                    } else {
-                        binding.etPassword.apply {
-                            requestFocus()
-                            toast("Password tidak sesuai")
-                        }
-                        binding.etConfirmPassword.apply {
-                            requestFocus()
-                            toast("Password tidak sesuai")
-                        }
-                    }
+                    val user = User(
+                        etFirstname.string().trim(),
+                        etLastname.string().trim(),
+                        etUsername.string().trim(),
+                        etEmail.string().trim()
+                    )
+                    val password = etPassword.string()
+                    val passwordConfirmation = etConfirmPassword.string()
+                    viewModel.signUpWithEmail(user, password, passwordConfirmation)
                 } else {
                     toast("Harap isi semua field")
                 }
@@ -77,6 +69,7 @@ class SignUpTabFragment : Fragment() {
         viewModel.register.observe(viewLifecycleOwner) {
             when (it) {
                 is State.Loading -> {
+                    binding.btnSignUp.requestFocus()
                     binding.signUpProgressBar.show()
                     binding.tvBtnNext.hide()
                 }
@@ -90,7 +83,6 @@ class SignUpTabFragment : Fragment() {
                         etConfirmPassword.text?.clear()
                     }
 
-                    snackbar(binding.root, "asd")
                     toast("Berhasil mendaftar, silahkan login")
                 }
                 is State.Error -> {
@@ -130,7 +122,13 @@ class SignUpTabFragment : Fragment() {
         with(binding) {
             return etPassword.string().isNotEmpty() && etConfirmPassword.string().isNotEmpty()
                     && etEmail.string().isNotEmpty() && etUsername.string().isNotEmpty()
+                    && etFirstname.string().isNotEmpty() && etLastname.string().isNotEmpty()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
 }

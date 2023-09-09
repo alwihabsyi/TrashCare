@@ -1,10 +1,9 @@
-package com.upnvjt.trashcare.ui.auth
+package com.upnvjt.trashcare.ui.auth.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
-import com.upnvjt.trashcare.data.User
 import com.upnvjt.trashcare.util.FieldsState
 import com.upnvjt.trashcare.util.State
 import com.upnvjt.trashcare.util.Validation
@@ -42,7 +41,7 @@ class SignInViewModel @Inject constructor(
                 }
         }else{
             val registerFieldsState = FieldsState(
-                validateEmail(email), validatePassword(password)
+                validateEmail(email), validatePassword(password, null)
             )
             runBlocking {
                 _validation.send(registerFieldsState)
@@ -50,9 +49,20 @@ class SignInViewModel @Inject constructor(
         }
     }
 
+    fun resetPassword(email: String) {
+        _resetPassword.value = State.Loading()
+        auth.sendPasswordResetEmail(email)
+            .addOnSuccessListener {
+                _resetPassword.value = State.Success("Link reset password telah dikirim ke email anda")
+            }
+            .addOnFailureListener {
+                _resetPassword.value = State.Error(it.message.toString())
+            }
+    }
+
     private fun checkValidation(email: String, password: String): Boolean {
         val emailValidation = validateEmail(email)
-        val passwordValidation = validatePassword(password)
+        val passwordValidation = validatePassword(password, null)
 
         return emailValidation is Validation.Success &&
                 passwordValidation is Validation.Success
