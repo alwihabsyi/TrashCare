@@ -16,11 +16,6 @@
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
         <action
-            android:id="@+id/action_homeFragment_to_taCycleFragment"
-            app:destination="@id/taCycleFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
-        <action
             android:id="@+id/action_homeFragment_to_articlesFragment"
             app:destination="@id/articlesFragment" />
         <action
@@ -39,11 +34,6 @@
         android:name="com.upnvjt.trashcare.ui.main.commerce.CommerceFragment"
         android:label="fragment_commerce"
         tools:layout="@layout/fragment_commerce" />
-    <fragment
-        android:id="@+id/taCycleFragment"
-        android:name="com.upnvjt.trashcare.ui.main.tacycle.InputDataFragment"
-        android:label="fragment_ta_cycle"
-        tools:layout="@layout/fragment_ta_cycle" />
     <fragment
         android:id="@+id/articlesFragment"
         android:name="com.upnvjt.trashcare.ui.main.articles.ArticlesFragment"
