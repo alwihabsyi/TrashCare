@@ -96,7 +96,6 @@ class TaCycleActivity : AppCompatActivity(), TimePickerFragment.DialogTimeListen
 
         val order = TacycleModel(
             TaCycleStatus.OnGoing.cycleStatus,
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt9IaKw0Aa8WwTuX6h2mc8Jk9ewNmEHCnPaA&usqp=CAU",
             listSampah,
             alamat!!,
             binding.tvPickupDate.text.toString()

@@ -14,7 +14,7 @@
         android:theme="@style/Theme.TrashCare"
         tools:targetApi="31">
         <activity
-            android:name=".ui.main.tacycle.TaCycleCartActivity"
+            android:name=".ui.main.tacycle.cart.TaCycleCartActivity"
             android:exported="false" />
         <activity
             android:name=".ui.main.tacycle.TaCycleActivity"

@@ -14,7 +14,7 @@ import com.upnvjt.trashcare.databinding.FragmentHomeBinding
 import com.upnvjt.trashcare.ui.data.Article
 import com.upnvjt.trashcare.ui.data.ListProductDummy
 import com.upnvjt.trashcare.ui.data.Product
-import com.upnvjt.trashcare.ui.main.tacycle.TaCycleCartActivity
+import com.upnvjt.trashcare.ui.main.tacycle.cart.TaCycleCartActivity
 import me.relex.circleindicator.CircleIndicator3
 
 class HomeFragment : Fragment() {

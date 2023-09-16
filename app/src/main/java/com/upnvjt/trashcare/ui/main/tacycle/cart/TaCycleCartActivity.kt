@@ -1,11 +1,13 @@
-package com.upnvjt.trashcare.ui.main.tacycle
+package com.upnvjt.trashcare.ui.main.tacycle.cart
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.android.material.tabs.TabLayoutMediator
-import com.upnvjt.trashcare.R
 import com.upnvjt.trashcare.databinding.ActivityTaCycleCartBinding
+import com.upnvjt.trashcare.ui.main.tacycle.TaCycleViewPagerAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TaCycleCartActivity : AppCompatActivity() {
 
     private var _binding: ActivityTaCycleCartBinding? = null
@@ -16,6 +18,14 @@ class TaCycleCartActivity : AppCompatActivity() {
         _binding = ActivityTaCycleCartBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setUpTacycleTabLayout()
+
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
+    }
+
+    private fun setUpTacycleTabLayout() {
         val statusFragment = arrayListOf(
             OnGoingFragment(),
             DoneFragment()

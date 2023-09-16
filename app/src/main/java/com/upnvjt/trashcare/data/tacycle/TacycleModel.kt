@@ -8,7 +8,6 @@ import kotlin.random.Random.Default.nextLong
 
 data class TacycleModel(
     val statusOrder: String = "",
-    val fotoProduk: String = "",
     val jenisSampah: List<String> = emptyList(),
     val lokasiPengambilan: UserAddress = UserAddress(),
     val waktuPengambilan: String = "",
