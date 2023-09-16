@@ -34,7 +34,7 @@
                 android:layout_margin="24dp"/>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/btn_remove"
+                android:id="@+id/btn_tacycle_cart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"

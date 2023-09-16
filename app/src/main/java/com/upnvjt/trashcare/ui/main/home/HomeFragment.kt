@@ -1,5 +1,6 @@
 package com.upnvjt.trashcare.ui.main.home
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import com.upnvjt.trashcare.databinding.FragmentHomeBinding
 import com.upnvjt.trashcare.ui.data.Article
 import com.upnvjt.trashcare.ui.data.ListProductDummy
 import com.upnvjt.trashcare.ui.data.Product
+import com.upnvjt.trashcare.ui.main.tacycle.TaCycleCartActivity
 import me.relex.circleindicator.CircleIndicator3
 
 class HomeFragment : Fragment() {
@@ -74,5 +76,8 @@ class HomeFragment : Fragment() {
         rvArticles.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
         rvArticles.adapter = rvArticlesHomeAdapter
 
+        binding.btnTacycleCart.setOnClickListener {
+            startActivity(Intent(requireContext(), TaCycleCartActivity::class.java))
+        }
     }
 }
