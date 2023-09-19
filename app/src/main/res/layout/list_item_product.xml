@@ -76,7 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Double Seat Sofa"
-                    android:textSize="12dp"
+                    android:textSize="12sp"
                     android:maxLines="1"
                     android:textColor="@color/black"
                     android:layout_marginBottom="4dp"
@@ -86,8 +86,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Rp70.000"
-                    android:textSize="12dp"
-                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:textColor="@color/greenSplash"
                     android:fontFamily="@font/plusjakartasans_semibold"/>
 
             </LinearLayout>

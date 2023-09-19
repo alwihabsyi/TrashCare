@@ -46,7 +46,7 @@
                 app:strokeWidth="1dp"
                 app:cardCornerRadius="10dp"
                 app:strokeColor="@color/white"
-                app:cardBackgroundColor="@color/softGreen">
+                app:cardBackgroundColor="@android:color/transparent">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -67,10 +67,11 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/welcomeUser"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Hello, Afif Ghani"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:fontFamily="@font/plusjakartasans_semibold"
                     android:textSize="24sp"/>
 
@@ -80,7 +81,7 @@
                     android:layout_marginTop="4dp"
                     android:paddingEnd="100dp"
                     android:text="Apa kontribusi kamu untuk mengurangi sampah, hari ini?"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:fontFamily="@font/plusjakartasans"
                     android:textSize="12sp"/>
             </LinearLayout>
@@ -88,7 +89,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!--  Card View User Point Info  -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/cv_user_info"
             android:layout_width="match_parent"
             android:layout_height="95dp"
@@ -98,129 +99,60 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="-95dp"
-            app:cardBackgroundColor="@color/greenYoung"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="2dp">
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/greenSplash"
+            app:cardCornerRadius="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="10dp"
+                android:paddingStart="24dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:layout_weight="1"
-                    android:elevation="1dp"
-                    app:cardCornerRadius="10dp">
+            <ImageView
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:src="@drawable/ic_tacoins"/>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center_vertical"
-                        android:padding="8dp">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="4dp"
-                                android:src="@drawable/ic_coin"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="TaCoins"
-                                android:textSize="12dp"
-                                android:textColor="@color/black"
-                                android:fontFamily="@font/plusjakartasans_semibold"/>
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/tv_total_point"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="25000"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginBottom="4dp"
-                            android:textSize="12dp"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/plusjakartasans_semibold"/>
-
-                        <TextView
-                            android:id="@+id/tv_see_rewards"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Lihat Hadiah"
-                            android:textColor="@color/softGreen"
-                            android:textSize="8dp"
-                            android:fontFamily="@font/plusjakartasans_semibold"/>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="4dp"
-                        android:src="@drawable/ic_round_place"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="TaBank"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:fontFamily="@font/plusjakartasans_semibold"
-                        android:textSize="12dp"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_gravity="start"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Quote For Today"
-                        android:textColor="@color/white"
-                        android:fontFamily="@font/plusjakartasans_bold"
-                        android:textSize="16sp"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="4dp"
-                        android:text="''Sharing Happiness, reassuring the soul''"
-                        android:textColor="@color/white"
-                        android:fontFamily="@font/plusjakartasans"
-                        android:textSize="12dp"/>
-
-                </LinearLayout>
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="TaCoins"
+                android:textColor="@color/black"
+                android:fontFamily="@font/plusjakartasans_semibold"
+                android:textSize="24sp"/>
 
 
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingEnd="24dp"
+                android:gravity="center_vertical|end"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="25000"
+                    android:textColor="@color/greenSplash"
+                    android:fontFamily="@font/plusjakartasans"
+                    android:textSize="24sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="4dp"
+                    android:text="Coins"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/plusjakartasans"/>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
         <!--  End of Card View User Point Info  -->
 
         <!--   Viewpager Banner     -->
@@ -277,7 +209,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Best Deal"
@@ -325,7 +257,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Info Baru Buat Kamu!"

@@ -14,38 +14,28 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/softGreen"
+        android:background="@drawable/bg_appbar"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_height="wrap_content">
+        android:layout_height="75dp">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/btn_back"
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="8dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="8dp">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:padding="8dp"
-                android:src="@drawable/ic_back_24" />
-
-        </androidx.cardview.widget.CardView>
+            android:layout_gravity="center"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_back_ios" />
 
         <TextView
             android:id="@+id/tv_articles"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Check Out"
             android:layout_weight="1"
             android:fontFamily="@font/plusjakartasans_bold"
+            android:gravity="center"
             android:textSize="20sp"
-            android:textColor="@color/white"
-            android:textAlignment="center"/>
+            android:textColor="@color/white"/>
 
     </LinearLayout>
 
@@ -67,7 +57,25 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kind of Trash"
+                android:text="Daftar Pesanan"
+                android:layout_weight="1"
+                android:fontFamily="@font/plusjakartasans_bold"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:textAlignment="center"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                tools:itemCount="5"/>
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Data Pemesan"
                 android:layout_weight="1"
                 android:fontFamily="@font/plusjakartasans_bold"
                 android:textSize="18sp"
@@ -77,7 +85,8 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tl_name_user"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
                 android:layout_marginTop="8dp"
                 android:layout_gravity="center"
                 app:boxBackgroundMode="outline"
@@ -98,232 +107,274 @@
                     android:textSize="14sp"
                     android:hint="Name Of User"
                     android:inputType="text"
-                    android:maxLength="20"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="30dp"
-                    android:paddingBottom="20dp"
                     android:textColorHint="@color/black"
                     android:textCursorDrawable="@null" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Phone Number"
-                android:layout_weight="1"
-                android:fontFamily="@font/plusjakartasans_bold"
-                android:textSize="18sp"
-                android:textColor="@color/black"
-                android:textAlignment="center"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tl_phone"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="8dp"
+                android:layout_height="wrap_content"
+                android:minHeight="50dp"
+                app:strokeColor="@color/softGreen"
                 android:layout_gravity="center"
-                app:boxBackgroundMode="outline"
-                app:boxCornerRadiusBottomEnd="10dp"
-                app:boxCornerRadiusBottomStart="10dp"
-                app:boxCornerRadiusTopEnd="10dp"
-                app:boxCornerRadiusTopStart="10dp"
-                app:boxStrokeColor="@color/white"
-                app:boxStrokeWidth=".5dp"
-                app:hintEnabled="false">
+                app:strokeWidth=".5dp"
+                app:cardCornerRadius="10dp"
+                android:layout_marginTop="16dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPhoneNumber"
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spin_address"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/style_spinner_input"
+                    android:layout_marginStart="8dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:cursorVisible="false"
-                    android:fontFamily="@font/plusjakartasans"
-                    android:textSize="14sp"
-                    android:hint="+91-800 301 0108"
-                    android:inputType="text"
-                    android:maxLength="20"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="30dp"
-                    android:paddingBottom="20dp"
-                    android:textColorHint="@color/black"
-                    android:textCursorDrawable="@null" />
+                    android:layout_height="wrap_content" />
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Payment Method"
-                android:layout_weight="1"
-                android:fontFamily="@font/plusjakartasans_bold"
-                android:textSize="18sp"
-                android:layout_marginVertical="12dp"
-                android:textColor="@color/black"
-                android:textAlignment="center"/>
+                android:minHeight="50dp"
+                app:strokeColor="@color/softGreen"
+                android:layout_gravity="center"
+                app:strokeWidth=".5dp"
+                app:cardCornerRadius="10dp"
+                android:layout_marginTop="16dp">
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spin_order_method"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/style_spinner_input"
+                    android:layout_marginStart="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="50dp"
+                app:strokeColor="@color/softGreen"
+                android:layout_gravity="center"
+                app:strokeWidth=".5dp"
+                app:cardCornerRadius="10dp"
+                android:layout_marginTop="16dp">
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spin_shipping_method"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/style_spinner_input"
+                    android:layout_marginStart="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Payment Method"-->
+<!--                android:layout_weight="1"-->
+<!--                android:fontFamily="@font/plusjakartasans_bold"-->
+<!--                android:textSize="18sp"-->
+<!--                android:layout_marginVertical="12dp"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textAlignment="center"/>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <com.google.android.material.card.MaterialCardView-->
+<!--                    android:id="@+id/btn_bca"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="60dp"-->
+<!--                    android:layout_marginBottom="16dp"-->
+<!--                    android:minHeight="48dp"-->
+<!--                    android:clickable="true"-->
+<!--                    android:foreground="?android:attr/selectableItemBackground"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:cardCornerRadius="10dp"-->
+<!--                    app:strokeColor="@color/grey2"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent">-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="70dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:padding="8dp"-->
+<!--                        android:src="@drawable/logo_bca"/>-->
+
+<!--                </com.google.android.material.card.MaterialCardView>-->
+<!--                <com.google.android.material.card.MaterialCardView-->
+<!--                    android:id="@+id/btn_bni"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="60dp"-->
+<!--                    android:layout_marginBottom="16dp"-->
+<!--                    android:layout_marginStart="16dp"-->
+<!--                    android:minHeight="48dp"-->
+<!--                    android:clickable="true"-->
+<!--                    android:foreground="?android:attr/selectableItemBackground"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:cardCornerRadius="10dp"-->
+<!--                    app:strokeColor="@color/grey2"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent">-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="70dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:padding="8dp"/>-->
+
+<!--                </com.google.android.material.card.MaterialCardView>-->
+<!--                <com.google.android.material.card.MaterialCardView-->
+<!--                    android:id="@+id/btn_bri"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="60dp"-->
+<!--                    android:layout_marginBottom="16dp"-->
+<!--                    android:layout_marginStart="16dp"-->
+<!--                    android:minHeight="48dp"-->
+<!--                    android:clickable="true"-->
+<!--                    android:foreground="?android:attr/selectableItemBackground"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:cardCornerRadius="10dp"-->
+<!--                    app:strokeColor="@color/grey2"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent">-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="70dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:padding="8dp"-->
+<!--                        android:src="@drawable/logo_bri"/>-->
+
+<!--                </com.google.android.material.card.MaterialCardView>-->
+<!--            </LinearLayout>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Shipping Info"-->
+<!--                android:layout_weight="1"-->
+<!--                android:fontFamily="@font/plusjakartasans_bold"-->
+<!--                android:textSize="18sp"-->
+<!--                android:layout_marginVertical="12dp"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textAlignment="center"/>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <com.google.android.material.card.MaterialCardView-->
+<!--                    android:id="@+id/iv_address"-->
+<!--                    android:layout_width="60dp"-->
+<!--                    android:layout_height="60dp"-->
+<!--                    android:layout_marginBottom="16dp"-->
+<!--                    android:minHeight="48dp"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:cardCornerRadius="10dp"-->
+<!--                    app:strokeWidth="0dp"-->
+<!--                    app:cardBackgroundColor="@color/grey"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent">-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="40dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:src="@drawable/ic_map"/>-->
+
+<!--                </com.google.android.material.card.MaterialCardView>-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_addressUser"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="8dp"-->
+<!--                    android:text="10506 - Jl Kutisari IX No. 52 - Tenggilis Mejoyo - Surabaya - Indonesia"-->
+<!--                    android:fontFamily="@font/plusjakartasans"/>-->
+
+<!--            </LinearLayout>-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <com.google.android.material.card.MaterialCardView-->
+<!--                    android:id="@+id/iv_shipping"-->
+<!--                    android:layout_width="60dp"-->
+<!--                    android:layout_height="60dp"-->
+<!--                    android:layout_marginBottom="16dp"-->
+<!--                    android:minHeight="48dp"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:cardCornerRadius="10dp"-->
+<!--                    app:strokeWidth="0dp"-->
+<!--                    app:cardBackgroundColor="@color/grey"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent">-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="40dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:src="@drawable/ic_truck"/>-->
+
+<!--                </com.google.android.material.card.MaterialCardView>-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/dateShipping"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="8dp"-->
+<!--                    android:text="Wednesday 04:00 PM"-->
+<!--                    android:layout_marginTop="-16dp"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:fontFamily="@font/plusjakartasans"/>-->
+
+<!--            </LinearLayout>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
                 android:orientation="horizontal">
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/btn_bca"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="16dp"
-                    android:minHeight="48dp"
-                    android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:cardCornerRadius="10dp"
-                    app:strokeColor="@color/grey2"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
-
-                    <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:src="@drawable/logo_bca"/>
-
-                </com.google.android.material.card.MaterialCardView>
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/btn_bni"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginStart="16dp"
-                    android:minHeight="48dp"
-                    android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:cardCornerRadius="10dp"
-                    app:strokeColor="@color/grey2"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
-
-                    <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"/>
-
-                </com.google.android.material.card.MaterialCardView>
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/btn_bri"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginStart="16dp"
-                    android:minHeight="48dp"
-                    android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:cardCornerRadius="10dp"
-                    app:strokeColor="@color/grey2"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
-
-                    <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:src="@drawable/logo_bri"/>
-
-                </com.google.android.material.card.MaterialCardView>
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Shipping Info"
-                android:layout_weight="1"
-                android:fontFamily="@font/plusjakartasans_bold"
-                android:textSize="18sp"
-                android:layout_marginVertical="12dp"
-                android:textColor="@color/black"
-                android:textAlignment="center"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/iv_address"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="16dp"
-                    android:minHeight="48dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:cardCornerRadius="10dp"
-                    app:strokeWidth="0dp"
-                    app:cardBackgroundColor="@color/grey"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_map"/>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <TextView
-                    android:id="@+id/tv_addressUser"
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="10506 - Jl Kutisari IX No. 52 - Tenggilis Mejoyo - Surabaya - Indonesia"
-                    android:fontFamily="@font/plusjakartasans"/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/iv_shipping"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="16dp"
-                    android:minHeight="48dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:cardCornerRadius="10dp"
-                    app:strokeWidth="0dp"
-                    app:cardBackgroundColor="@color/grey"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_truck"/>
-
-                </com.google.android.material.card.MaterialCardView>
-
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_tacoins"/>
                 <TextView
-                    android:id="@+id/dateShipping"
+                    android:id="@+id/tvTaCoins"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Tukarkan 3.700 TaCoins"/>
+
+                <Switch
+                    android:id="@+id/switchTaCoins"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="Wednesday 04:00 PM"
-                    android:layout_marginTop="-16dp"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/plusjakartasans"/>
+                    android:buttonTint="@color/greenSplash"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
 
             </LinearLayout>
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
@@ -380,7 +431,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
@@ -393,6 +444,31 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:textColor="@color/black"
+                    android:text="Rp10.000"
+                    android:fontFamily="@font/plusjakartasans_semibold"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/tv_TaCoinsUsed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Hemat"
+                    android:fontFamily="@font/plusjakartasans"/>
+
+                <TextView
+                    android:id="@+id/totalTaCoins"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textColor="@color/red"
                     android:text="Rp10.000"
                     android:fontFamily="@font/plusjakartasans_semibold"/>
 
