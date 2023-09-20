@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="380dp"
+    android:layout_height="150dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingStart="16dp"
+    android:paddingEnd="0dp"
+    android:layout_marginBottom="16dp"
+    android:background="@drawable/bg_task">
+
+    <TextView
+        android:id="@+id/tv_taskTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:fontFamily="@font/plusjakartasans_bold"
+        android:layout_marginTop="16dp"
+        android:text="Daily Impact 1"/>
+
+    <LinearLayout
+        android:id="@+id/tv_statusTaskContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/tv_taskTitle"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_check_box"/>
+        <TextView
+            android:id="@+id/taskStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="Task Completed"
+            android:fontFamily="@font/plusjakartasans_bold"
+            android:textColor="@color/greenOld"/>
+
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btn_pay"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginVertical="16dp"
+        android:minHeight="48dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/softGreen"
+        android:layout_below="@id/tv_statusTaskContainer"
+        app:cardCornerRadius="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selesaikan Misi"
+            android:textSize="14sp"
+            android:paddingHorizontal="20dp"
+            android:fontFamily="@font/plusjakartasans_bold"
+            android:layout_gravity="center"
+            android:textColor="@color/white"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/trash_task"
+        android:layout_alignParentEnd="true"/>
+
+</RelativeLayout>

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.task.TaskDetailActivity">
+
+    <LinearLayout
+        android:id="@+id/appBarContainer"
+        android:layout_width="match_parent"
+        android:paddingVertical="16dp"
+        android:paddingHorizontal="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/bg_appbar"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_height="75dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_back_ios" />
+
+        <TextView
+            android:id="@+id/tv_DetailTask"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Daily Impact 1"
+            android:layout_weight="1"
+            android:fontFamily="@font/plusjakartasans_bold"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBarContainer"
+        >
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/update_task_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:visibility="visible"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="My Task"
+                    android:fontFamily="@font/plusjakartasans_bold"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textColor="@color/black"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvListDetailTask"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/item_task_detail"
+                    android:layout_marginTop="16dp"
+                    tools:itemCount="5"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Upload Bukti Kegiatan"
+                    android:fontFamily="@font/plusjakartasans_bold"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textColor="@color/black"/>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cv_upload_task"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:minHeight="120dp"
+                    android:minWidth="200dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_add_box_grey_40"
+                        android:layout_gravity="center"/>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="-8dp"
+                    android:layout_marginBottom="16dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/cb_completed"
+                        app:buttonTint="@color/softGreen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Sudah Menyelesaikan Misi"/>
+
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_taskDone"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginVertical="16dp"
+                    android:layout_marginHorizontal="30dp"
+                    android:minHeight="48dp"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/softGreen"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:cardCornerRadius="5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_pay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Selesaikan Misi"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/plusjakartasans_bold"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"/>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/info_waiting_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="gone"
+                android:layout_marginVertical="120dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/iv_waiting"/>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cv_info_waiting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="44dp"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@color/greenYoung"
+                    app:strokeColor="@color/greenSplash"
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Menunggu Persetujuan"
+                        android:paddingHorizontal="16dp"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/plusjakartasans_bold"
+                        android:layout_gravity="center"
+                        android:textColor="@color/greenSplash"/>
+                </com.google.android.material.card.MaterialCardView>
+
+
+            </LinearLayout>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_info_taCoins"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="44dp"
+                android:layout_marginTop="16dp"
+                app:strokeColor="@color/greenSplash"
+                android:layout_gravity="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="8dp"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_tacoins"/>
+
+                    <TextView
+                        android:id="@+id/tv_coins_added"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Anda mendapatkan 10000 TaCoins"
+                        android:layout_marginStart="8dp"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/plusjakartasans_bold"
+                        android:layout_gravity="center"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <LinearLayout
+                android:id="@+id/info_finish_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="gone"
+                android:layout_marginVertical="120dp"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/iv_finish"/>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cv_info_finish"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="44dp"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@color/greenYoung"
+                    app:strokeColor="@color/greenSplash"
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sudah Disetujui"
+                        android:paddingHorizontal="16dp"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/plusjakartasans_bold"
+                        android:layout_gravity="center"
+                        android:textColor="@color/greenSplash"/>
+                </com.google.android.material.card.MaterialCardView>
+
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

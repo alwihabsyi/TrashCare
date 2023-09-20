@@ -2,12 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="transparent">#00FFFFFF</color>
-    <color name="softGreen">#9DBC79</color>
+    <color name="softGreen">#B7D984</color>
     <color name="greenMenthol">#9DBC79</color>
     <color name="greenLeaf">#0BA36C</color>
     <color name="greenSplash">#799953</color>
-    <color name="greenYoung">#C4E2A1</color>
+    <color name="greenOld">#4F5E3D</color>
+    <color name="greenYoung">#CFE6AD</color>
     <color name="yellow">#F5C900</color>
     <color name="ruddyBrown">#BE6B25</color>
     <color name="lightBrown">#DEA25C</color>
@@ -17,7 +17,6 @@
     <color name="grey">#D1D1D1</color>
     <color name="grey2">#9C9C9C</color>
     <color name="red">#F44336</color>
-    <color name="darkGreen">#697D51</color>
 
     <color name="mtrl_textinput_default_box_stroke_color">#9DBC79</color>
 </resources>

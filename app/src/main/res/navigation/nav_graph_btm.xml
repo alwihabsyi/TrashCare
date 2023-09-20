@@ -16,32 +16,35 @@
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
         <action
-            android:id="@+id/action_homeFragment_to_articlesFragment"
-            app:destination="@id/articlesFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_articlesFragment2"
-            app:destination="@id/articlesFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
-        <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_homeFragment_to_taskFragment"
+            app:destination="@id/taskFragment" />
     </fragment>
     <fragment
         android:id="@+id/commerceFragment"
         android:name="com.upnvjt.trashcare.ui.main.commerce.CommerceFragment"
         android:label="fragment_commerce"
-        tools:layout="@layout/fragment_commerce" />
-    <fragment
-        android:id="@+id/articlesFragment"
-        android:name="com.upnvjt.trashcare.ui.main.articles.ArticlesFragment"
-        android:label="fragment_articles"
-        tools:layout="@layout/fragment_articles" />
+        tools:layout="@layout/fragment_commerce" >
+        <action
+            android:id="@+id/action_commerceFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.upnvjt.trashcare.ui.main.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/taskFragment"
+        android:name="com.upnvjt.trashcare.ui.main.task.TaskFragment"
+        android:label="fragment_task"
+        tools:layout="@layout/fragment_task" >
+        <action
+            android:id="@+id/action_taskFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

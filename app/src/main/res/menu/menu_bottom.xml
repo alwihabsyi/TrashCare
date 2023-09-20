@@ -18,9 +18,9 @@
         android:title=""
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/articlesFragment"
-        android:icon="@drawable/ic_article"
-        android:title="Article"
+        android:id="@+id/taskFragment"
+        android:icon="@drawable/ic_task"
+        android:title="Task"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/profileFragment"
