@@ -1,4 +1,4 @@
-package com.upnvjt.trashcare.data
+package com.upnvjt.trashcare.data.user
 
 data class User(
     val firstname: String? = null,

@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.upnvjt.trashcare.data.User
+import com.upnvjt.trashcare.data.user.User
 import com.upnvjt.trashcare.databinding.FragmentSignupTabBinding
 import com.upnvjt.trashcare.ui.auth.viewmodel.SignUpViewModel
 import com.upnvjt.trashcare.util.State

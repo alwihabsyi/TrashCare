@@ -1,4 +1,4 @@
-package com.upnvjt.trashcare.data
+package com.upnvjt.trashcare.data.user
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

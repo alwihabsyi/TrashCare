@@ -1,9 +1,12 @@
 package com.upnvjt.trashcare.ui.main.tacycle.cart
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import com.google.android.material.tabs.TabLayoutMediator
 import com.upnvjt.trashcare.databinding.ActivityTaCycleCartBinding
+import com.upnvjt.trashcare.ui.main.MainActivity
 import com.upnvjt.trashcare.ui.main.tacycle.TaCycleViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,11 +21,34 @@ class TaCycleCartActivity : AppCompatActivity() {
         _binding = ActivityTaCycleCartBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupAction()
         setUpTacycleTabLayout()
+    }
+
+    private fun setupAction() {
+        val fromOrder = intent.getBooleanExtra(FROM_ORDER, false)
 
         binding.btnBack.setOnClickListener {
-            finish()
+            if (fromOrder) {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            } else {
+                finish()
+            }
         }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (fromOrder) {
+                    val intent = Intent(this@TaCycleCartActivity, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                } else {
+                    finish()
+                }
+            }
+        })
     }
 
     private fun setUpTacycleTabLayout() {
@@ -33,7 +59,8 @@ class TaCycleCartActivity : AppCompatActivity() {
 
         binding.viewPager2.isUserInputEnabled = false
 
-        val viewPagerAdapter = TaCycleViewPagerAdapter(statusFragment, supportFragmentManager, lifecycle)
+        val viewPagerAdapter =
+            TaCycleViewPagerAdapter(statusFragment, supportFragmentManager, lifecycle)
         binding.viewPager2.adapter = viewPagerAdapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager2) { tab, position ->
             when (position) {
@@ -46,5 +73,9 @@ class TaCycleCartActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    companion object {
+        const val FROM_ORDER = "tacycle"
     }
 }

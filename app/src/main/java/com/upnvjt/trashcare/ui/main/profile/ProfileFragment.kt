@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.identity.Identity
-import com.upnvjt.trashcare.R
 import com.upnvjt.trashcare.databinding.FragmentProfileBinding
 import com.upnvjt.trashcare.ui.auth.AuthActivity
 import com.upnvjt.trashcare.util.GoogleAuthUiClient
@@ -42,15 +41,21 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setActions()
+    }
+
+    private fun setActions() {
         binding.linearLogOut.setOnClickListener {
             lifecycleScope.launch {
                 googleAuthUiClient.signOut()
             }
+
             viewModel.logout()
             val intent = Intent(requireContext(), AuthActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
         }
+
 
     }
 }

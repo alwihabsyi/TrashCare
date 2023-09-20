@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayout
-import com.upnvjt.trashcare.R
 import com.upnvjt.trashcare.databinding.FragmentCommerceBinding
 
 class CommerceFragment : Fragment() {
@@ -17,8 +16,7 @@ class CommerceFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         binding =FragmentCommerceBinding.inflate(inflater, container, false)
         return binding.root
     }

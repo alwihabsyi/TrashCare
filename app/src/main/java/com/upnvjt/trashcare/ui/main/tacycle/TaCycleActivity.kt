@@ -1,16 +1,19 @@
 package com.upnvjt.trashcare.ui.main.tacycle
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.upnvjt.trashcare.R
-import com.upnvjt.trashcare.data.UserAddress
+import com.upnvjt.trashcare.data.user.UserAddress
 import com.upnvjt.trashcare.data.tacycle.TaCycleStatus
 import com.upnvjt.trashcare.data.tacycle.TacycleModel
 import com.upnvjt.trashcare.databinding.ActivityTaCycleBinding
+import com.upnvjt.trashcare.ui.main.tacycle.cart.TaCycleCartActivity
+import com.upnvjt.trashcare.ui.main.tacycle.cart.TaCycleCartActivity.Companion.FROM_ORDER
 import com.upnvjt.trashcare.util.State
 import com.upnvjt.trashcare.util.hide
 import com.upnvjt.trashcare.util.show
@@ -45,16 +48,17 @@ class TaCycleActivity : AppCompatActivity(), TimePickerFragment.DialogTimeListen
         viewModel.cycleOrder.observe(this) {
             when (it) {
                 is State.Loading -> {
-                    binding.tvFindTaRider.hide()
                     binding.progressBar.show()
                 }
                 is State.Success -> {
-                    binding.tvFindTaRider.show()
                     binding.progressBar.hide()
                     toast("Berhasil order tacycle")
+                    val intent = Intent(this, TaCycleCartActivity::class.java)
+                    intent.putExtra(FROM_ORDER, true)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
                 }
                 is State.Error -> {
-                    binding.tvFindTaRider.show()
                     binding.progressBar.hide()
                     toast(it.message.toString())
                 }
@@ -68,6 +72,11 @@ class TaCycleActivity : AppCompatActivity(), TimePickerFragment.DialogTimeListen
         }
 
         binding.pickDateInput.setOnClickListener {
+            if (alamat == null) {
+                toast("Harap isi alamat")
+                return@setOnClickListener
+            }
+
             val timePickerFragmentOne = TimePickerFragment()
             timePickerFragmentOne.show(supportFragmentManager, TIME_PICKER_ONCE_TAG)
         }
@@ -105,7 +114,7 @@ class TaCycleActivity : AppCompatActivity(), TimePickerFragment.DialogTimeListen
     }
 
     private fun setSpinner() {
-        spinner = binding.spinner1
+        spinner = binding.spinner2
 
         val valueOfCategory = arrayOf(
             "Plastik",
@@ -127,6 +136,7 @@ class TaCycleActivity : AppCompatActivity(), TimePickerFragment.DialogTimeListen
         val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
         binding.tvPickupDate.text = dateFormat.format(calendar.time)
+        binding.btnFindRider.isEnabled = true
     }
 
     override fun onDestroy() {

@@ -11,5 +11,19 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="kirim_ke_email">Kami akan mengirimkan link reset password ke email anda</string>
     <string name="order_trash">Order Trash</string>
+    <string name="tacycle">TaCycle</string>
+    <string name="jenis_sampah">Jenis Sampah</string>
+    <string name="plastik">Plastik</string>
+    <string name="kaca">Kaca</string>
+    <string name="limbah_dapur">Limbah Dapur</string>
+    <string name="kertas_kardus">Kertas/Kardus</string>
+    <string name="serbuk_kayu">Serbuk Kayu</string>
+    <string name="elektronik">Elektronik</string>
+    <string name="lokasi_pengambilan">Lokasi Pengambilan</string>
+    <string name="waktu_pengambilan">Waktu Pengambilan</string>
+    <string name="pilih_waktu_pengambilan">Pilih Waktu Pengambilan</string>
+    <string name="pesan">Pesan</string>
+    <string name="alamat">Alamat</string>
+    <string name="alamat_saya">Alamat Saya</string>
 
 </resources>

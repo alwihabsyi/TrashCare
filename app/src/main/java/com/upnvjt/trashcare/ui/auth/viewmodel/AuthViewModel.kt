@@ -3,9 +3,8 @@ package com.upnvjt.trashcare.ui.auth.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.upnvjt.trashcare.data.User
+import com.upnvjt.trashcare.data.user.User
 import com.upnvjt.trashcare.util.Constants
 import com.upnvjt.trashcare.util.SignInResult
 import com.upnvjt.trashcare.util.State

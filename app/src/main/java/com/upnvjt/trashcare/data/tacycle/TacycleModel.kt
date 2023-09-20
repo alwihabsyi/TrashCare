@@ -1,6 +1,6 @@
 package com.upnvjt.trashcare.data.tacycle
 
-import com.upnvjt.trashcare.data.UserAddress
+import com.upnvjt.trashcare.data.user.UserAddress
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

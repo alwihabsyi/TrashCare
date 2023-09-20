@@ -18,7 +18,7 @@ class TacycleCartAdapter: RecyclerView.Adapter<TacycleCartAdapter.TacycleCartVie
         @SuppressLint("SetTextI18n")
         fun bind(item: TacycleModel) {
             binding.apply {
-                tvIdPesanan.text = item.orderId
+                tvIdPesanan.text = "ID Pesanan: ${item.orderId}"
                 tvStatusPesanan.text = when (getCycleStatus(item.statusOrder)) {
                     is TaCycleStatus.OnGoing -> "On Process"
                     else -> "Done"
