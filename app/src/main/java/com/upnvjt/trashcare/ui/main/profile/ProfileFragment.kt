@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.identity.Identity
 import com.upnvjt.trashcare.databinding.FragmentProfileBinding
 import com.upnvjt.trashcare.ui.auth.AuthActivity
+import com.upnvjt.trashcare.ui.main.profile.viewmodel.ProfileViewModel
 import com.upnvjt.trashcare.util.GoogleAuthUiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -56,6 +57,9 @@ class ProfileFragment : Fragment() {
             requireActivity().finish()
         }
 
-
+        binding.linearBilling.setOnClickListener {
+            val intent = Intent(requireContext(), AddressActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

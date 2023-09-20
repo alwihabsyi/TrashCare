@@ -1,4 +1,4 @@
-package com.upnvjt.trashcare.ui.main.profile
+package com.upnvjt.trashcare.ui.main.profile.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth

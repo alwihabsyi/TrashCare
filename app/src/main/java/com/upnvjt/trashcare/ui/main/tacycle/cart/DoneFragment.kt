@@ -10,8 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.upnvjt.trashcare.data.tacycle.TaCycleStatus
+import com.upnvjt.trashcare.data.tacycle.TacycleCartAdapter
 import com.upnvjt.trashcare.data.tacycle.TacycleModel
 import com.upnvjt.trashcare.databinding.FragmentDoneBinding
+import com.upnvjt.trashcare.ui.main.tacycle.viewmodel.TaCycleOrderViewModel
+import com.upnvjt.trashcare.ui.main.tacycle.viewmodel.TaCycleOrderViewModelFactory
 import com.upnvjt.trashcare.util.State
 import com.upnvjt.trashcare.util.hide
 import com.upnvjt.trashcare.util.show

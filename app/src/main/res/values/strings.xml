@@ -25,5 +25,13 @@
     <string name="pesan">Pesan</string>
     <string name="alamat">Alamat</string>
     <string name="alamat_saya">Alamat Saya</string>
+    <string name="tambah_alamat">Tambah Alamat</string>
+    <string name="nama_jalan">Nama Jalan</string>
+    <string name="kelurahan">Kelurahan</string>
+    <string name="kecamatan">Kecamatan</string>
+    <string name="kota">Kota</string>
+    <string name="provinsi">Provinsi</string>
+    <string name="detail_alamat">Detail Alamat (ex: Rumah, Kantor)</string>
+    <string name="kode_pos">Kode Pos</string>
 
 </resources>

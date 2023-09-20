@@ -1,4 +1,4 @@
-package com.upnvjt.trashcare.ui.main.tacycle.cart
+package com.upnvjt.trashcare.data.tacycle
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,9 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.upnvjt.trashcare.data.tacycle.TaCycleStatus
-import com.upnvjt.trashcare.data.tacycle.TacycleModel
-import com.upnvjt.trashcare.data.tacycle.getCycleStatus
 import com.upnvjt.trashcare.databinding.ItemTacycleLayoutBinding
 
 class TacycleCartAdapter: RecyclerView.Adapter<TacycleCartAdapter.TacycleCartViewHolder>() {

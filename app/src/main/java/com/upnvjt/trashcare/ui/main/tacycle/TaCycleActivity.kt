@@ -14,6 +14,7 @@ import com.upnvjt.trashcare.data.tacycle.TacycleModel
 import com.upnvjt.trashcare.databinding.ActivityTaCycleBinding
 import com.upnvjt.trashcare.ui.main.tacycle.cart.TaCycleCartActivity
 import com.upnvjt.trashcare.ui.main.tacycle.cart.TaCycleCartActivity.Companion.FROM_ORDER
+import com.upnvjt.trashcare.ui.main.tacycle.viewmodel.TaCycleViewModel
 import com.upnvjt.trashcare.util.State
 import com.upnvjt.trashcare.util.hide
 import com.upnvjt.trashcare.util.show
@@ -100,7 +101,9 @@ class TaCycleActivity : AppCompatActivity(), TimePickerFragment.DialogTimeListen
             "Kelurahan Debug",
             "Kecamatan Debug",
             "Kota Debug",
-            "Provinsi Debug"
+            "Provinsi Debug",
+            "",
+            "Disamping gerobak sampah"
         )
 
         val order = TacycleModel(

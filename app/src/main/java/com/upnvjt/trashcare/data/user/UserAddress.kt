@@ -9,7 +9,9 @@ data class UserAddress(
     val kelurahan: String,
     val kecamatan: String,
     val kota: String,
-    val provinsi: String
+    val provinsi: String,
+    val kodePos: String,
+    val judulAlamat: String
 ) : Parcelable {
-    constructor(): this("", "", "", "" , "")
+    constructor(): this("", "", "", "" , "", "", "")
 }

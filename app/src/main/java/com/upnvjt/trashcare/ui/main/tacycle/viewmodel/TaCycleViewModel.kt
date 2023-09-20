@@ -1,4 +1,4 @@
-package com.upnvjt.trashcare.ui.main.tacycle
+package com.upnvjt.trashcare.ui.main.tacycle.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

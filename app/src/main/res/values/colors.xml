@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
+    <color name="transparent">#00000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="softGreen">#B7D984</color>
     <color name="greenMenthol">#9DBC79</color>
@@ -17,6 +18,7 @@
     <color name="grey">#D1D1D1</color>
     <color name="grey2">#9C9C9C</color>
     <color name="red">#F44336</color>
+    <color name="darkGreen">#697D51</color>
 
     <color name="mtrl_textinput_default_box_stroke_color">#9DBC79</color>
 </resources>
