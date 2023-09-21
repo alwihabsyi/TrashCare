@@ -9,12 +9,17 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.upnvjt.trashcare.R
 import com.upnvjt.trashcare.ui.auth.AuthViewPagerAdapter
+import java.text.NumberFormat
+import java.util.Currency
+import kotlin.math.roundToInt
 
 
 fun View.show() {
@@ -31,6 +36,18 @@ fun Activity.toast(msg: String) {
 
 fun Fragment.toast(msg: String) {
     Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+}
+
+fun ImageView.glide(url: String) {
+    Glide.with(this).load(url).into(this)
+}
+
+fun Double.toPrice():String{
+    val format: NumberFormat = NumberFormat.getCurrencyInstance()
+    format.maximumFractionDigits = 0
+    format.currency = Currency.getInstance("IDR")
+
+    return format.format(this.roundToInt())
 }
 
 fun Fragment.setUpForgotPasswordDialog(

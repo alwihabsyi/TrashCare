@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.upnvjt.trashcare.data.tacycle.TaCycleStatus
 import com.upnvjt.trashcare.data.tacycle.TacycleModel
 import com.upnvjt.trashcare.util.Constants.TACYCLE_ORDER_COLLECTION
@@ -27,7 +28,9 @@ class TaCycleOrderViewModel constructor(
     private fun getAllOrders() {
         _allOrders.value = State.Loading()
         firestore.collection(USER_COLLECTION).document(auth.uid!!).collection(TACYCLE_ORDER_COLLECTION)
-            .whereEqualTo("statusOrder", status.cycleStatus).get()
+            .whereEqualTo("statusOrder", status.cycleStatus)
+            .orderBy("tanggalOrder", Query.Direction.DESCENDING)
+            .get()
             .addOnSuccessListener {
                 val orders = it.toObjects(TacycleModel::class.java)
                 _allOrders.value = State.Success(orders)

@@ -9,6 +9,7 @@ import com.upnvjt.trashcare.data.user.AddressAdapter
 import com.upnvjt.trashcare.data.user.UserAddress
 import com.upnvjt.trashcare.databinding.ActivityAddressBinding
 import com.upnvjt.trashcare.ui.main.profile.viewmodel.AddressViewModel
+import com.upnvjt.trashcare.ui.main.tacycle.TaCycleActivity
 import com.upnvjt.trashcare.util.State
 import com.upnvjt.trashcare.util.hide
 import com.upnvjt.trashcare.util.show
@@ -20,17 +21,28 @@ class AddressActivity : AppCompatActivity() {
 
     private var _binding: ActivityAddressBinding? = null
     private val binding get() = _binding!!
-    private val addressAdapter by lazy { AddressAdapter() }
     private val viewModel by viewModels<AddressViewModel>()
+    private lateinit var addressAdapter: AddressAdapter
+    private var pickAddress: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityAddressBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        checkPickAddress()
         setUpRv()
         setActions()
         observer()
+    }
+
+    private fun checkPickAddress() {
+        pickAddress = intent.getBooleanExtra(PICK_ADDRESS, false)
+        addressAdapter = if (pickAddress) {
+            AddressAdapter(true)
+        } else {
+            AddressAdapter()
+        }
     }
 
     private fun setActions() {
@@ -45,12 +57,14 @@ class AddressActivity : AppCompatActivity() {
                 is State.Loading -> {
                     binding.progressBar.show()
                 }
+
                 is State.Success -> {
                     binding.progressBar.hide()
                     it.data?.let { address ->
                         setUpRvData(address)
                     }
                 }
+
                 is State.Error -> {
                     binding.progressBar.hide()
                     toast(it.message.toString())
@@ -63,22 +77,35 @@ class AddressActivity : AppCompatActivity() {
         addressAdapter.differ.submitList(data)
 
         addressAdapter.onClick = {
-            val intent = Intent(this, AddAddressActivity::class.java)
-            intent.putExtra(AddAddressActivity.EDIT_ADDRESS, it)
-            startActivity(intent)
+            if (!pickAddress) {
+                val intent = Intent(this, AddAddressActivity::class.java)
+                intent.putExtra(AddAddressActivity.EDIT_ADDRESS, it)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, TaCycleActivity::class.java)
+                intent.putExtra(ADDRESS_PICKED, it)
+                startActivity(intent)
+                finish()
+            }
         }
     }
 
     private fun setUpRv() {
         binding.rvAddress.apply {
             adapter = addressAdapter
-            layoutManager = LinearLayoutManager(this@AddressActivity, LinearLayoutManager.VERTICAL, false)
+            layoutManager =
+                LinearLayoutManager(this@AddressActivity, LinearLayoutManager.VERTICAL, false)
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    companion object {
+        const val PICK_ADDRESS = "pick_address"
+        const val ADDRESS_PICKED = "address_picked"
     }
 
 }

@@ -53,6 +53,7 @@ class AddAddressActivity : AppCompatActivity() {
                 etProvinsi.setText(it.provinsi)
                 etKodePos.setText(it.kodePos)
                 etDetailAlamat.setText(it.judulAlamat)
+                btnHapusAlamat.show()
             }
         }
     }
@@ -70,6 +71,11 @@ class AddAddressActivity : AppCompatActivity() {
 
                 val address = UserAddress(namaJalan, kelurahan, kecamatan, kota, provinsi, kodePos, judulAlamat)
                 viewModel.addAddress(address)
+            }
+
+            btnHapusAlamat.setOnClickListener {
+                val judulAlamat = etDetailAlamat.string().trim()
+                viewModel.deleteAddress(judulAlamat)
             }
         }
     }
@@ -93,6 +99,25 @@ class AddAddressActivity : AppCompatActivity() {
                 }
 
                 else -> {}
+            }
+        }
+
+        viewModel.deleteAddress.observe(this) {
+            when (it) {
+                is State.Loading -> {
+                    binding.btnHapusAlamat.hide()
+                    binding.progressBar.show()
+                }
+                is State.Success -> {
+                    binding.progressBar.hide()
+                    clearFields()
+                    toast(it.data.toString())
+                }
+                is State.Error -> {
+                    binding.progressBar.hide()
+                    binding.btnHapusAlamat.show()
+                    toast(it.message.toString())
+                }
             }
         }
     }

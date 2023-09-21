@@ -33,5 +33,8 @@
     <string name="provinsi">Provinsi</string>
     <string name="detail_alamat">Detail Alamat (ex: Rumah, Kantor)</string>
     <string name="kode_pos">Kode Pos</string>
+    <string name="hapus_alamat">Hapus Alamat</string>
+    <string name="pilih_alamat">Pilih Alamat</string>
+    <string name="description">Description</string>
 
 </resources>

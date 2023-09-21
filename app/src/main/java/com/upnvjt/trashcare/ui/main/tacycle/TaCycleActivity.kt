@@ -2,16 +2,18 @@ package com.upnvjt.trashcare.ui.main.tacycle
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.Spinner
+import android.widget.CheckBox
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.upnvjt.trashcare.R
 import com.upnvjt.trashcare.data.user.UserAddress
 import com.upnvjt.trashcare.data.tacycle.TaCycleStatus
 import com.upnvjt.trashcare.data.tacycle.TacycleModel
 import com.upnvjt.trashcare.databinding.ActivityTaCycleBinding
+import com.upnvjt.trashcare.ui.main.profile.AddressActivity
+import com.upnvjt.trashcare.ui.main.profile.AddressActivity.Companion.ADDRESS_PICKED
+import com.upnvjt.trashcare.ui.main.profile.AddressActivity.Companion.PICK_ADDRESS
 import com.upnvjt.trashcare.ui.main.tacycle.cart.TaCycleCartActivity
 import com.upnvjt.trashcare.ui.main.tacycle.cart.TaCycleCartActivity.Companion.FROM_ORDER
 import com.upnvjt.trashcare.ui.main.tacycle.viewmodel.TaCycleViewModel
@@ -29,20 +31,42 @@ class TaCycleActivity : AppCompatActivity(), TimePickerFragment.DialogTimeListen
 
     private var _binding: ActivityTaCycleBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var spinner: Spinner
     private var alamat: UserAddress? = null
-
     private val viewModel by viewModels<TaCycleViewModel>()
+    private val jenisSampah: MutableList<String> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityTaCycleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSpinner()
+        setUpPage()
         setActions()
+        setCheckBox()
         observer()
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Suppress("DEPRECATION")
+    private fun setUpPage() {
+        val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra(ADDRESS_PICKED, UserAddress::class.java)
+        } else {
+            intent.getParcelableExtra(ADDRESS_PICKED)
+        }
+
+        if (data != null) {
+            alamat = data
+            binding.apply {
+                tvPilihAlamat.hide()
+                linearAlamat.show()
+
+                tvAlamatUser.text = data.judulAlamat
+                tvKodePos.text = "ID ${data.kodePos}"
+                tvDetailAlamat.text =
+                    "${data.namaJalan}, ${data.kelurahan}, ${data.kecamatan}, ${data.kota}, ${data.provinsi}"
+            }
+        }
     }
 
     private fun observer() {
@@ -51,6 +75,7 @@ class TaCycleActivity : AppCompatActivity(), TimePickerFragment.DialogTimeListen
                 is State.Loading -> {
                     binding.progressBar.show()
                 }
+
                 is State.Success -> {
                     binding.progressBar.hide()
                     toast("Berhasil order tacycle")
@@ -59,6 +84,7 @@ class TaCycleActivity : AppCompatActivity(), TimePickerFragment.DialogTimeListen
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 }
+
                 is State.Error -> {
                     binding.progressBar.hide()
                     toast(it.message.toString())
@@ -73,8 +99,8 @@ class TaCycleActivity : AppCompatActivity(), TimePickerFragment.DialogTimeListen
         }
 
         binding.pickDateInput.setOnClickListener {
-            if (alamat == null) {
-                toast("Harap isi alamat")
+            if (alamat == null && jenisSampah.isEmpty()) {
+                toast("Harap isi alamat dan jenis sampah")
                 return@setOnClickListener
             }
 
@@ -90,45 +116,48 @@ class TaCycleActivity : AppCompatActivity(), TimePickerFragment.DialogTimeListen
                 placeOrderDialog()
             }
         }
+
+        binding.layoutAlamat.setOnClickListener {
+            val intent = Intent(this, AddressActivity::class.java)
+            intent.putExtra(PICK_ADDRESS, true)
+            startActivity(intent)
+            finish()
+        }
     }
 
+    private fun setCheckBox() {
+        binding.apply {
+            val checkBoxes = listOf<CheckBox>(
+                cbPlastik,
+                cbKaca,
+                cbLimbahDapur,
+                cbKertasKardus,
+                cbElektronik,
+                cbSerbukKayu
+            )
+
+            checkBoxes.forEach {
+                it.setOnClickListener { view ->
+                    if (view.isActivated){
+                        jenisSampah.remove(it.text.toString())
+                    } else {
+                        jenisSampah.add(it.text.toString())
+                    }
+                }
+            }
+        }
+    }
+
+
     private fun placeOrderDialog() {
-        val listSampah: MutableList<String> = mutableListOf()
-        listSampah.add(spinner.selectedItem.toString())
-
-        alamat = UserAddress(
-            "Jalan Debug",
-            "Kelurahan Debug",
-            "Kecamatan Debug",
-            "Kota Debug",
-            "Provinsi Debug",
-            "",
-            "Disamping gerobak sampah"
-        )
-
         val order = TacycleModel(
             TaCycleStatus.OnGoing.cycleStatus,
-            listSampah,
+            jenisSampah,
             alamat!!,
             binding.tvPickupDate.text.toString()
         )
 
         viewModel.placeCycleOrder(order)
-    }
-
-    private fun setSpinner() {
-        spinner = binding.spinner2
-
-        val valueOfCategory = arrayOf(
-            "Plastik",
-            "Limbah Dapur",
-            "Serbuk Kayu",
-            "Kaca",
-            "Kertas/Kardus"
-        )
-
-        val arrayAdapter = ArrayAdapter(this, R.layout.style_spinner, valueOfCategory)
-        spinner.adapter = arrayAdapter
     }
 
     @SuppressLint("SetTextI18n")

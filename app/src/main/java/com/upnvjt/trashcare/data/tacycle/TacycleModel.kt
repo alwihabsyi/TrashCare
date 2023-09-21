@@ -14,5 +14,6 @@ data class TacycleModel(
     val orderId: String = (nextLong(0, 100_000_000)).toString() + SimpleDateFormat(
         "yyyyMMdd",
         Locale.ENGLISH
-    ).format(Date())
+    ).format(Date()),
+    val tanggalOrder: Date = Date()
 )

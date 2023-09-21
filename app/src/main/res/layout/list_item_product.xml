@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="168dp"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginEnd="20dp"
-    android:layout_marginBottom="6dp"
-    app:strokeWidth="0dp">
+    android:layout_marginBottom="6dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,15 +18,15 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                app:cardCornerRadius="8dp"
-                android:layout_height="146dp">
+                android:layout_height="146dp"
+                app:cardCornerRadius="8dp">
 
                 <ImageView
                     android:id="@+id/iv_product"
                     android:layout_width="match_parent"
                     android:layout_height="146dp"
                     android:background="@color/greyNickel"
-                    android:scaleType="centerCrop"/>
+                    android:scaleType="fitCenter"/>
 
             </androidx.cardview.widget.CardView>
 
@@ -43,18 +43,18 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingVertical="4dp"
-                    android:paddingHorizontal="12dp"
                     android:background="@color/yellow"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="4dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
                         android:fontFamily="@font/plusjakartasans_semibold"
-                        android:textSize="12sp"
-                        android:text="New"/>
+                        android:text="New"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
                 </LinearLayout>
 
 
@@ -63,34 +63,35 @@
         </RelativeLayout>
 
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/productName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="8dp"
-                android:layout_marginEnd="4dp"
-                android:orientation="vertical">
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/plusjakartasans_semibold"
+                android:maxLines="1"
+                android:text="Double Seat Sofa"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
 
-                <TextView
-                    android:id="@+id/productName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Double Seat Sofa"
-                    android:textSize="12sp"
-                    android:maxLines="1"
-                    android:textColor="@color/black"
-                    android:layout_marginBottom="4dp"
-                    android:fontFamily="@font/plusjakartasans_semibold"/>
-                <TextView
-                    android:id="@+id/productPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Rp70.000"
-                    android:textSize="12sp"
-                    android:textColor="@color/greenSplash"
-                    android:fontFamily="@font/plusjakartasans_semibold"/>
+            <TextView
+                android:id="@+id/productPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/plusjakartasans_semibold"
+                android:text="Rp70.000"
+                android:textColor="@color/greenSplash"
+                android:textSize="12sp" />
 
-            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

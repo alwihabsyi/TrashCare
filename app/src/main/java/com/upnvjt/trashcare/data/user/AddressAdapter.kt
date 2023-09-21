@@ -7,14 +7,20 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.upnvjt.trashcare.databinding.ItemAddressBinding
+import com.upnvjt.trashcare.util.show
 
-class AddressAdapter : RecyclerView.Adapter<AddressAdapter.AddressViewHolder>() {
+class AddressAdapter(private var pickAddress: Boolean = false) :
+    RecyclerView.Adapter<AddressAdapter.AddressViewHolder>() {
 
-    inner class AddressViewHolder(private val binding: ItemAddressBinding) :
+    inner class AddressViewHolder(val binding: ItemAddressBinding) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(item: UserAddress) {
             binding.apply {
+                if (pickAddress) {
+                    binding.radioPick.show()
+                }
+
                 binding.tvAlamatUser.text = item.judulAlamat
                 binding.tvKodePos.text = "ID ${item.kodePos}"
                 binding.tvDetailAlamat.text =
@@ -46,9 +52,13 @@ class AddressAdapter : RecyclerView.Adapter<AddressAdapter.AddressViewHolder>() 
 
     override fun onBindViewHolder(holder: AddressViewHolder, position: Int) {
         val item = differ.currentList[position]
-
         holder.bind(item)
+
         holder.itemView.setOnClickListener {
+            onClick?.invoke(item)
+        }
+
+        holder.binding.radioPick.setOnClickListener {
             onClick?.invoke(item)
         }
     }

@@ -1,38 +1,84 @@
 package com.upnvjt.trashcare.ui.main.commerce
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.material.tabs.TabLayout
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import com.upnvjt.trashcare.data.tacommerce.Product
+import com.upnvjt.trashcare.data.tacommerce.TaCommerceAdapter
 import com.upnvjt.trashcare.databinding.FragmentCommerceBinding
+import com.upnvjt.trashcare.ui.main.commerce.viewmodel.TaCommerceViewModel
+import com.upnvjt.trashcare.util.Constants.PRODUCTS
+import com.upnvjt.trashcare.util.State
+import com.upnvjt.trashcare.util.hide
+import com.upnvjt.trashcare.util.show
+import com.upnvjt.trashcare.util.toast
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CommerceFragment : Fragment() {
 
-    private lateinit var binding:FragmentCommerceBinding
-    private lateinit var tabLayout: TabLayout
+    private var _binding: FragmentCommerceBinding? = null
+    private val binding get() = _binding!!
+    private val viewModel by viewModels<TaCommerceViewModel>()
+    private val productAdapter by lazy { TaCommerceAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding =FragmentCommerceBinding.inflate(inflater, container, false)
+        _binding = FragmentCommerceBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tabLayout = binding.tabLayoutCommerce
 
-        tabLayout.addTab(tabLayout.newTab().setText("All"))
-        tabLayout.addTab(tabLayout.newTab().setText("Furniture"))
-        tabLayout.addTab(tabLayout.newTab().setText("Ceramics"))
-        tabLayout.addTab(tabLayout.newTab().setText("Bag"))
-        tabLayout.addTab(tabLayout.newTab().setText("Fertilizer"))
-        tabLayout.addTab(tabLayout.newTab().setText("Collection & Toy"))
-        tabLayout.addTab(tabLayout.newTab().setText("Others"))
-
+        setUpRv()
+        observer()
     }
 
+    private fun observer() {
+        viewModel.allProducts.observe(viewLifecycleOwner) {
+            when (it) {
+                is State.Loading -> {
+                    binding.progressBar.show()
+                }
+                is State.Success -> {
+                    binding.progressBar.hide()
+                    setUpRvData(it.data!!)
+                }
+                is State.Error -> {
+                    binding.progressBar.hide()
+                    toast(it.message.toString())
+                }
+            }
+        }
+    }
+
+    private fun setUpRvData(data: List<Product>) {
+        productAdapter.differ.submitList(data)
+        productAdapter.onClick = {
+            Intent(requireContext(), ProductDetailActivity::class.java).apply {
+                putExtra(PRODUCTS, it)
+                startActivity(this)
+            }
+        }
+    }
+
+    private fun setUpRv() {
+        binding.rvProducts.apply {
+            adapter = productAdapter
+            layoutManager = GridLayoutManager(requireContext(), 2)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

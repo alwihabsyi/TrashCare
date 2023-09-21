@@ -28,11 +28,11 @@ class TaCycleViewModel @Inject constructor(
             firestore.collection(USER_COLLECTION)
                 .document(auth.uid!!)
                 .collection(USER_TACYCLE_COLLECTION)
-                .document()
+                .document(cycle.orderId)
                 .set(cycle)
 
             firestore.collection(TACYCLE_ORDER_COLLECTION)
-                .document()
+                .document(cycle.orderId)
                 .set(cycle)
         }.addOnSuccessListener {
             _cycleOrder.value = State.Success(cycle)

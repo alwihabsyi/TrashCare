@@ -16,13 +16,16 @@ import javax.inject.Inject
 class AddressViewModel @Inject constructor(
     private val firestore: FirebaseFirestore,
     private val auth: FirebaseAuth
-): ViewModel() {
+) : ViewModel() {
 
     private val _address = MutableLiveData<State<List<UserAddress>>>()
     val address: LiveData<State<List<UserAddress>>> = _address
 
     private val _addNewAddress = MutableLiveData<State<UserAddress>>()
     val addNewAddress: LiveData<State<UserAddress>> = _addNewAddress
+
+    private val _deleteAddress = MutableLiveData<State<String>>()
+    val deleteAddress: LiveData<State<String>> = _deleteAddress
 
     init {
         getAddress()
@@ -45,12 +48,24 @@ class AddressViewModel @Inject constructor(
     fun addAddress(address: UserAddress) {
         _addNewAddress.value = State.Loading()
         firestore.collection(USER_COLLECTION).document(auth.uid!!)
-            .collection(ADDRESS).document().set(address)
+            .collection(ADDRESS).document(address.judulAlamat + auth.uid).set(address)
             .addOnSuccessListener {
                 _addNewAddress.value = State.Success(address)
             }
             .addOnFailureListener {
                 _addNewAddress.value = State.Error(it.message.toString())
+            }
+    }
+
+    fun deleteAddress(address: String) {
+        _deleteAddress.value = State.Loading()
+        firestore.collection(USER_COLLECTION).document(auth.uid!!)
+            .collection(ADDRESS).document(address + auth.uid).delete()
+            .addOnSuccessListener {
+                _deleteAddress.value = State.Success("Alamat $address Berhasil Dihapus")
+            }
+            .addOnFailureListener {
+                _deleteAddress.value = State.Error(it.message.toString())
             }
     }
 
