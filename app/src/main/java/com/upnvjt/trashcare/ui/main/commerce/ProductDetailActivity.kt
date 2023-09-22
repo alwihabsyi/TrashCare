@@ -5,12 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.upnvjt.trashcare.R
+import com.upnvjt.trashcare.data.tacommerce.Cart
 import com.upnvjt.trashcare.data.tacommerce.Product
 import com.upnvjt.trashcare.databinding.ActivityProductDetailBinding
 import com.upnvjt.trashcare.ui.main.commerce.viewmodel.ProductDetailViewModel
 import com.upnvjt.trashcare.util.Constants
 import com.upnvjt.trashcare.util.State
 import com.upnvjt.trashcare.util.glide
+import com.upnvjt.trashcare.util.hide
+import com.upnvjt.trashcare.util.show
 import com.upnvjt.trashcare.util.toPrice
 import com.upnvjt.trashcare.util.toast
 import dagger.hilt.android.AndroidEntryPoint
@@ -79,6 +82,13 @@ class ProductDetailActivity : AppCompatActivity() {
                     viewModel.bookmarkProduct(it, isBookmarked)
                 }
             }
+
+            btnAddToCart.setOnClickListener {
+                product?.let {
+                    val cart = Cart(it, orderAmount)
+                    viewModel.addUpdateProductToCart(cart)
+                }
+            }
         }
     }
 
@@ -114,6 +124,22 @@ class ProductDetailActivity : AppCompatActivity() {
                 }
 
                 else -> {}
+            }
+        }
+
+        viewModel.addToCart.observe(this) {
+            when (it) {
+                is State.Loading -> {
+                    binding.progressBar.show()
+                }
+                is State.Success -> {
+                    binding.progressBar.hide()
+                    toast("Barang berhasil ditambahkan")
+                }
+                is State.Error -> {
+                    binding.progressBar.hide()
+                    toast(it.message.toString())
+                }
             }
         }
     }

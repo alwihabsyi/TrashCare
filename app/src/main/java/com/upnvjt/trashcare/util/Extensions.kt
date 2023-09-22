@@ -1,5 +1,6 @@
 package com.upnvjt.trashcare.util
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.util.Patterns
@@ -9,14 +10,18 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.upnvjt.trashcare.R
 import com.upnvjt.trashcare.ui.auth.AuthViewPagerAdapter
+import com.upnvjt.trashcare.ui.main.MainActivity
 import java.text.NumberFormat
 import java.util.Currency
 import kotlin.math.roundToInt
@@ -50,6 +55,27 @@ fun Double.toPrice():String{
     return format.format(this.roundToInt())
 }
 
+fun Fragment.hideBottomNavView() {
+    val appBar: BottomAppBar = (activity as MainActivity).findViewById(R.id.menuBottom)
+    val frameLayout: FrameLayout = (activity as MainActivity).findViewById(R.id.frameLayout)
+    val fab: FloatingActionButton = (activity as MainActivity).findViewById(R.id.taCycleButton)
+
+    appBar.visibility = View.GONE
+    frameLayout.visibility = View.GONE
+    fab.visibility = View.GONE
+}
+
+fun Fragment.showBottomNavView() {
+    val appBar: BottomAppBar = (activity as MainActivity).findViewById(R.id.menuBottom)
+    val frameLayout: FrameLayout = (activity as MainActivity).findViewById(R.id.frameLayout)
+    val fab: FloatingActionButton = (activity as MainActivity).findViewById(R.id.taCycleButton)
+
+    appBar.visibility = View.VISIBLE
+    frameLayout.visibility = View.VISIBLE
+    fab.visibility = View.VISIBLE
+}
+
+@SuppressLint("InflateParams")
 fun Fragment.setUpForgotPasswordDialog(
     onSendClick: (String) -> Unit
 ){

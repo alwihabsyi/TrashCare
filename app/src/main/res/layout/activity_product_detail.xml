@@ -112,19 +112,34 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_findRider"
+        <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_weight="1"
             android:minHeight="48dp"
-            android:text="@string/pesan"
-            app:cornerRadius="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_add_to_cart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/pesan"
+                app:cornerRadius="5dp" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/white"
+                android:visibility="gone" />
+
+        </androidx.cardview.widget.CardView>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_decrease_item"
@@ -144,9 +159,9 @@
             android:fontFamily="@font/plusjakartasans_semibold"
             android:gravity="center"
             android:maxLines="1"
-            tools:text="2"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            tools:text="2" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_increase_item"

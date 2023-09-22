@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.upnvjt.trashcare.R
 import com.upnvjt.trashcare.data.tacommerce.Product
 import com.upnvjt.trashcare.data.tacommerce.TaCommerceAdapter
 import com.upnvjt.trashcare.databinding.FragmentCommerceBinding
@@ -16,6 +18,7 @@ import com.upnvjt.trashcare.util.Constants.PRODUCTS
 import com.upnvjt.trashcare.util.State
 import com.upnvjt.trashcare.util.hide
 import com.upnvjt.trashcare.util.show
+import com.upnvjt.trashcare.util.showBottomNavView
 import com.upnvjt.trashcare.util.toast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,8 +41,17 @@ class CommerceFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupAction()
         setUpRv()
         observer()
+    }
+
+    private fun setupAction() {
+        binding.apply {
+            btnMyCart.setOnClickListener {
+                findNavController().navigate(R.id.action_commerceFragment_to_myCartFragment)
+            }
+        }
     }
 
     private fun observer() {
@@ -80,5 +92,10 @@ class CommerceFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        showBottomNavView()
     }
 }
