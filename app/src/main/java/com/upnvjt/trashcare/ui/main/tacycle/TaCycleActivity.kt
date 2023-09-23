@@ -13,10 +13,10 @@ import com.upnvjt.trashcare.data.tacycle.TacycleModel
 import com.upnvjt.trashcare.databinding.ActivityTaCycleBinding
 import com.upnvjt.trashcare.ui.main.profile.AddressActivity
 import com.upnvjt.trashcare.ui.main.profile.AddressActivity.Companion.ADDRESS_PICKED
-import com.upnvjt.trashcare.ui.main.profile.AddressActivity.Companion.PICK_ADDRESS
 import com.upnvjt.trashcare.ui.main.tacycle.cart.TaCycleCartActivity
 import com.upnvjt.trashcare.ui.main.tacycle.cart.TaCycleCartActivity.Companion.FROM_ORDER
 import com.upnvjt.trashcare.ui.main.tacycle.viewmodel.TaCycleViewModel
+import com.upnvjt.trashcare.util.Constants
 import com.upnvjt.trashcare.util.State
 import com.upnvjt.trashcare.util.hide
 import com.upnvjt.trashcare.util.show
@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
+@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class TaCycleActivity : AppCompatActivity(), TimePickerFragment.DialogTimeListener {
 
@@ -40,33 +41,9 @@ class TaCycleActivity : AppCompatActivity(), TimePickerFragment.DialogTimeListen
         _binding = ActivityTaCycleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setUpPage()
         setActions()
         setCheckBox()
         observer()
-    }
-
-    @SuppressLint("SetTextI18n")
-    @Suppress("DEPRECATION")
-    private fun setUpPage() {
-        val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(ADDRESS_PICKED, UserAddress::class.java)
-        } else {
-            intent.getParcelableExtra(ADDRESS_PICKED)
-        }
-
-        if (data != null) {
-            alamat = data
-            binding.apply {
-                tvPilihAlamat.hide()
-                linearAlamat.show()
-
-                tvAlamatUser.text = data.judulAlamat
-                tvKodePos.text = "ID ${data.kodePos}"
-                tvDetailAlamat.text =
-                    "${data.namaJalan}, ${data.kelurahan}, ${data.kecamatan}, ${data.kota}, ${data.provinsi}"
-            }
-        }
     }
 
     private fun observer() {
@@ -99,7 +76,7 @@ class TaCycleActivity : AppCompatActivity(), TimePickerFragment.DialogTimeListen
         }
 
         binding.pickDateInput.setOnClickListener {
-            if (alamat == null && jenisSampah.isEmpty()) {
+            if (alamat == null || jenisSampah.isEmpty()) {
                 toast("Harap isi alamat dan jenis sampah")
                 return@setOnClickListener
             }
@@ -109,7 +86,7 @@ class TaCycleActivity : AppCompatActivity(), TimePickerFragment.DialogTimeListen
         }
 
         binding.btnFindRider.setOnClickListener {
-            if (binding.tvPickupDate.text.isEmpty()) {
+            if (binding.tvPickupDate.text.isEmpty() && alamat == null && jenisSampah.isEmpty()) {
                 toast("Harap isi semua muanya")
                 return@setOnClickListener
             } else {
@@ -119,9 +96,8 @@ class TaCycleActivity : AppCompatActivity(), TimePickerFragment.DialogTimeListen
 
         binding.layoutAlamat.setOnClickListener {
             val intent = Intent(this, AddressActivity::class.java)
-            intent.putExtra(PICK_ADDRESS, true)
-            startActivity(intent)
-            finish()
+            intent.putExtra(AddressActivity.PICK_ADDRESS, true)
+            startActivityForResult(intent, Constants.REQUEST_ADDRESS)
         }
     }
 
@@ -136,12 +112,14 @@ class TaCycleActivity : AppCompatActivity(), TimePickerFragment.DialogTimeListen
                 cbSerbukKayu
             )
 
-            checkBoxes.forEach {
-                it.setOnClickListener { view ->
-                    if (view.isActivated){
-                        jenisSampah.remove(it.text.toString())
+            checkBoxes.forEach { cb ->
+                cb.setOnClickListener {
+                    if (cb.isChecked) {
+                        jenisSampah.add(cb.text.toString())
+                        cb.isChecked = true
                     } else {
-                        jenisSampah.add(it.text.toString())
+                        jenisSampah.remove(cb.text.toString())
+                        cb.isChecked = false
                     }
                 }
             }
@@ -169,6 +147,37 @@ class TaCycleActivity : AppCompatActivity(), TimePickerFragment.DialogTimeListen
 
         binding.tvPickupDate.text = dateFormat.format(calendar.time)
         binding.btnFindRider.isEnabled = true
+    }
+
+    @Deprecated(
+        "Deprecated in Java", ReplaceWith(
+            "super.onActivityResult(requestCode, resultCode, data)",
+            "androidx.appcompat.app.AppCompatActivity"
+        )
+    )
+    @SuppressLint("SetTextI18n")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == Constants.REQUEST_ADDRESS) {
+            val address = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                data?.getParcelableExtra(ADDRESS_PICKED, UserAddress::class.java)
+            } else {
+                data?.getParcelableExtra(ADDRESS_PICKED)
+            }
+
+            if (address != null) {
+                alamat = address
+                binding.apply {
+                    tvPilihAlamat.hide()
+                    linearAlamat.show()
+
+                    tvAlamatUser.text = address.judulAlamat
+                    tvKodePos.text = "ID ${address.kodePos}"
+                    tvDetailAlamat.text =
+                        "${address.namaJalan}, ${address.kelurahan}, ${address.kecamatan}, ${address.kota}, ${address.provinsi}"
+                }
+            }
+        }
     }
 
     override fun onDestroy() {

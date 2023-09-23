@@ -18,11 +18,12 @@
 
         <TextView
             android:id="@+id/tv_id_pesanan"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/plusjakartasans_bold"
             android:maxLength="50"
-            android:textSize="15sp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/tv_status_pesanan"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="ID Pesanan: 200890789" />
@@ -33,7 +34,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/plusjakartasans_regular"
             android:textColor="?attr/colorPrimary"
-            android:textSize="15sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_id_pesanan"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_id_pesanan"

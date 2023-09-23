@@ -40,5 +40,12 @@
     <string name="check_out">Check Out</string>
     <string name="semua">Semua</string>
     <string name="total">Total</string>
+    <string name="data_pesanan">Data Pesanan</string>
+    <string name="metode_pengiriman">Metode Pengiriman</string>
+    <string name="gunakan_tacoins">Gunakan TaCoins </string>
+    <string name="tacoins">TaCoins</string>
+    <string name="subtotal">Sub Total</string>
+    <string name="shipping">Shipping</string>
+    <string name="bayar">Bayar</string>
 
 </resources>

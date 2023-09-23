@@ -3,6 +3,7 @@ package com.upnvjt.trashcare.data.tacommerce
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -10,10 +11,17 @@ import com.upnvjt.trashcare.databinding.ListProductCartBinding
 import com.upnvjt.trashcare.util.glide
 import com.upnvjt.trashcare.util.toPrice
 
-class CartAdapter: RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
+class CartAdapter : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
-    inner class CartViewHolder(private val binding: ListProductCartBinding)
-        : RecyclerView.ViewHolder(binding.root) {
+    private var allSelected: Boolean = false
+    @SuppressLint("NotifyDataSetChanged")
+    fun allSelected(b: Boolean) {
+        allSelected = b
+        notifyDataSetChanged()
+    }
+
+    inner class CartViewHolder(val binding: ListProductCartBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(item: Cart) {
             binding.apply {
@@ -21,6 +29,14 @@ class CartAdapter: RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
                 tvPriceProduct.text = item.product.price.toPrice()
                 ivProduct.glide(item.product.photoUrl)
                 tvAmount.text = item.quantity.toString()
+
+                if (allSelected) {
+                    checkbox.isChecked = true
+                    checkbox.isEnabled = false
+                } else {
+                    checkbox.isChecked = false
+                    checkbox.isEnabled = true
+                }
             }
         }
 
@@ -28,7 +44,7 @@ class CartAdapter: RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
     private val diffUtil = object : DiffUtil.ItemCallback<Cart>() {
         override fun areItemsTheSame(oldItem: Cart, newItem: Cart): Boolean {
-            return oldItem.product.id == newItem.product.id
+            return oldItem.quantity == newItem.quantity
         }
 
         override fun areContentsTheSame(oldItem: Cart, newItem: Cart): Boolean {
@@ -48,14 +64,21 @@ class CartAdapter: RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
         val item = differ.currentList[position]
-
         holder.bind(item)
-        holder.itemView.setOnClickListener {
-            onClick?.invoke(item)
+
+        check?.invoke(item, holder.binding.checkbox)
+
+        holder.binding.btnIncreaseItem.setOnClickListener {
+            onPlusClick?.invoke(item)
+        }
+        holder.binding.btnDecreaseItem.setOnClickListener {
+            onMinusClick?.invoke(item)
         }
     }
 
     override fun getItemCount(): Int = differ.currentList.size
 
-    var onClick: ((Cart) -> Unit)? = null
+    var onPlusClick: ((Cart) -> Unit)? = null
+    var onMinusClick: ((Cart) -> Unit)? = null
+    var check: ((Cart, CheckBox) -> Unit)? = null
 }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:orientation="vertical">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="15dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_product"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/customRoundedImageView" />
+
+            <TextView
+                android:id="@+id/tv_product_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@id/iv_product"
+                android:fontFamily="@font/plusjakartasans_bold"
+                android:maxLength="13"
+                android:textSize="16sp"
+                tools:text="Wood Cupboard" />
+
+            <TextView
+                android:id="@+id/tv_price_product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_product_title"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@id/iv_product"
+                android:fontFamily="@font/plusjakartasans_semibold"
+                android:maxLength="13"
+                android:textColor="@color/greenMenthol"
+                android:textSize="16sp"
+                tools:text="IDR30,000" />
+
+            <TextView
+                android:id="@+id/tv_jumlah"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/plusjakartasans_bold"
+                tools:text="Jumlah: 2"
+                android:layout_toEndOf="@id/iv_product"
+                android:layout_below="@id/tv_price_product"/>
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

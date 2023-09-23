@@ -91,6 +91,7 @@ class AddAddressActivity : AppCompatActivity() {
                     binding.progressBar.hide()
                     clearFields()
                     toast("Alamat ${result.data!!.judulAlamat} Berhasil Ditambahkan")
+                    finish()
                 }
                 is State.Error -> {
                     binding.progressBar.hide()

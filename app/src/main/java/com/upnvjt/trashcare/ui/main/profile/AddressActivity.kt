@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.upnvjt.trashcare.data.user.AddressAdapter
 import com.upnvjt.trashcare.data.user.UserAddress
 import com.upnvjt.trashcare.databinding.ActivityAddressBinding
+import com.upnvjt.trashcare.ui.main.commerce.CheckoutActivity
 import com.upnvjt.trashcare.ui.main.profile.viewmodel.AddressViewModel
 import com.upnvjt.trashcare.ui.main.tacycle.TaCycleActivity
+import com.upnvjt.trashcare.util.Constants.REQUEST_ADDRESS
 import com.upnvjt.trashcare.util.State
 import com.upnvjt.trashcare.util.hide
 import com.upnvjt.trashcare.util.show
@@ -24,6 +26,7 @@ class AddressActivity : AppCompatActivity() {
     private val viewModel by viewModels<AddressViewModel>()
     private lateinit var addressAdapter: AddressAdapter
     private var pickAddress: Boolean = false
+    private var checkoutAddress: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +41,9 @@ class AddressActivity : AppCompatActivity() {
 
     private fun checkPickAddress() {
         pickAddress = intent.getBooleanExtra(PICK_ADDRESS, false)
-        addressAdapter = if (pickAddress) {
+        checkoutAddress = intent.getBooleanExtra(CHECKOUT_ADDRESS, false)
+
+        addressAdapter = if (pickAddress || checkoutAddress) {
             AddressAdapter(true)
         } else {
             AddressAdapter()
@@ -77,15 +82,24 @@ class AddressActivity : AppCompatActivity() {
         addressAdapter.differ.submitList(data)
 
         addressAdapter.onClick = {
-            if (!pickAddress) {
+            if (pickAddress) {
+                val intent = Intent(this, TaCycleActivity::class.java)
+                intent.putExtra(ADDRESS_PICKED, it)
+                setResult(REQUEST_ADDRESS, intent)
+                finish()
+            }
+
+            if (checkoutAddress) {
+                val intent = Intent(this, CheckoutActivity::class.java)
+                intent.putExtra(ADDRESS_PICKED, it)
+                setResult(REQUEST_ADDRESS, intent)
+                finish()
+            }
+
+            if (!pickAddress && !checkoutAddress) {
                 val intent = Intent(this, AddAddressActivity::class.java)
                 intent.putExtra(AddAddressActivity.EDIT_ADDRESS, it)
                 startActivity(intent)
-            } else {
-                val intent = Intent(this, TaCycleActivity::class.java)
-                intent.putExtra(ADDRESS_PICKED, it)
-                startActivity(intent)
-                finish()
             }
         }
     }
@@ -105,6 +119,7 @@ class AddressActivity : AppCompatActivity() {
 
     companion object {
         const val PICK_ADDRESS = "pick_address"
+        const val CHECKOUT_ADDRESS = "checkout_address"
         const val ADDRESS_PICKED = "address_picked"
     }
 
