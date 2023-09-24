@@ -47,5 +47,18 @@
     <string name="subtotal">Sub Total</string>
     <string name="shipping">Shipping</string>
     <string name="bayar">Bayar</string>
+    <string name="payment_info">Informasi Pembayaran</string>
+    <string name="choose_an_action">Choose an action</string>
+    <string name="imageview">ImageView</string>
+    <string name="konfirmasi">Konfirmasi Pembayaran</string>
+    <string name="pilih_bukti_pembayaran">Pilih Bukti Pembayaran</string>
+    <string name="proses_konfirmasi">Proses Konfirmasi</string>
+    <string name="rekening_afif">1250447148</string>
+    <string name="afif_ghani">a.n/ Afif Ghani Zahran</string>
+    <string name="upload_bukti_pembayaran">Upload Bukti Pembayaran</string>
+    <string name="delivered_to">Delivered to</string>
+    <string name="filter">Filter</string>
+    <string name="harga_terendah">Harga Terendah</string>
+    <string name="harga_tertinggi">Harga Tertinggi</string>
 
 </resources>

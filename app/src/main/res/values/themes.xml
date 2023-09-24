@@ -41,11 +41,10 @@
     </style>
 
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
-        <item name="searchIcon">@drawable/ic_search</item>
         <item name="queryBackground">@android:color/transparent</item>
-        <item name="queryHint">"search_hint"</item>
         <item name="iconifiedByDefault">false</item>
-        <item name="android:textColorHint">@color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColorHint">@color/grey</item>
         <item name="android:background">@drawable/bg_corner_search</item>
     </style>
 

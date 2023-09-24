@@ -48,7 +48,7 @@ class AddressViewModel @Inject constructor(
     fun addAddress(address: UserAddress) {
         _addNewAddress.value = State.Loading()
         firestore.collection(USER_COLLECTION).document(auth.uid!!)
-            .collection(ADDRESS).document(address.judulAlamat + auth.uid).set(address)
+            .collection(ADDRESS).document(address.addressId).set(address)
             .addOnSuccessListener {
                 _addNewAddress.value = State.Success(address)
             }

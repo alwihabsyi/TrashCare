@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.commerce.CheckoutActivity">
+    tools:context=".ui.main.commerce.CheckoutFragment">
 
     <RelativeLayout
         android:id="@+id/appBarContainer"
@@ -304,7 +304,7 @@
             </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_check_out"
+                android:id="@+id/btn_bayar"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:layout_marginTop="40dp"

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.upnvjt.trashcare.data.user.AddressAdapter
 import com.upnvjt.trashcare.data.user.UserAddress
 import com.upnvjt.trashcare.databinding.ActivityAddressBinding
-import com.upnvjt.trashcare.ui.main.commerce.CheckoutActivity
+import com.upnvjt.trashcare.ui.main.MainActivity
 import com.upnvjt.trashcare.ui.main.profile.viewmodel.AddressViewModel
 import com.upnvjt.trashcare.ui.main.tacycle.TaCycleActivity
 import com.upnvjt.trashcare.util.Constants.REQUEST_ADDRESS
@@ -90,7 +90,7 @@ class AddressActivity : AppCompatActivity() {
             }
 
             if (checkoutAddress) {
-                val intent = Intent(this, CheckoutActivity::class.java)
+                val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra(ADDRESS_PICKED, it)
                 setResult(REQUEST_ADDRESS, intent)
                 finish()

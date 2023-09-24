@@ -2,6 +2,7 @@ package com.upnvjt.trashcare.data.user
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.util.UUID
 
 @Parcelize
 data class UserAddress(
@@ -11,7 +12,8 @@ data class UserAddress(
     val kota: String,
     val provinsi: String,
     val kodePos: String,
-    val judulAlamat: String
+    val judulAlamat: String,
+    val addressId: String = UUID.randomUUID().toString() + judulAlamat
 ) : Parcelable {
     constructor(): this("", "", "", "" , "", "", "")
 }

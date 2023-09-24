@@ -12,7 +12,7 @@
         android:layout_height="0dp"
         android:background="@drawable/bg_commerce"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".28"
+        app:layout_constraintHeight_percent=".25"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -33,7 +33,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="-8dp"
             android:fontFamily="@font/plusjakartasans"
-            android:text="Delivered to"
+            android:text="@string/delivered_to"
             android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@id/ic_location"
@@ -45,11 +45,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:fontFamily="@font/plusjakartasans_semibold"
-            android:text="Jl. Kutisari IX No. 52"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@id/ic_location"
-            app:layout_constraintTop_toBottomOf="@id/tv_deliveredTo" />
+            app:layout_constraintTop_toBottomOf="@id/tv_deliveredTo"
+            tools:text="Jl. Kutisari IX No. 52" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_my_cart"
@@ -57,60 +57,50 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginEnd="20dp"
-            app:backgroundTint="@color/transparent"
-            app:elevation="0dp"
+            android:background="@color/transparent"
             app:icon="@drawable/ic_shopping_cart_24"
             app:iconTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/tv_addressUser"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_deliveredTo"
-            app:layout_constraintBottom_toBottomOf="@id/tv_addressUser"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/plusjakartasans_bold"
-            android:text="TaCommerce"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_addressUser" />
+            app:layout_constraintTop_toTopOf="@id/tv_deliveredTo" />
 
         <LinearLayout
             android:id="@+id/welcome_text_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="42dp"
             android:gravity="center"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="@id/section_top"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_addressUser">
 
             <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_view"
                 style="@style/SearchViewStyle"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginEnd="10dp"
                 android:clickable="true"
-                android:minHeight="40dp"
+                android:focusable="true"
+                android:minHeight="38dp"
+                app:searchIcon="@drawable/ic_search_24"
                 android:textAlignment="textStart"
                 app:queryBackground="@android:color/transparent"
-                app:queryHint="Search what you need..." />
+                app:queryHint="Mau cari apa..." />
 
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_back"
+                android:id="@+id/btn_filter"
                 style="@style/Widget.MaterialComponents.Button.IconOnly"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginHorizontal="5dp"
-                app:backgroundTint="@color/white"
-                app:cornerRadius="10dp"
+                android:stateListAnimator="@null"
+                app:backgroundTint="@color/transparent"
                 app:icon="@drawable/ic_filter"
-                app:iconTint="@color/black" />
+                app:iconTint="@color/white"
+                app:strokeColor="@color/white"
+                app:strokeWidth="1dp" />
 
         </LinearLayout>
 

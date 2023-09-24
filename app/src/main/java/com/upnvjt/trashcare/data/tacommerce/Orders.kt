@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import kotlin.random.Random
+import java.util.UUID
 
 @Parcelize
 data class Orders(
@@ -14,6 +14,9 @@ data class Orders(
     val totalPrice: Double = 0.0,
     val products: List<Cart> = emptyList(),
     val address: UserAddress = UserAddress(),
+    val shippingMethod: String = "",
+    val paymentPhoto: String = "",
     val date: String = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(Date()),
-    val orderId: Long = Random.nextLong(0, 100_000_000_000) + totalPrice.toLong()
-): Parcelable
+    val orderId: String = UUID.randomUUID().toString() + date,
+    val userId: String? = null
+) : Parcelable

@@ -2,21 +2,21 @@ package com.upnvjt.trashcare.ui.main.commerce
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.upnvjt.trashcare.R
 import com.upnvjt.trashcare.data.tacommerce.Cart
 import com.upnvjt.trashcare.data.tacommerce.CartAdapter
 import com.upnvjt.trashcare.data.tacommerce.OrderStatus
 import com.upnvjt.trashcare.data.tacommerce.Orders
 import com.upnvjt.trashcare.data.user.UserAddress
 import com.upnvjt.trashcare.databinding.FragmentMyCartBinding
-import com.upnvjt.trashcare.ui.main.commerce.CheckoutActivity.Companion.ORDER
 import com.upnvjt.trashcare.ui.main.commerce.viewmodel.CartViewModel
 import com.upnvjt.trashcare.util.State
 import com.upnvjt.trashcare.util.hide
@@ -182,9 +182,8 @@ class MyCartFragment : Fragment() {
                 UserAddress()
             )
 
-            val intent = Intent(requireContext(), CheckoutActivity::class.java)
-            intent.putExtra(ORDER, order)
-            startActivity(intent)
+            val b = Bundle().apply { putParcelable(ORDER, order) }
+            findNavController().navigate(R.id.action_myCartFragment_to_checkoutFragment, b)
         }
     }
 
@@ -199,5 +198,9 @@ class MyCartFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val ORDER = "order"
     }
 }

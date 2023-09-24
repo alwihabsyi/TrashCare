@@ -8,69 +8,75 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.upnvjt.trashcare.R
 import com.upnvjt.trashcare.data.tacommerce.Product
 import com.upnvjt.trashcare.data.tacommerce.TaCommerceAdapter
-import com.upnvjt.trashcare.databinding.FragmentCommerceBinding
+import com.upnvjt.trashcare.databinding.FragmentSearchBinding
+import com.upnvjt.trashcare.ui.main.commerce.CommerceFragment.Companion.SEARCH_QUERY
 import com.upnvjt.trashcare.ui.main.commerce.viewmodel.TaCommerceViewModel
-import com.upnvjt.trashcare.util.Constants.PRODUCTS
+import com.upnvjt.trashcare.util.Constants
 import com.upnvjt.trashcare.util.State
-import com.upnvjt.trashcare.util.filterProductDialog
 import com.upnvjt.trashcare.util.hide
+import com.upnvjt.trashcare.util.hideBottomNavView
 import com.upnvjt.trashcare.util.onTextSubmit
 import com.upnvjt.trashcare.util.show
-import com.upnvjt.trashcare.util.showBottomNavView
 import com.upnvjt.trashcare.util.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CommerceFragment : Fragment() {
+class SearchFragment : Fragment() {
 
-    private var _binding: FragmentCommerceBinding? = null
+    private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
+    private val args by navArgs<SearchFragmentArgs>()
     private val viewModel by viewModels<TaCommerceViewModel>()
+    private var query: String? = null
     private val productAdapter by lazy { TaCommerceAdapter() }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        query = args.itemName
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCommerceBinding.inflate(inflater)
+        hideBottomNavView()
+        _binding = FragmentSearchBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupAction()
+        setPage()
         setUpRv()
         observer()
     }
 
-    private fun setupAction() {
+    private fun setPage() {
         binding.apply {
-            btnMyCart.setOnClickListener {
-                findNavController().navigate(R.id.action_commerceFragment_to_myCartFragment)
+            query?.let {
+                searchView.setQuery(it, false)
+                viewModel.getSearchedProducts(query!!)
+            }
+
+            btnBack.setOnClickListener {
+                findNavController().navigateUp()
             }
 
             searchView.onTextSubmit {
-                searchView.setQuery("", false)
                 val b = Bundle().apply { putString(SEARCH_QUERY, it) }
-                findNavController().navigate(R.id.action_commerceFragment_to_searchFragment, b)
-            }
-
-            btnFilter.setOnClickListener {
-                filterProductDialog(
-                    hargaTerendah = { viewModel.getFilteredProducts(true) },
-                    hargaTertinggi = { viewModel.getFilteredProducts(false) }
-                )
+                findNavController().navigate(R.id.action_searchFragment_self, b)
             }
         }
     }
 
     private fun observer() {
-        viewModel.allProducts.observe(viewLifecycleOwner) {
+        viewModel.searchProducts.observe(viewLifecycleOwner) {
             when (it) {
                 is State.Loading -> {
                     binding.progressBar.show()
@@ -91,7 +97,7 @@ class CommerceFragment : Fragment() {
         productAdapter.differ.submitList(data)
         productAdapter.onClick = {
             Intent(requireContext(), ProductDetailActivity::class.java).apply {
-                putExtra(PRODUCTS, it)
+                putExtra(Constants.PRODUCTS, it)
                 startActivity(this)
             }
         }
@@ -109,12 +115,4 @@ class CommerceFragment : Fragment() {
         _binding = null
     }
 
-    override fun onResume() {
-        super.onResume()
-        showBottomNavView()
-    }
-
-    companion object {
-        const val SEARCH_QUERY = "item_name"
-    }
 }
