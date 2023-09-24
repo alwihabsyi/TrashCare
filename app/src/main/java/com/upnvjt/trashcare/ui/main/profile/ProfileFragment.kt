@@ -42,7 +42,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.linearLogOut.setOnClickListener {
+        binding.btnLogout.setOnClickListener {
             lifecycleScope.launch {
                 googleAuthUiClient.signOut()
             }
