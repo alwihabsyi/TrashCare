@@ -46,18 +46,17 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setActions() {
-        binding.linearLogOut.setOnClickListener {
+        binding.btnLogout.setOnClickListener {
             lifecycleScope.launch {
                 googleAuthUiClient.signOut()
             }
-
             viewModel.logout()
             val intent = Intent(requireContext(), AuthActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
         }
 
-        binding.linearBilling.setOnClickListener {
+        binding.btnCommerceHistory.setOnClickListener {
             val intent = Intent(requireContext(), AddressActivity::class.java)
             startActivity(intent)
         }
