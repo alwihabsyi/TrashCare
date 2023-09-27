@@ -10,12 +10,15 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.firebase.auth.FirebaseAuth
+import com.upnvjt.trashcare.R
 import com.upnvjt.trashcare.databinding.ActivityAuthBinding
 import com.upnvjt.trashcare.ui.auth.viewmodel.AuthViewModel
 import com.upnvjt.trashcare.ui.main.MainActivity
 import com.upnvjt.trashcare.util.GoogleAuthUiClient
 import com.upnvjt.trashcare.util.State
+import com.upnvjt.trashcare.util.hide
 import com.upnvjt.trashcare.util.setUpTabLayout
+import com.upnvjt.trashcare.util.show
 import com.upnvjt.trashcare.util.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -30,7 +33,6 @@ class AuthActivity : AppCompatActivity() {
 
     private val googleAuthUiClient by lazy {
         GoogleAuthUiClient(
-            applicationContext,
             Identity.getSignInClient(applicationContext)
         )
     }
@@ -43,6 +45,9 @@ class AuthActivity : AppCompatActivity() {
                     viewModel.googleSignIn(signInResult)
                 }
             }
+        }else {
+            binding.progressBar.hide()
+            binding.btnGoogle.text = getString(R.string.masuk_dengan_google)
         }
     }
 
@@ -72,6 +77,8 @@ class AuthActivity : AppCompatActivity() {
                 }
 
                 is State.Success -> {
+                    binding.progressBar.hide()
+                    binding.btnGoogle.text = getString(R.string.masuk_dengan_google)
                     Intent(this, MainActivity::class.java).also { intent ->
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
@@ -79,6 +86,8 @@ class AuthActivity : AppCompatActivity() {
                 }
 
                 is State.Error -> {
+                    binding.progressBar.hide()
+                    binding.btnGoogle.text = getString(R.string.masuk_dengan_google)
                     toast(it.data.toString())
                 }
             }
@@ -87,6 +96,8 @@ class AuthActivity : AppCompatActivity() {
 
     private fun googleSignIn() {
         lifecycleScope.launch {
+            binding.btnGoogle.text = ""
+            binding.progressBar.show()
             val signInIntentSender = googleAuthUiClient.signIn()
             launcher.launch(
                 IntentSenderRequest.Builder(

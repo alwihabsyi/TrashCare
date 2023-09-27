@@ -1,12 +1,15 @@
 package com.upnvjt.trashcare.data.tacommerce
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.upnvjt.trashcare.databinding.ListItemProductBinding
+import com.upnvjt.trashcare.ui.main.commerce.ProductDetailActivity
+import com.upnvjt.trashcare.util.Constants.PRODUCTS
 import com.upnvjt.trashcare.util.glide
 import com.upnvjt.trashcare.util.toPrice
 
@@ -55,12 +58,14 @@ class TaCommerceAdapter(var fromHome: Boolean = false): RecyclerView.Adapter<TaC
         val item = differ.currentList[position]
 
         holder.bind(item)
+        val context = holder.itemView.context
         holder.itemView.setOnClickListener {
-            onClick?.invoke(item)
+            Intent(context, ProductDetailActivity::class.java).also {
+                it.putExtra(PRODUCTS, item)
+                context.startActivity(it)
+            }
         }
     }
 
     override fun getItemCount(): Int = differ.currentList.size
-
-    var onClick: ((Product) -> Unit)? = null
 }

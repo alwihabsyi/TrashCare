@@ -8,7 +8,6 @@ import android.app.Dialog
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -29,7 +28,6 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
@@ -416,14 +414,7 @@ fun showPermissionSettingsAlert(context: Context) {
     dialog.show()
 }
 
-fun checkPermissionStorage(context: Context): Boolean {
-    val cameraResult = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
-
-    return cameraResult == PackageManager.PERMISSION_GRANTED
-}
-
-fun Fragment.permissionLaunch(arrayPermission: Array<String>): Boolean {
-    var permissionGiven = false
+fun Fragment.permissionLaunch(arrayPermission: Array<String>, permissionGranted: (Boolean) -> Unit) {
     val permission =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
 
@@ -431,12 +422,13 @@ fun Fragment.permissionLaunch(arrayPermission: Array<String>): Boolean {
             val readData = permissions[Manifest.permission.READ_EXTERNAL_STORAGE] ?: false
 
             if (isGranted && readData) {
-                permissionGiven = true
+                permissionGranted(true)
+            }else {
+                permissionGranted(false)
             }
         }
 
     permission.launch(arrayPermission)
-    return permissionGiven
 }
 
 data class Camera(

@@ -92,7 +92,7 @@
                     android:layout_alignStart="@id/tv_name"
                     android:layout_centerVertical="true"
                     android:fontFamily="@font/plusjakartasans"
-                    android:text="Edit Profile"
+                    android:text="@string/edit_profile"
                     android:textColor="@color/grey2"
                     android:textSize="17sp" />
 

@@ -67,7 +67,6 @@ class HomeViewModel @Inject constructor(
             }
     }
 
-
     private fun getAllProducts() {
         _allProducts.value = State.Loading()
         firestore.collection(Constants.PRODUCTS).get().addOnSuccessListener {
@@ -104,6 +103,10 @@ class HomeViewModel @Inject constructor(
             }.addOnFailureListener {
                 _allProducts.value = State.Error(it.message.toString())
             }
+    }
+
+    fun logout() {
+        auth.signOut()
     }
 
 }

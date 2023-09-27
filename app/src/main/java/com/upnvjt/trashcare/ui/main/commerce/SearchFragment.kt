@@ -1,6 +1,5 @@
 package com.upnvjt.trashcare.ui.main.commerce
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,7 +15,6 @@ import com.upnvjt.trashcare.data.tacommerce.TaCommerceAdapter
 import com.upnvjt.trashcare.databinding.FragmentSearchBinding
 import com.upnvjt.trashcare.ui.main.commerce.CommerceFragment.Companion.SEARCH_QUERY
 import com.upnvjt.trashcare.ui.main.home.viewmodel.HomeViewModel
-import com.upnvjt.trashcare.util.Constants
 import com.upnvjt.trashcare.util.State
 import com.upnvjt.trashcare.util.hide
 import com.upnvjt.trashcare.util.hideBottomNavView
@@ -95,12 +93,6 @@ class SearchFragment : Fragment() {
 
     private fun setUpRvData(data: List<Product>) {
         productAdapter.differ.submitList(data)
-        productAdapter.onClick = {
-            Intent(requireContext(), ProductDetailActivity::class.java).apply {
-                putExtra(Constants.PRODUCTS, it)
-                startActivity(this)
-            }
-        }
     }
 
     private fun setUpRv() {

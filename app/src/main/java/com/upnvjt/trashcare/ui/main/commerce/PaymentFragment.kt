@@ -19,7 +19,6 @@ import com.upnvjt.trashcare.databinding.FragmentPaymentBinding
 import com.upnvjt.trashcare.ui.main.commerce.viewmodel.PaymentViewModel
 import com.upnvjt.trashcare.util.Constants.storagePermission
 import com.upnvjt.trashcare.util.State
-import com.upnvjt.trashcare.util.checkPermissionStorage
 import com.upnvjt.trashcare.util.hide
 import com.upnvjt.trashcare.util.permissionLaunch
 import com.upnvjt.trashcare.util.pickPhoto
@@ -67,11 +66,14 @@ class PaymentFragment : Fragment() {
     }
 
     private fun permissionSet() {
-        permissionGiven = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            true
-        } else {
-            if (!checkPermissionStorage(requireContext())) permissionLaunch(storagePermission)
-            else true
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            permissionGiven = true
+        }else {
+            permissionLaunch(storagePermission,
+                permissionGranted = {
+                    permissionGiven = it
+                }
+            )
         }
     }
 
@@ -102,6 +104,8 @@ class PaymentFragment : Fragment() {
                     return@setOnClickListener
                 }
 
+                binding.btnKonfirmasi.text = ""
+                binding.progressBar.show()
                 val setFile = reduceFileImage(imageFile as File)
                 val photoUri = setFile.readBytes()
                 viewModel.submitOrder(order!!, photoUri)
@@ -113,8 +117,6 @@ class PaymentFragment : Fragment() {
         viewModel.submitOrder.observe(viewLifecycleOwner) {
             when (it) {
                 is State.Loading -> {
-                    binding.btnKonfirmasi.text = ""
-                    binding.progressBar.show()
                 }
 
                 is State.Success -> {

@@ -7,7 +7,7 @@ import androidx.activity.OnBackPressedCallback
 import com.google.android.material.tabs.TabLayoutMediator
 import com.upnvjt.trashcare.databinding.ActivityTaCycleCartBinding
 import com.upnvjt.trashcare.ui.main.MainActivity
-import com.upnvjt.trashcare.ui.main.tacycle.TaCycleViewPagerAdapter
+import com.upnvjt.trashcare.data.ViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -60,7 +60,7 @@ class TaCycleCartActivity : AppCompatActivity() {
         binding.viewPager2.isUserInputEnabled = false
 
         val viewPagerAdapter =
-            TaCycleViewPagerAdapter(statusFragment, supportFragmentManager, lifecycle)
+            ViewPagerAdapter(statusFragment, supportFragmentManager, lifecycle)
         binding.viewPager2.adapter = viewPagerAdapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager2) { tab, position ->
             when (position) {

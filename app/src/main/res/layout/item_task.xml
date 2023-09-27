@@ -53,7 +53,7 @@
                     android:layout_width="150dp"
                     android:layout_height="48dp"
                     android:minHeight="48dp"
-                    android:text="@string/selesaikan_misi"
+                    android:text="@string/kerjakan"
                     app:cornerRadius="5dp" />
 
             </LinearLayout>

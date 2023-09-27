@@ -9,12 +9,13 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.upnvjt.trashcare.data.tacommerce.OrderStatus
 import com.upnvjt.trashcare.data.tacycle.TaCycleStatus
 import com.upnvjt.trashcare.data.tacycle.TacycleCartAdapter
 import com.upnvjt.trashcare.data.tacycle.TacycleModel
 import com.upnvjt.trashcare.databinding.FragmentOnGoingBinding
-import com.upnvjt.trashcare.ui.main.tacycle.viewmodel.TaCycleOrderViewModel
-import com.upnvjt.trashcare.ui.main.tacycle.viewmodel.TaCycleOrderViewModelFactory
+import com.upnvjt.trashcare.ui.main.tacycle.viewmodel.OrderViewModel
+import com.upnvjt.trashcare.ui.main.tacycle.viewmodel.OrderViewModelFactory
 import com.upnvjt.trashcare.util.State
 import com.upnvjt.trashcare.util.hide
 import com.upnvjt.trashcare.util.show
@@ -23,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class OnGoingFragment : Fragment() {
+class OnGoingFragment: Fragment() {
 
     @Inject
     lateinit var firestore: FirebaseFirestore
@@ -33,11 +34,12 @@ class OnGoingFragment : Fragment() {
     private var _binding: FragmentOnGoingBinding? = null
     private val binding get() = _binding!!
     private val cartAdapter by lazy { TacycleCartAdapter() }
-    private val viewModel by viewModels<TaCycleOrderViewModel> {
-        TaCycleOrderViewModelFactory(
+    private val viewModel by viewModels<OrderViewModel> {
+        OrderViewModelFactory(
             firestore,
             auth,
-            TaCycleStatus.OnGoing
+            TaCycleStatus.OnGoing,
+            OrderStatus.OnGoing
         )
     }
 
@@ -82,6 +84,7 @@ class OnGoingFragment : Fragment() {
     }
 
     private fun setupOrdersRv() {
+        viewModel.getTaCycleOrders()
         binding.rvOngoing.apply {
             adapter = cartAdapter
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

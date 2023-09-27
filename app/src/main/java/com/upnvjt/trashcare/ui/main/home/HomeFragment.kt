@@ -18,6 +18,8 @@ import com.upnvjt.trashcare.ui.main.home.viewmodel.HomeViewModel
 import com.upnvjt.trashcare.ui.main.tacycle.TaCycleActivity
 import com.upnvjt.trashcare.ui.main.tacycle.cart.TaCycleCartActivity
 import com.upnvjt.trashcare.util.State
+import com.upnvjt.trashcare.util.hide
+import com.upnvjt.trashcare.util.show
 import com.upnvjt.trashcare.util.toast
 import dagger.hilt.android.AndroidEntryPoint
 import me.relex.circleindicator.CircleIndicator3
@@ -96,14 +98,14 @@ class HomeFragment : Fragment() {
         viewModel.task.observe(viewLifecycleOwner) {
             when (it) {
                 is State.Loading -> {
-//                    binding.progressBar.show()
+                    binding.taskProgressBar.show()
                 }
                 is State.Success -> {
-//                    binding.progressBar.hide()
+                    binding.taskProgressBar.hide()
                     taskAdapter.differ.submitList(it.data)
                 }
                 is State.Error -> {
-//                    binding.progressBar.hide()
+                    binding.taskProgressBar.hide()
                     toast(it.message.toString())
                 }
             }
@@ -112,9 +114,10 @@ class HomeFragment : Fragment() {
         viewModel.user.observe(viewLifecycleOwner) {
             when (it) {
                 is State.Loading -> {
-
+                    binding.userProgressBar.show()
                 }
                 is State.Success -> {
+                    binding.userProgressBar.hide()
                     val user = it.data
                     user?.let { data ->
                         val nama = if (data.lastname == null) data.firstname else "${data.firstname} ${data.lastname}"
@@ -123,6 +126,7 @@ class HomeFragment : Fragment() {
                     }
                 }
                 is State.Error -> {
+                    binding.userProgressBar.hide()
                     toast(it.message.toString())
                 }
             }
@@ -132,14 +136,14 @@ class HomeFragment : Fragment() {
         viewModel.allProducts.observe(viewLifecycleOwner) {
             when (it) {
                 is State.Loading -> {
-//                    binding.progressBar.show()
+                    binding.productsProgressBar.show()
                 }
                 is State.Success -> {
-//                    binding.progressBar.hide()
+                    binding.productsProgressBar.hide()
                     productAdapter.differ.submitList(it.data)
                 }
                 is State.Error -> {
-//                    binding.progressBar.hide()
+                    binding.productsProgressBar.hide()
                     toast(it.message.toString())
                 }
             }

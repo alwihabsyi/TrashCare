@@ -1,11 +1,11 @@
-package com.upnvjt.trashcare.ui.main.tacycle
+package com.upnvjt.trashcare.data
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class TaCycleViewPagerAdapter(
+class ViewPagerAdapter(
     private val fragments: List<Fragment>,
     fm: FragmentManager,
     lifecycle: Lifecycle

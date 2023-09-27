@@ -55,6 +55,16 @@
                     android:src="@drawable/ic_motorcycle" />
             </com.google.android.material.card.MaterialCardView>
 
+            <ProgressBar
+                android:id="@+id/user_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
             <LinearLayout
                 android:id="@+id/welcome_text_container"
                 android:layout_width="match_parent"
@@ -231,6 +241,14 @@
 
             </LinearLayout>
 
+            <ProgressBar
+                android:id="@+id/task_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:layout_gravity="center_horizontal"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvTacampaign"
                 android:layout_width="match_parent"
@@ -239,7 +257,7 @@
                 android:layout_marginTop="16dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_task_home" />
+                tools:listitem="@layout/item_task" />
 
         </LinearLayout>
         <!-- Articles Section-->
@@ -279,6 +297,14 @@
                     android:textSize="16sp" />
 
             </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/products_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:layout_gravity="center_horizontal"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvListProduct"

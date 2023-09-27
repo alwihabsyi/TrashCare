@@ -1,6 +1,5 @@
 package com.upnvjt.trashcare.util
 
-import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
@@ -16,7 +15,6 @@ import java.lang.Exception
 import java.util.concurrent.CancellationException
 
 class GoogleAuthUiClient(
-    private val context: Context,
     private val oneTapClient: SignInClient
 ) {
     private val auth = Firebase.auth
@@ -44,8 +42,8 @@ class GoogleAuthUiClient(
                 data = user?.run {
                     User(
                         firstname = displayName,
-                        username = displayName!!,
                         email = email!!,
+                        phoneNo = phoneNumber ?: "",
                         imagePath = photoUrl.toString()
                         )
                 },

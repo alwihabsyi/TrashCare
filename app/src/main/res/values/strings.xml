@@ -69,5 +69,20 @@
     <string name="selesaikan_misi">Selesaikan Misi</string>
     <string name="my_task">My Task</string>
     <string name="best_products">Best Products</string>
+    <string name="kerjakan">Kerjakan</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="daftar">Sign Up</string>
+    <string name="login">Log In</string>
+    <string name="masuk_dengan_google">Masuk Dengan Google</string>
+    <string name="commerce_history">Commerce History</string>
+    <string name="ongoing">OnGoing</string>
+    <string name="done">Done</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="security">Security</string>
+    <string name="password_lama">Password Lama</string>
+    <string name="update">Update</string>
+    <string name="tacommerce">TaCommerce</string>
 
 </resources>
