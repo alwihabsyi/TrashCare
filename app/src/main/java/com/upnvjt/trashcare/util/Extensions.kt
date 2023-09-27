@@ -1,5 +1,6 @@
 package com.upnvjt.trashcare.util
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
@@ -422,23 +423,21 @@ fun checkPermissionStorage(context: Context): Boolean {
     return cameraResult == PackageManager.PERMISSION_GRANTED
 }
 
-fun Fragment.permissionLaunch(arrayPermission: Array<String>) {
+fun Fragment.permissionLaunch(arrayPermission: Array<String>): Boolean {
+    var permissionGiven = false
     val permission =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { granted ->
-            granted.entries.forEach {
-                when (it.value) {
-                    true -> {
-                        return@forEach
-                    }
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
 
-                    false -> {
-                        showPermissionSettingsAlert(requireContext())
-                    }
-                }
+            val isGranted = permissions[Manifest.permission.CAMERA] ?: false
+            val readData = permissions[Manifest.permission.READ_EXTERNAL_STORAGE] ?: false
+
+            if (isGranted && readData) {
+                permissionGiven = true
             }
         }
 
     permission.launch(arrayPermission)
+    return permissionGiven
 }
 
 data class Camera(

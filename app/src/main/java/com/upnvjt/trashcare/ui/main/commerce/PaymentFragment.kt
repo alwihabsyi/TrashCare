@@ -67,11 +67,11 @@ class PaymentFragment : Fragment() {
     }
 
     private fun permissionSet() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            permissionGiven = true
+        permissionGiven = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            true
         } else {
             if (!checkPermissionStorage(requireContext())) permissionLaunch(storagePermission)
-            else permissionGiven = true
+            else true
         }
     }
 
