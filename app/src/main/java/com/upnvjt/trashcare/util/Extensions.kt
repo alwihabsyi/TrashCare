@@ -40,7 +40,6 @@ import com.google.android.material.tabs.TabLayout
 import com.upnvjt.trashcare.R
 import com.upnvjt.trashcare.ui.auth.AuthViewPagerAdapter
 import com.upnvjt.trashcare.ui.main.MainActivity
-import com.upnvjt.trashcare.util.Constants.storagePermission
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -418,7 +417,7 @@ fun showPermissionSettingsAlert(context: Context) {
 }
 
 fun checkPermissionStorage(context: Context): Boolean {
-    val cameraResult = ContextCompat.checkSelfPermission(context, storagePermission[0])
+    val cameraResult = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
 
     return cameraResult == PackageManager.PERMISSION_GRANTED
 }
