@@ -25,6 +25,7 @@ class AddAddressActivity : AppCompatActivity() {
     private val binding get() = _binding!!
     private val viewModel by viewModels<AddressViewModel>()
     private var job: Job? = null
+    private var userAddress: UserAddress? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +46,7 @@ class AddAddressActivity : AppCompatActivity() {
         }
 
         data?.let {
+            userAddress = it
             binding.apply {
                 etNamaJalan.setText(it.namaJalan)
                 etKelurahan.setText(it.kelurahan)
@@ -61,6 +63,10 @@ class AddAddressActivity : AppCompatActivity() {
     private fun setActions() {
         binding.apply {
             btnTambahAlamat.setOnClickListener {
+                if (userAddress != null) {
+                    viewModel.addAddress(userAddress!!)
+                }
+
                 val namaJalan = etNamaJalan.string().trim()
                 val kelurahan = etKelurahan.string().trim()
                 val kecamatan = etKecamatan.string().trim()
@@ -74,8 +80,13 @@ class AddAddressActivity : AppCompatActivity() {
             }
 
             btnHapusAlamat.setOnClickListener {
-                val judulAlamat = etDetailAlamat.string().trim()
-                viewModel.deleteAddress(judulAlamat)
+                userAddress?.let {
+                    viewModel.deleteAddress(it.addressId)
+                }
+            }
+
+            btnBack.setOnClickListener {
+                finish()
             }
         }
     }
@@ -113,6 +124,7 @@ class AddAddressActivity : AppCompatActivity() {
                     binding.progressBar.hide()
                     clearFields()
                     toast(it.data.toString())
+                    finish()
                 }
                 is State.Error -> {
                     binding.progressBar.hide()

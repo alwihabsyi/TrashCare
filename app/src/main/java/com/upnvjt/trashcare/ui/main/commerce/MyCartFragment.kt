@@ -185,6 +185,10 @@ class MyCartFragment : Fragment() {
             val b = Bundle().apply { putParcelable(ORDER, order) }
             findNavController().navigate(R.id.action_myCartFragment_to_checkoutFragment, b)
         }
+
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun checkTotalPrice() {

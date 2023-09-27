@@ -19,20 +19,6 @@
         tools:itemCount="1"
         tools:listitem="@layout/tacycle_status_item_layout"/>
 
-    <TextView
-        android:id="@+id/tv_no_order"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="Anda tidak memiliki pesanan"
-        android:gravity="center"
-        android:textSize="30sp"
-        android:visibility="invisible"
-        android:fontFamily="@font/plusjakartasans_semibold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
@@ -42,4 +28,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_no_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_nodata"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

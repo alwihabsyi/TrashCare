@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.upnvjt.trashcare.R
 import com.upnvjt.trashcare.databinding.FragmentSecurityBinding
 import com.upnvjt.trashcare.ui.main.profile.viewmodel.ProfileViewModel
@@ -48,6 +49,10 @@ class SecurityFragment : Fragment() {
             }
 
             viewModel.updatePassword(binding.etPasswordLama.string(), binding.etPassword.string())
+        }
+
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
         }
     }
 

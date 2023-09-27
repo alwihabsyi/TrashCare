@@ -16,7 +16,6 @@ import com.upnvjt.trashcare.databinding.FragmentProfileBinding
 import com.upnvjt.trashcare.ui.auth.AuthActivity
 import com.upnvjt.trashcare.ui.main.home.viewmodel.HomeViewModel
 import com.upnvjt.trashcare.ui.main.profile.EditProfileFragment.Companion.USER_PROFILE
-import com.upnvjt.trashcare.ui.main.profile.commercehistory.CommerceHistoryActivity
 import com.upnvjt.trashcare.util.GoogleAuthUiClient
 import com.upnvjt.trashcare.util.State
 import com.upnvjt.trashcare.util.glide

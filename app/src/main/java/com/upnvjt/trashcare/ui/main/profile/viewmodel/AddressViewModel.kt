@@ -57,12 +57,12 @@ class AddressViewModel @Inject constructor(
             }
     }
 
-    fun deleteAddress(address: String) {
+    fun deleteAddress(addressId: String) {
         _deleteAddress.value = State.Loading()
         firestore.collection(USER_COLLECTION).document(auth.uid!!)
-            .collection(ADDRESS).document(address + auth.uid).delete()
+            .collection(ADDRESS).document(addressId).delete()
             .addOnSuccessListener {
-                _deleteAddress.value = State.Success("Alamat $address Berhasil Dihapus")
+                _deleteAddress.value = State.Success("Alamat Berhasil Dihapus")
             }
             .addOnFailureListener {
                 _deleteAddress.value = State.Error(it.message.toString())

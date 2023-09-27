@@ -61,10 +61,18 @@
             app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_profileFragment_to_bookmarkFragment"
-            app:destination="@id/bookmarkFragment" />
+            app:destination="@id/bookmarkFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"  />
         <action
             android:id="@+id/action_profileFragment_to_securityFragment"
-            app:destination="@id/securityFragment" />
+            app:destination="@id/securityFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"  />
     </fragment>
     <fragment
         android:id="@+id/taskFragment"
@@ -98,7 +106,11 @@
             app:argType="com.upnvjt.trashcare.data.tacommerce.Orders" />
         <action
             android:id="@+id/action_checkoutFragment_to_paymentFragment"
-            app:destination="@id/paymentFragment" />
+            app:destination="@id/paymentFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
     </fragment>
     <fragment
         android:id="@+id/paymentFragment"
@@ -113,7 +125,10 @@
             app:destination="@id/orderProcessedFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="true"/>
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
     </fragment>
     <fragment
         android:id="@+id/orderProcessedFragment"

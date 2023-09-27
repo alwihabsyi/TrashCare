@@ -66,7 +66,10 @@ class CommerceDoneFragment : Fragment() {
                 }
                 is State.Success -> {
                     binding.progressBar.hide()
-                    setupRvData(it.data!!)
+                    if (it.data!!.isEmpty()){
+                        binding.ivNoData.show()
+                    }
+                    setupRvData(it.data)
                 }
                 is State.Error -> {
                     binding.progressBar.hide()
@@ -78,9 +81,6 @@ class CommerceDoneFragment : Fragment() {
 
     private fun setupRvData(data: List<Orders>) {
         cartAdapter.differ.submitList(data)
-        if(data.isEmpty()) {
-            binding.tvNoOrder.show()
-        }
     }
 
     private fun setupOrdersRv() {

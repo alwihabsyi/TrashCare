@@ -24,6 +24,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_back"
                 style="@style/Widget.MaterialComponents.Button.IconOnly"
+                android:background="@color/transparent"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"

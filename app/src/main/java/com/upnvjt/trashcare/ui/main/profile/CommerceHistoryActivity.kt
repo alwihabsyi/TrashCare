@@ -1,4 +1,4 @@
-package com.upnvjt.trashcare.ui.main.profile.commercehistory
+package com.upnvjt.trashcare.ui.main.profile
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -21,6 +21,9 @@ class CommerceHistoryActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setUpTacycleTabLayout()
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun setUpTacycleTabLayout() {

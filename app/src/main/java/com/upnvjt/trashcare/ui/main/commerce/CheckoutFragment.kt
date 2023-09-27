@@ -128,6 +128,10 @@ class CheckoutFragment : Fragment() {
                 val b = Bundle().apply { putParcelable(MyCartFragment.ORDER, orders) }
                 findNavController().navigate(R.id.action_checkoutFragment_to_paymentFragment, b)
             }
+
+            btnBack.setOnClickListener {
+                findNavController().navigateUp()
+            }
         }
     }
 

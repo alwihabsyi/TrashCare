@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.upnvjt.trashcare.data.tacommerce.TaCommerceAdapter
 import com.upnvjt.trashcare.databinding.FragmentBookmarkBinding
@@ -39,6 +40,13 @@ class BookmarkFragment : Fragment() {
 
         setupRv()
         observer()
+        setActions()
+    }
+
+    private fun setActions() {
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun observer() {
@@ -49,6 +57,9 @@ class BookmarkFragment : Fragment() {
                 }
                 is State.Success -> {
                     binding.progressBar.hide()
+                    if (it.data!!.isEmpty()){
+                        binding.ivNoData.show()
+                    }
                     productAdapter.differ.submitList(it.data)
                 }
                 is State.Error -> {

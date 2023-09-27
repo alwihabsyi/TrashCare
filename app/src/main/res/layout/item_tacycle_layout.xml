@@ -63,6 +63,7 @@
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/plusjakartasans_semibold"
                     android:maxLength="50"
+                    android:minWidth="70dp"
                     android:textColor="?attr/colorPrimary"
                     android:textSize="15sp"
                     tools:text="Jl. Kutisari IX no 52" />

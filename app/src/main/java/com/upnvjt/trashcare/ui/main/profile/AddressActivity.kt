@@ -27,6 +27,7 @@ class AddressActivity : AppCompatActivity() {
     private lateinit var addressAdapter: AddressAdapter
     private var pickAddress: Boolean = false
     private var checkoutAddress: Boolean = false
+    private var addresses : List<UserAddress>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +55,10 @@ class AddressActivity : AppCompatActivity() {
         binding.btnTambahAlamat.setOnClickListener {
             startActivity(Intent(this, AddAddressActivity::class.java))
         }
+
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun observer() {
@@ -65,9 +70,11 @@ class AddressActivity : AppCompatActivity() {
 
                 is State.Success -> {
                     binding.progressBar.hide()
-                    it.data?.let { address ->
-                        setUpRvData(address)
+                    addresses = it.data!!
+                    if (it.data.isEmpty()){
+                        binding.ivNoData.show()
                     }
+                    setUpRvData(it.data)
                 }
 
                 is State.Error -> {
@@ -115,6 +122,17 @@ class AddressActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        addresses?.let {
+            if (it.isEmpty()) {
+                binding.ivNoData.show()
+            }else {
+                binding.ivNoData.hide()
+            }
+        }
     }
 
     companion object {

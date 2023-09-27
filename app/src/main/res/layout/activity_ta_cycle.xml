@@ -21,6 +21,7 @@
             style="@style/Widget.MaterialComponents.Button.IconOnly"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:background="@color/transparent"
             android:layout_centerVertical="true"
             app:icon="@drawable/ic_back_24" />
 

@@ -29,7 +29,7 @@
         android:theme="@style/Theme.TrashCare"
         tools:targetApi="31">
         <activity
-            android:name=".ui.main.profile.commercehistory.CommerceHistoryActivity"
+            android:name=".ui.main.profile.CommerceHistoryActivity"
             android:exported="false" />
         <activity
             android:name=".ui.main.commerce.ProductDetailActivity"

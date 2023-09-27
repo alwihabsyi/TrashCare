@@ -89,6 +89,10 @@ class ProductDetailActivity : AppCompatActivity() {
                     viewModel.addUpdateProductToCart(cart)
                 }
             }
+
+            btnBack.setOnClickListener {
+                finish()
+            }
         }
     }
 

@@ -103,11 +103,11 @@ class TaskDetailActivity : AppCompatActivity() {
                     binding.updateTaskContainer.hide()
                     binding.btnSubmitTask.hide()
                     binding.infoWaitingContainer.show()
-                    binding.cvInfoTaCoins.show()
                 }
                 else -> {
                     binding.updateTaskContainer.hide()
                     binding.btnSubmitTask.hide()
+                    binding.cvInfoTaCoins.show()
                     binding.infoFinishContainer.show()
                 }
             }
@@ -174,6 +174,10 @@ class TaskDetailActivity : AppCompatActivity() {
 
                     viewModel.submitTask(it, photoUri)
                 }
+            }
+
+            btnBack.setOnClickListener {
+                finish()
             }
         }
     }

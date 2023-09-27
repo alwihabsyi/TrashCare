@@ -20,6 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -191,7 +192,7 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="8dp"
                         android:fontFamily="@font/plusjakartasans_bold"
-                        android:text="Anda mendapatkan 10000 TaCoins"
+                        android:text="@string/anda_mendapatkan_10_tacoins"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
                 </LinearLayout>

@@ -135,6 +135,10 @@ class EditProfileFragment : Fragment() {
                 val intent = Intent(requireContext(), AddressActivity::class.java)
                 startActivity(intent)
             }
+
+            binding.btnBack.setOnClickListener {
+                findNavController().navigateUp()
+            }
         }
     }
 
