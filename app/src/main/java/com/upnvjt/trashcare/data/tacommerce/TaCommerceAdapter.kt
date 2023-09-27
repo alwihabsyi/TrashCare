@@ -10,7 +10,7 @@ import com.upnvjt.trashcare.databinding.ListItemProductBinding
 import com.upnvjt.trashcare.util.glide
 import com.upnvjt.trashcare.util.toPrice
 
-class TaCommerceAdapter: RecyclerView.Adapter<TaCommerceAdapter.TaCommerceViewHolder>() {
+class TaCommerceAdapter(var fromHome: Boolean = false): RecyclerView.Adapter<TaCommerceAdapter.TaCommerceViewHolder>() {
 
     inner class TaCommerceViewHolder(private val binding: ListItemProductBinding)
         : RecyclerView.ViewHolder(binding.root) {
@@ -20,6 +20,12 @@ class TaCommerceAdapter: RecyclerView.Adapter<TaCommerceAdapter.TaCommerceViewHo
                 productName.text = item.name
                 productPrice.text = item.price.toPrice()
                 ivProduct.glide(item.photoUrl)
+
+                if (fromHome) {
+                    val params = (cardView.layoutParams as ViewGroup.MarginLayoutParams)
+                    params.marginStart = 0
+                    params.bottomMargin = 10
+                }
             }
         }
 

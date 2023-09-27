@@ -13,7 +13,7 @@ import com.upnvjt.trashcare.R
 import com.upnvjt.trashcare.data.tacommerce.Product
 import com.upnvjt.trashcare.data.tacommerce.TaCommerceAdapter
 import com.upnvjt.trashcare.databinding.FragmentCommerceBinding
-import com.upnvjt.trashcare.ui.main.commerce.viewmodel.TaCommerceViewModel
+import com.upnvjt.trashcare.ui.main.home.viewmodel.HomeViewModel
 import com.upnvjt.trashcare.util.Constants.PRODUCTS
 import com.upnvjt.trashcare.util.State
 import com.upnvjt.trashcare.util.filterProductDialog
@@ -29,7 +29,7 @@ class CommerceFragment : Fragment() {
 
     private var _binding: FragmentCommerceBinding? = null
     private val binding get() = _binding!!
-    private val viewModel by viewModels<TaCommerceViewModel>()
+    private val viewModel by viewModels<HomeViewModel>()
     private val productAdapter by lazy { TaCommerceAdapter() }
 
     override fun onCreateView(

@@ -98,7 +98,7 @@
             android:id="@+id/action_paymentFragment_to_orderProcessedFragment"
             app:destination="@id/orderProcessedFragment"
             app:launchSingleTop="true"
-            app:popUpTo="@id/nav_graph_btm"
+            app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true"/>
     </fragment>
     <fragment

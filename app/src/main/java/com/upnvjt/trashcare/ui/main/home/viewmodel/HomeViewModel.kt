@@ -1,20 +1,32 @@
-package com.upnvjt.trashcare.ui.main.commerce.viewmodel
+package com.upnvjt.trashcare.ui.main.home.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.upnvjt.trashcare.data.tacampaign.TaskData
 import com.upnvjt.trashcare.data.tacommerce.Product
-import com.upnvjt.trashcare.util.Constants.PRODUCTS
+import com.upnvjt.trashcare.data.user.User
+import com.upnvjt.trashcare.util.Constants
+import com.upnvjt.trashcare.util.Constants.TASK
+import com.upnvjt.trashcare.util.Constants.USER_COLLECTION
 import com.upnvjt.trashcare.util.State
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class TaCommerceViewModel @Inject constructor(
+class HomeViewModel @Inject constructor(
+    private val auth: FirebaseAuth,
     private val firestore: FirebaseFirestore
 ) : ViewModel() {
+
+    private val _task = MutableLiveData<State<List<TaskData>>>()
+    val task: LiveData<State<List<TaskData>>> = _task
+
+    private val _user = MutableLiveData<State<User>>()
+    val user: LiveData<State<User>> = _user
 
     private val _allProducts = MutableLiveData<State<List<Product>>>()
     val allProducts: LiveData<State<List<Product>>> = _allProducts
@@ -23,12 +35,42 @@ class TaCommerceViewModel @Inject constructor(
     val searchProducts: LiveData<State<List<Product>>> = _searchProducts
 
     init {
+        getAllTask()
+        getUser()
         getAllProducts()
     }
 
+    private fun getAllTask() {
+        _task.value = State.Loading()
+        firestore.collection(USER_COLLECTION).document(auth.uid!!)
+            .collection(TASK)
+            .addSnapshotListener { value, error ->
+                if (error != null) {
+                    _task.value = State.Error(error.message.toString())
+                }
+
+                val task = value?.toObjects(TaskData::class.java)
+                _task.value = State.Success(task!!)
+            }
+    }
+
+    private fun getUser() {
+        _user.value = State.Loading()
+        firestore.collection(USER_COLLECTION).document(auth.uid!!)
+            .addSnapshotListener { value, error ->
+                if (error != null) {
+                    _user.value = State.Error(error.message.toString())
+                }
+
+                val user = value?.toObject(User::class.java)
+                _user.value = State.Success(user!!)
+            }
+    }
+
+
     private fun getAllProducts() {
         _allProducts.value = State.Loading()
-        firestore.collection(PRODUCTS).get().addOnSuccessListener {
+        firestore.collection(Constants.PRODUCTS).get().addOnSuccessListener {
             val products = it.toObjects(Product::class.java)
             _allProducts.value = State.Success(products)
         }.addOnFailureListener {
@@ -38,7 +80,7 @@ class TaCommerceViewModel @Inject constructor(
 
     fun getSearchedProducts(productName: String) {
         _searchProducts.value = State.Loading()
-        firestore.collection(PRODUCTS)
+        firestore.collection(Constants.PRODUCTS)
             .whereEqualTo("name", productName.replaceFirstChar {
                 it.uppercase()
             }).get()
@@ -53,7 +95,7 @@ class TaCommerceViewModel @Inject constructor(
     fun getFilteredProducts(isAscending: Boolean) {
         _allProducts.value = State.Loading()
         val filter = if (isAscending) Query.Direction.ASCENDING else Query.Direction.DESCENDING
-        firestore.collection(PRODUCTS)
+        firestore.collection(Constants.PRODUCTS)
             .orderBy("price", filter)
             .get()
             .addOnSuccessListener {
@@ -63,4 +105,5 @@ class TaCommerceViewModel @Inject constructor(
                 _allProducts.value = State.Error(it.message.toString())
             }
     }
+
 }

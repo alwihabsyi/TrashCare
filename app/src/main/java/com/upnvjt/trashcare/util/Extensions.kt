@@ -2,15 +2,20 @@ package com.upnvjt.trashcare.util
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.ContentResolver
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Environment
+import android.provider.MediaStore
+import android.provider.Settings
 import android.util.Patterns
 import android.view.Gravity
 import android.view.View
@@ -21,7 +26,10 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -31,6 +39,7 @@ import com.google.android.material.tabs.TabLayout
 import com.upnvjt.trashcare.R
 import com.upnvjt.trashcare.ui.auth.AuthViewPagerAdapter
 import com.upnvjt.trashcare.ui.main.MainActivity
+import com.upnvjt.trashcare.util.Constants.storagePermission
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -63,7 +72,7 @@ fun ImageView.glide(url: String) {
     Glide.with(this).load(url).into(this)
 }
 
-fun Double.toPrice():String{
+fun Double.toPrice(): String {
     val format: NumberFormat = NumberFormat.getCurrencyInstance()
     format.maximumFractionDigits = 0
     format.currency = Currency.getInstance("IDR")
@@ -94,7 +103,7 @@ fun Fragment.showBottomNavView() {
 @SuppressLint("InflateParams")
 fun Fragment.setUpForgotPasswordDialog(
     onSendClick: (String) -> Unit
-){
+) {
     val dialog = Dialog(requireContext(), android.R.style.Theme_Dialog)
     val view = layoutInflater.inflate(R.layout.reset_password_dialog, null)
     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -126,7 +135,7 @@ fun Fragment.setUpForgotPasswordDialog(
 fun Fragment.pickPhoto(
     onCameraClick: () -> Unit?,
     onGalleryClick: () -> Unit?
-){
+) {
     val dialog = Dialog(requireContext(), android.R.style.Theme_Dialog)
     val view = layoutInflater.inflate(R.layout.pick_photo_dialog, null)
     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -152,11 +161,44 @@ fun Fragment.pickPhoto(
         dialog.dismiss()
     }
 }
+
+@SuppressLint("InflateParams", "MissingInflatedId")
+fun Activity.pickPhoto(
+    onCameraClick: () -> Unit?,
+    onGalleryClick: () -> Unit?
+) {
+    val dialog = Dialog(this, android.R.style.Theme_Dialog)
+    val view = layoutInflater.inflate(R.layout.pick_photo_dialog, null)
+    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialog.setContentView(view)
+    dialog.window?.setGravity(Gravity.BOTTOM)
+    dialog.window?.setLayout(
+        WindowManager.LayoutParams.MATCH_PARENT,
+        WindowManager.LayoutParams.WRAP_CONTENT
+    )
+    dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    dialog.show()
+
+    val btnCamera = view.findViewById<Button>(R.id.btnCamera)
+    val btnGallery = view.findViewById<Button>(R.id.btnGallery)
+
+    btnCamera.setOnClickListener {
+        onCameraClick()
+        dialog.dismiss()
+    }
+
+    btnGallery.setOnClickListener {
+        onGalleryClick()
+        dialog.dismiss()
+    }
+}
+
+
 @SuppressLint("InflateParams", "MissingInflatedId")
 fun Fragment.filterProductDialog(
     hargaTerendah: () -> Unit?,
     hargaTertinggi: () -> Unit?
-){
+) {
     val dialog = Dialog(requireContext(), android.R.style.Theme_Dialog)
     val view = layoutInflater.inflate(R.layout.filter_product_dialog, null)
     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -217,34 +259,34 @@ fun setUpTabLayout(tabLayout: TabLayout, viewPager: ViewPager2, adapter: AuthVie
     viewPager.registerOnPageChangeCallback(myPageChangeCallback)
 }
 
-fun EditText.string(): String{
+fun EditText.string(): String {
     return text.toString()
 }
 
-fun validateEmail(email: String): Validation{
-    if(email.isEmpty()){
+fun validateEmail(email: String): Validation {
+    if (email.isEmpty()) {
         return Validation.Failed("Email tidak boleh kosong")
     }
 
-    if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+    if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
         return Validation.Failed("Harap isi dengan email yang valid")
     }
 
     return Validation.Success
 }
 
-fun validatePassword(password: String, passwordConfirmation: String?): Validation{
-    if(password.isEmpty()){
+fun validatePassword(password: String, passwordConfirmation: String?): Validation {
+    if (password.isEmpty()) {
         return Validation.Failed("Password tidak boleh kosong")
     }
 
-    if(passwordConfirmation != null) {
-        if(password != passwordConfirmation) {
+    if (passwordConfirmation != null) {
+        if (password != passwordConfirmation) {
             return Validation.Failed("Password tidak sesuai")
         }
     }
 
-    if(password.length < 6){
+    if (password.length < 6) {
         return Validation.Failed("Password harus terdiri dari 6 huruf atau lebih")
     }
 
@@ -295,7 +337,7 @@ fun uriToFile(selectedImg: Uri, context: Context): File {
 }
 
 fun SearchView.onTextSubmit(onSubmit: (String) -> Unit) {
-    setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+    setOnQueryTextListener(object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean {
             query?.let {
                 onSubmit(it)
@@ -309,3 +351,97 @@ fun SearchView.onTextSubmit(onSubmit: (String) -> Unit) {
         }
     })
 }
+
+@SuppressLint("QueryPermissionsNeeded")
+fun Fragment.setUpCamera(): Camera {
+    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+    var photoPath: String? = null
+    activity?.let { activity ->
+        intent.resolveActivity(activity.packageManager)
+        createTemporaryFile(requireActivity()).also {
+            val photoURI: Uri = FileProvider.getUriForFile(
+                requireActivity(),
+                "com.upnvjt.trashcare.ui.main.commerce",
+                it
+            )
+            photoPath = it.absolutePath
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+        }
+    }
+    return Camera(photoPath!!, intent)
+}
+
+@SuppressLint("QueryPermissionsNeeded")
+fun Activity.setUpCamera(): Camera {
+    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+    var photoPath: String?
+    this.let { activity ->
+        intent.resolveActivity(activity.packageManager)
+        createTemporaryFile(this).also {
+            val photoURI: Uri = FileProvider.getUriForFile(
+                this,
+                "com.upnvjt.trashcare.ui.main.commerce",
+                it
+            )
+            photoPath = it.absolutePath
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+        }
+    }
+    return Camera(photoPath!!, intent)
+}
+
+fun setUpGallery(): Intent {
+    val intent = Intent()
+    intent.action = Intent.ACTION_GET_CONTENT
+    intent.type = "image/*"
+    return Intent.createChooser(intent, "Choose a Picture")
+}
+
+fun showPermissionSettingsAlert(context: Context) {
+    val builder = AlertDialog.Builder(context)
+    builder.setTitle("Grant Permission")
+    builder.setMessage("Izinkan aplikasi untuk mengakses kamera untuk melanjutkan")
+    builder.setPositiveButton("Allow") { _, _ ->
+        val intent = Intent()
+        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+        val uri = Uri.fromParts("package", context.packageName, null)
+        intent.data = uri
+        context.startActivity(intent)
+    }
+    builder.setNeutralButton("Deny") { dialog, _ ->
+        dialog.dismiss()
+    }
+
+    val dialog = builder.create()
+    dialog.show()
+}
+
+fun checkPermissionStorage(context: Context): Boolean {
+    val cameraResult = ContextCompat.checkSelfPermission(context, storagePermission[0])
+
+    return cameraResult == PackageManager.PERMISSION_GRANTED
+}
+
+fun Fragment.permissionLaunch(arrayPermission: Array<String>) {
+    val permission =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { granted ->
+            granted.entries.forEach {
+                when (it.value) {
+                    true -> {
+                        return@forEach
+                    }
+
+                    false -> {
+                        showPermissionSettingsAlert(requireContext())
+                    }
+                }
+            }
+        }
+
+    permission.launch(arrayPermission)
+}
+
+data class Camera(
+    val path: String,
+    val intent: Intent
+)

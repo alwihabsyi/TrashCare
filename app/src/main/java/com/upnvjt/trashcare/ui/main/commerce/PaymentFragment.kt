@@ -1,18 +1,15 @@
 package com.upnvjt.trashcare.ui.main.commerce
 
-import android.annotation.SuppressLint
-import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -20,12 +17,17 @@ import com.upnvjt.trashcare.R
 import com.upnvjt.trashcare.data.tacommerce.Orders
 import com.upnvjt.trashcare.databinding.FragmentPaymentBinding
 import com.upnvjt.trashcare.ui.main.commerce.viewmodel.PaymentViewModel
+import com.upnvjt.trashcare.util.Constants.storagePermission
 import com.upnvjt.trashcare.util.State
-import com.upnvjt.trashcare.util.createTemporaryFile
+import com.upnvjt.trashcare.util.checkPermissionStorage
 import com.upnvjt.trashcare.util.hide
+import com.upnvjt.trashcare.util.permissionLaunch
 import com.upnvjt.trashcare.util.pickPhoto
 import com.upnvjt.trashcare.util.reduceFileImage
+import com.upnvjt.trashcare.util.setUpCamera
+import com.upnvjt.trashcare.util.setUpGallery
 import com.upnvjt.trashcare.util.show
+import com.upnvjt.trashcare.util.showPermissionSettingsAlert
 import com.upnvjt.trashcare.util.toast
 import com.upnvjt.trashcare.util.uriToFile
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +43,7 @@ class PaymentFragment : Fragment() {
     private val args by navArgs<PaymentFragmentArgs>()
     private var order: Orders? = null
     private val viewModel by viewModels<PaymentViewModel>()
+    private var permissionGiven: Boolean? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,16 +61,38 @@ class PaymentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        permissionSet()
         setActions()
         observer()
+    }
+
+    private fun permissionSet() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            permissionGiven = true
+        } else {
+            if (!checkPermissionStorage(requireContext())) permissionLaunch(storagePermission)
+            else permissionGiven = true
+        }
     }
 
     private fun setActions() {
         binding.apply {
             ivBuktiPembayaran.setOnClickListener {
                 pickPhoto(
-                    onCameraClick = { startCamera() },
-                    onGalleryClick = { startGallery() }
+                    onCameraClick = {
+                        permissionGiven?.let {
+                            if (it) {
+                                startCamera()
+                            } else {
+                                showPermissionSettingsAlert(requireContext())
+                            }
+                        }
+                    },
+
+                    onGalleryClick = {
+                        val chooser = setUpGallery()
+                        launchGallery.launch(chooser)
+                    }
                 )
             }
 
@@ -105,22 +130,10 @@ class PaymentFragment : Fragment() {
         }
     }
 
-    @SuppressLint("QueryPermissionsNeeded")
     private fun startCamera() {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        activity?.let { activity ->
-            intent.resolveActivity(activity.packageManager)
-            createTemporaryFile(requireActivity()).also {
-                val photoURI: Uri = FileProvider.getUriForFile(
-                    requireActivity(),
-                    "com.upnvjt.trashcare.ui.main.commerce",
-                    it
-                )
-                photoPath = it.absolutePath
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                launchCamera.launch(intent)
-            }
-        }
+        val intent = setUpCamera()
+        photoPath = intent.path
+        launchCamera.launch(intent.intent)
     }
 
     private val launchCamera = registerForActivityResult(
@@ -134,14 +147,6 @@ class PaymentFragment : Fragment() {
                 binding.ivBuktiPembayaran.setImageBitmap(BitmapFactory.decodeFile(file.path))
             }
         }
-    }
-
-    private fun startGallery() {
-        val intent = Intent()
-        intent.action = Intent.ACTION_GET_CONTENT
-        intent.type = "image/*"
-        val chooser = Intent.createChooser(intent, "Choose a Picture")
-        launchGallery.launch(chooser)
     }
 
     private val launchGallery = registerForActivityResult(

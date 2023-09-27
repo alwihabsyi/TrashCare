@@ -6,13 +6,9 @@
     android:layout_height="165dp">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="5dp"
         app:cardCornerRadius="10dp">
 
         <RelativeLayout
@@ -40,8 +36,8 @@
                     android:id="@+id/taskStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="-5dp"
                     android:layout_marginTop="-5dp"
+                    android:layout_marginStart="-5dp"
                     android:enabled="false"
                     android:fontFamily="@font/plusjakartasans_bold"
                     android:textColor="@color/darkGreen"
@@ -49,7 +45,7 @@
 
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_tacampaign"
+                    android:id="@+id/btn_findRider"
                     android:layout_width="150dp"
                     android:layout_height="48dp"
                     android:minHeight="48dp"
@@ -57,13 +53,14 @@
                     app:cornerRadius="5dp" />
 
             </LinearLayout>
-        </RelativeLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:src="@drawable/trash_task" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/trash_task" />
+        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
 

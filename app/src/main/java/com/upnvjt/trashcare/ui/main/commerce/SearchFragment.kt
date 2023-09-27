@@ -15,7 +15,7 @@ import com.upnvjt.trashcare.data.tacommerce.Product
 import com.upnvjt.trashcare.data.tacommerce.TaCommerceAdapter
 import com.upnvjt.trashcare.databinding.FragmentSearchBinding
 import com.upnvjt.trashcare.ui.main.commerce.CommerceFragment.Companion.SEARCH_QUERY
-import com.upnvjt.trashcare.ui.main.commerce.viewmodel.TaCommerceViewModel
+import com.upnvjt.trashcare.ui.main.home.viewmodel.HomeViewModel
 import com.upnvjt.trashcare.util.Constants
 import com.upnvjt.trashcare.util.State
 import com.upnvjt.trashcare.util.hide
@@ -31,7 +31,7 @@ class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
     private val args by navArgs<SearchFragmentArgs>()
-    private val viewModel by viewModels<TaCommerceViewModel>()
+    private val viewModel by viewModels<HomeViewModel>()
     private var query: String? = null
     private val productAdapter by lazy { TaCommerceAdapter() }
 

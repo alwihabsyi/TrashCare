@@ -60,5 +60,14 @@
     <string name="filter">Filter</string>
     <string name="harga_terendah">Harga Terendah</string>
     <string name="harga_tertinggi">Harga Tertinggi</string>
+    <string name="profile">Profile</string>
+    <string name="nama_belakang">Nama Belakang</string>
+    <string name="nama_depan">Nama Depan</string>
+    <string name="email">Email</string>
+    <string name="no_telepon">No Telepon</string>
+    <string name="simpan">Simpan</string>
+    <string name="selesaikan_misi">Selesaikan Misi</string>
+    <string name="my_task">My Task</string>
+    <string name="best_products">Best Products</string>
 
 </resources>
