@@ -6,10 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.upnvjt.trashcare.R
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.upnvjt.trashcare.data.User
+import com.upnvjt.trashcare.data.user.User
 import com.upnvjt.trashcare.databinding.FragmentSignupTabBinding
 import com.upnvjt.trashcare.ui.auth.viewmodel.SignUpViewModel
 import com.upnvjt.trashcare.util.State
@@ -23,7 +24,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-private val TAG = "SignUpTabFragment"
 
 @AndroidEntryPoint
 class SignUpTabFragment : Fragment() {
@@ -48,10 +48,10 @@ class SignUpTabFragment : Fragment() {
             btnSignUp.setOnClickListener {
                 if (validateFields()) {
                     val user = User(
-                        etFirstname.string().trim(),
-                        etLastname.string().trim(),
-                        etUsername.string().trim(),
-                        etEmail.string().trim()
+                        etFirstName.string().trim(),
+                        etLastName.string().trim(),
+                        etEmail.string().trim(),
+                        etNomorTelepon.string().trim()
                     )
                     val password = etPassword.string()
                     val passwordConfirmation = etConfirmPassword.string()
@@ -71,14 +71,14 @@ class SignUpTabFragment : Fragment() {
                 is State.Loading -> {
                     binding.btnSignUp.requestFocus()
                     binding.signUpProgressBar.show()
-                    binding.tvBtnNext.hide()
+                    binding.btnSignUp.text = ""
                 }
                 is State.Success -> {
                     binding.signUpProgressBar.hide()
-                    binding.tvBtnNext.show()
+                    binding.btnSignUp.text = getString(R.string.daftar)
                     with(binding){
                         etEmail.text?.clear()
-                        etUsername.text?.clear()
+                        etNomorTelepon.text?.clear()
                         etPassword.text?.clear()
                         etConfirmPassword.text?.clear()
                     }
@@ -87,7 +87,7 @@ class SignUpTabFragment : Fragment() {
                 }
                 is State.Error -> {
                     binding.signUpProgressBar.hide()
-                    binding.tvBtnNext.show()
+                    binding.btnSignUp.text = getString(R.string.daftar)
                     toast("Terjadi kesalahan")
                 }
             }
@@ -121,8 +121,8 @@ class SignUpTabFragment : Fragment() {
     private fun validateFields(): Boolean {
         with(binding) {
             return etPassword.string().isNotEmpty() && etConfirmPassword.string().isNotEmpty()
-                    && etEmail.string().isNotEmpty() && etUsername.string().isNotEmpty()
-                    && etFirstname.string().isNotEmpty() && etLastname.string().isNotEmpty()
+                    && etEmail.string().isNotEmpty() && etNomorTelepon.string().isNotEmpty()
+                    && etFirstName.string().isNotEmpty() && etLastName.string().isNotEmpty()
         }
     }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_btm"
     app:startDestination="@id/homeFragment">
@@ -9,23 +9,10 @@
         android:id="@+id/homeFragment"
         android:name="com.upnvjt.trashcare.ui.main.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_commerceFragment"
             app:destination="@id/commerceFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
-        <action
-            android:id="@+id/action_homeFragment_to_taCycleFragment"
-            app:destination="@id/taCycleFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
-        <action
-            android:id="@+id/action_homeFragment_to_articlesFragment"
-            app:destination="@id/articlesFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_articlesFragment2"
-            app:destination="@id/articlesFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
         <action
@@ -33,25 +20,156 @@
             app:destination="@id/profileFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_homeFragment_to_taskFragment"
+            app:destination="@id/taskFragment" />
     </fragment>
     <fragment
         android:id="@+id/commerceFragment"
         android:name="com.upnvjt.trashcare.ui.main.commerce.CommerceFragment"
         android:label="fragment_commerce"
-        tools:layout="@layout/fragment_commerce" />
-    <fragment
-        android:id="@+id/taCycleFragment"
-        android:name="com.upnvjt.trashcare.ui.main.tacycle.InputDataFragment"
-        android:label="fragment_ta_cycle"
-        tools:layout="@layout/fragment_ta_cycle" />
-    <fragment
-        android:id="@+id/articlesFragment"
-        android:name="com.upnvjt.trashcare.ui.main.articles.ArticlesFragment"
-        android:label="fragment_articles"
-        tools:layout="@layout/fragment_articles" />
+        tools:layout="@layout/fragment_commerce">
+        <action
+            android:id="@+id/action_commerceFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_commerceFragment_to_myCartFragment"
+            app:destination="@id/myCartFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
+        <action
+            android:id="@+id/action_commerceFragment_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"  />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.upnvjt.trashcare.ui.main.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
+        <action
+            android:id="@+id/action_profileFragment_to_bookmarkFragment"
+            app:destination="@id/bookmarkFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"  />
+        <action
+            android:id="@+id/action_profileFragment_to_securityFragment"
+            app:destination="@id/securityFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"  />
+    </fragment>
+    <fragment
+        android:id="@+id/taskFragment"
+        android:name="com.upnvjt.trashcare.ui.main.task.TaskFragment"
+        android:label="fragment_task"
+        tools:layout="@layout/fragment_task">
+        <action
+            android:id="@+id/action_taskFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myCartFragment"
+        android:name="com.upnvjt.trashcare.ui.main.commerce.MyCartFragment"
+        android:label="fragment_my_cart"
+        tools:layout="@layout/fragment_my_cart" >
+        <action
+            android:id="@+id/action_myCartFragment_to_checkoutFragment"
+            app:destination="@id/checkoutFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"  />
+    </fragment>
+    <fragment
+        android:id="@+id/checkoutFragment"
+        android:name="com.upnvjt.trashcare.ui.main.commerce.CheckoutFragment"
+        android:label="fragment_checkout"
+        tools:layout="@layout/fragment_checkout" >
+        <argument
+            android:name="order"
+            app:argType="com.upnvjt.trashcare.data.tacommerce.Orders" />
+        <action
+            android:id="@+id/action_checkoutFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
+    </fragment>
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.upnvjt.trashcare.ui.main.commerce.PaymentFragment"
+        android:label="fragment_payment"
+        tools:layout="@layout/fragment_payment" >
+        <argument
+            android:name="order"
+            app:argType="com.upnvjt.trashcare.data.tacommerce.Orders" />
+        <action
+            android:id="@+id/action_paymentFragment_to_orderProcessedFragment"
+            app:destination="@id/orderProcessedFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/homeFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
+    </fragment>
+    <fragment
+        android:id="@+id/orderProcessedFragment"
+        android:name="com.upnvjt.trashcare.ui.main.commerce.OrderProcessedFragment"
+        android:label="fragment_order_processed"
+        tools:layout="@layout/fragment_order_processed" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.upnvjt.trashcare.ui.main.commerce.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <argument
+            android:name="item_name"
+            app:argType="string"
+            android:defaultValue="false"/>
+        <action
+            android:id="@+id/action_searchFragment_self"
+            app:destination="@id/searchFragment"
+            app:popUpTo="@id/commerceFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.upnvjt.trashcare.ui.main.profile.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" >
+        <argument
+            android:name="user"
+            app:argType="com.upnvjt.trashcare.data.user.User" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookmarkFragment"
+        android:name="com.upnvjt.trashcare.ui.main.profile.BookmarkFragment"
+        android:label="fragment_bookmark"
+        tools:layout="@layout/fragment_bookmark" />
+    <fragment
+        android:id="@+id/securityFragment"
+        android:name="com.upnvjt.trashcare.ui.main.profile.SecurityFragment"
+        android:label="fragment_security"
+        tools:layout="@layout/fragment_security" />
 </navigation>

@@ -1,61 +1,86 @@
 package com.upnvjt.trashcare.ui.main.home
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.upnvjt.trashcare.R
+import com.upnvjt.trashcare.data.tacampaign.TaskAdapter
+import com.upnvjt.trashcare.data.tacommerce.TaCommerceAdapter
 import com.upnvjt.trashcare.databinding.FragmentHomeBinding
-import com.upnvjt.trashcare.ui.data.Article
-import com.upnvjt.trashcare.ui.data.ListProductDummy
-import com.upnvjt.trashcare.ui.data.Product
+import com.upnvjt.trashcare.ui.main.home.viewmodel.HomeViewModel
+import com.upnvjt.trashcare.ui.main.tacycle.TaCycleActivity
+import com.upnvjt.trashcare.ui.main.tacycle.cart.TaCycleCartActivity
+import com.upnvjt.trashcare.util.State
+import com.upnvjt.trashcare.util.hide
+import com.upnvjt.trashcare.util.show
+import com.upnvjt.trashcare.util.showBottomNavView
+import com.upnvjt.trashcare.util.toast
+import dagger.hilt.android.AndroidEntryPoint
 import me.relex.circleindicator.CircleIndicator3
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
-    private lateinit var binding: FragmentHomeBinding
-    lateinit var rvListProduct: RecyclerView
-    lateinit var rvArticles: RecyclerView
+
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
     private lateinit var bannerViewPager: ViewPager2
-    lateinit var rvListProductAdapter: RvListProductAdapter
-    lateinit var rvArticlesHomeAdapter: RvArticlesHomeAdapter
+    private val taskAdapter by lazy { TaskAdapter(true) }
+    private val productAdapter by lazy { TaCommerceAdapter(true) }
+    private val viewModel by viewModels<HomeViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //rvListProduct Start
-        rvListProduct = binding.rvListProduct
-        var data = ArrayList<Product>()
-        data.addAll(ListProductDummy.list)
-        rvListProductAdapter = RvListProductAdapter(data)
+        setViewPager()
+        setUpRv()
+        setActions()
+        observer()
+    }
 
-        rvListProduct.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
-        rvListProduct.adapter = rvListProductAdapter
+    private fun setUpRv() {
+        binding.apply {
+            rvTacampaign.apply {
+                adapter = taskAdapter
+                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            }
 
-        // rvArticles Start
-        rvArticles = binding.rvArticles
-        var dataArticles = ArrayList<Article>()
-        repeat(10) {
-            dataArticles.add(Article(
-                "Trash Schedule Draws Complaints Over Service, Missed Pickups",
-                R.drawable.product_1,
-                "20-10-2023",
-                "The Indonesian government has launched a program that will pay thousands of traditional fishers to collect plastic trash from the sea. The four-week initiative is part of wider efforts to cut marine plastic waste by 70% by 2025.",
-                "Yusan Pr."
-            ))
+            rvListProduct.apply {
+                adapter = productAdapter
+                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            }
         }
+    }
+
+    private fun setActions() {
+        binding.apply {
+            btnTacycleCart.setOnClickListener {
+                startActivity(Intent(requireContext(), TaCycleCartActivity::class.java))
+            }
+
+            viewPager.setOnClickListener {
+                Intent(requireActivity(), TaCycleActivity::class.java).also {
+                    startActivity(it)
+                }
+            }
+        }
+    }
+
+    private fun setViewPager() {
         val images = listOf(
             R.drawable.poster_three,
             R.drawable.poster_one,
@@ -63,16 +88,76 @@ class HomeFragment : Fragment() {
         )
 
         bannerViewPager = binding.viewPager
-
         val bannerAdapter = BannerAdapter(images)
         bannerViewPager.adapter = bannerAdapter
-
-        val indicator3: CircleIndicator3 = view.findViewById(R.id.circleIndicator3)
+        val indicator3: CircleIndicator3 = requireView().findViewById(R.id.circleIndicator3)
         indicator3.setViewPager(bannerViewPager)
+    }
 
-        rvArticlesHomeAdapter = RvArticlesHomeAdapter(dataArticles)
-        rvArticles.layoutManager = LinearLayoutManager(this.context, RecyclerView.HORIZONTAL, false)
-        rvArticles.adapter = rvArticlesHomeAdapter
+    @SuppressLint("SetTextI18n")
+    private fun observer() {
+        viewModel.task.observe(viewLifecycleOwner) {
+            when (it) {
+                is State.Loading -> {
+                    binding.taskProgressBar.show()
+                }
+                is State.Success -> {
+                    binding.taskProgressBar.hide()
+                    taskAdapter.differ.submitList(it.data)
+                }
+                is State.Error -> {
+                    binding.taskProgressBar.hide()
+                    toast(it.message.toString())
+                }
+            }
+        }
 
+        viewModel.user.observe(viewLifecycleOwner) {
+            when (it) {
+                is State.Loading -> {
+                    binding.userProgressBar.show()
+                }
+                is State.Success -> {
+                    binding.userProgressBar.hide()
+                    val user = it.data
+                    user?.let { data ->
+                        val nama = if (data.lastname == null) data.firstname else "${data.firstname} ${data.lastname}"
+                        binding.welcomeUser.text = "Hello, $nama"
+                        binding.tacoins.text = data.taCoins.toString()
+                    }
+                }
+                is State.Error -> {
+                    binding.userProgressBar.hide()
+                    toast(it.message.toString())
+                }
+            }
+        }
+
+
+        viewModel.allProducts.observe(viewLifecycleOwner) {
+            when (it) {
+                is State.Loading -> {
+                    binding.productsProgressBar.show()
+                }
+                is State.Success -> {
+                    binding.productsProgressBar.hide()
+                    productAdapter.differ.submitList(it.data)
+                }
+                is State.Error -> {
+                    binding.productsProgressBar.hide()
+                    toast(it.message.toString())
+                }
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        showBottomNavView()
     }
 }

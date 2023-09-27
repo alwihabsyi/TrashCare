@@ -11,6 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.snackbar.Snackbar
+import com.upnvjt.trashcare.R
 import com.upnvjt.trashcare.databinding.FragmentSigninTabBinding
 import com.upnvjt.trashcare.ui.auth.viewmodel.SignInViewModel
 import com.upnvjt.trashcare.ui.main.MainActivity
@@ -31,7 +32,6 @@ class SignInTabFragment : Fragment() {
 
     private var _binding: FragmentSigninTabBinding? = null
     private val binding get() = _binding!!
-
     private val viewModel by viewModels<SignInViewModel>()
 
     override fun onCreateView(
@@ -68,12 +68,12 @@ class SignInTabFragment : Fragment() {
             when (it) {
                 is State.Loading -> {
                     binding.signInProgressBar.show()
-                    binding.tvBtnNext.hide()
+                    binding.btnLogin.text = ""
                 }
 
                 is State.Success -> {
                     binding.signInProgressBar.hide()
-                    binding.tvBtnNext.show()
+                    binding.btnLogin.text = getString(R.string.login)
                     Intent(requireContext(), MainActivity::class.java).also { intent ->
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
@@ -82,7 +82,7 @@ class SignInTabFragment : Fragment() {
 
                 is State.Error -> {
                     binding.signInProgressBar.hide()
-                    binding.tvBtnNext.show()
+                    binding.btnLogin.text = getString(R.string.login)
                     toast(it.message.toString())
                 }
             }

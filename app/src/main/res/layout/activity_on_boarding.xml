@@ -7,7 +7,6 @@
     android:padding="20dp"
     tools:context=".ui.onboarding.OnBoardingActivity">
 
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/onBoardingViewPager"
         android:layout_width="match_parent"

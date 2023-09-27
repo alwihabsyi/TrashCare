@@ -31,6 +31,7 @@
     </com.google.android.material.bottomappbar.BottomAppBar>
 
     <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -53,11 +54,13 @@
         android:id="@+id/taCycleButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
         android:backgroundTint="@color/softGreen"
         android:elevation="10dp"
         app:layout_anchor="@id/menuBottom"
         app:maxImageSize="40dp"
-        app:srcCompat="@drawable/ic_tacycle"
+        android:src="@drawable/ic_tacycle"
+        android:foreground="@drawable/btn_tacycle"
         app:tint="@color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

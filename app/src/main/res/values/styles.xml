@@ -29,6 +29,11 @@
         <item name="android:fontFamily">@font/plusjakartasans_light</item>
     </style>
 
+    <style name="customRoundedImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+    </style>
+
     <dimen name="h4TextSize">35sp</dimen>
     <dimen name="h2TextSize">17sp</dimen>
     <dimen name="h3TextSize">22sp</dimen>

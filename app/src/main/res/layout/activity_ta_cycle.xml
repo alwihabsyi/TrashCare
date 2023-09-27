@@ -6,13 +6,349 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.tacycle.TaCycleActivity">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerTaCycle"
-        android:name="com.upnvjt.trashcare.ui.main.tacycle.InputDataFragment"
+    <RelativeLayout
+        android:id="@+id/appBarContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="75dp"
+        android:background="@drawable/bg_appbar"
+        android:paddingHorizontal="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_back"
+            style="@style/Widget.MaterialComponents.Button.IconOnly"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/transparent"
+            android:layout_centerVertical="true"
+            app:icon="@drawable/ic_back_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/plusjakartasans_bold"
+            android:text="@string/tacycle"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/layoutAlamat"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/appBarContainer">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="15dp"
+            android:src="@drawable/ic_map_point" />
+
+        <TextView
+            android:id="@+id/tv_pilih_alamat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/plusjakartasans_bold"
+            android:textColor="@color/greenMenthol"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:text="@string/pilih_alamat" />
+
+        <LinearLayout
+            android:id="@+id/linearAlamat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="50dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_alamat_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/plusjakartasans_bold"
+                android:textColor="@color/greenMenthol"
+                android:textSize="16sp"
+                tools:text="Rumah" />
+
+            <TextView
+                android:id="@+id/tv_detail_alamat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/plusjakartasans_regular"
+                android:maxLines="2"
+                android:textSize="12sp"
+                tools:text="Jalan Kutisari IX No. 52, Kec. Jemursari, Kota Surabaya" />
+
+            <TextView
+                android:id="@+id/tv_kode_pos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/plusjakartasans_regular"
+                android:maxLength="10"
+                android:textSize="12sp"
+                tools:text="6017734" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/ic_next" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tv_jenis_sampah"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/plusjakartasans_bold"
+        android:text="@string/jenis_sampah"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutAlamat" />
+
+    <LinearLayout
+        android:id="@+id/layout_jenis_sampah"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/tv_jenis_sampah">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/greenYoung"
+                app:cardCornerRadius="5dp"
+                app:strokeColor="@color/greyNickel"
+                app:strokeWidth="1.5dp">
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_plastik"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:text="@string/plastik"
+                    android:textColor="@color/darkGreen"
+                    android:textStyle="bold" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/greenYoung"
+                app:cardCornerRadius="5dp"
+                app:strokeColor="@color/greyNickel"
+                app:strokeWidth="1.5dp">
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_kaca"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:text="@string/kaca"
+                    android:textColor="@color/darkGreen"
+                    android:textStyle="bold" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/greenYoung"
+                app:cardCornerRadius="5dp"
+                app:strokeColor="@color/greyNickel"
+                app:strokeWidth="1.5dp">
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_limbah_dapur"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:text="@string/limbah_dapur"
+                    android:textColor="@color/darkGreen"
+                    android:textStyle="bold" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/greenYoung"
+                app:cardCornerRadius="5dp"
+                app:strokeColor="@color/greyNickel"
+                app:strokeWidth="1.5dp">
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_kertas_kardus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:text="@string/kertas_kardus"
+                    android:textColor="@color/darkGreen"
+                    android:textStyle="bold" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/greenYoung"
+                app:cardCornerRadius="5dp"
+                app:strokeColor="@color/greyNickel"
+                app:strokeWidth="1.5dp">
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_serbuk_kayu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:text="@string/serbuk_kayu"
+                    android:textColor="@color/darkGreen"
+                    android:textStyle="bold" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/greenYoung"
+                app:cardCornerRadius="5dp"
+                app:strokeColor="@color/greyNickel"
+                app:strokeWidth="1.5dp">
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_elektronik"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:text="@string/elektronik"
+                    android:textColor="@color/darkGreen"
+                    android:textStyle="bold" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/layout_jenis_sampah">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/plusjakartasans_bold"
+            android:text="@string/waktu_pengambilan"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:id="@+id/pickDateInput"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/style_spinner_input">
+
+            <TextView
+                android:id="@+id/tv_pickupDate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/plusjakartasans"
+                android:gravity="center_vertical"
+                android:hint="@string/pilih_waktu_pengambilan"
+                android:paddingStart="8dp"
+                android:paddingEnd="20dp"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_findRider"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginBottom="36dp"
+        android:enabled="false"
+        android:minHeight="48dp"
+        android:text="@string/pesan"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/btn_findRider"
+        app:layout_constraintEnd_toEndOf="@id/btn_findRider"
+        app:layout_constraintStart_toStartOf="@id/btn_findRider"
+        app:layout_constraintTop_toTopOf="@id/btn_findRider" />
 </androidx.constraintlayout.widget.ConstraintLayout>
