@@ -48,6 +48,13 @@ class ProductDetailActivity : AppCompatActivity() {
 
         product?.let {
             viewModel.getBookmark(it.id)
+
+            if (it.stock == 0) {
+                orderAmount = 0
+                binding.btnIncreaseItem.isEnabled = false
+                binding.btnDecreaseItem.isEnabled = false
+            }
+
             binding.apply {
                 tvProductTitle.text = it.name
                 tvPriceProduct.text = it.price.toPrice()
@@ -84,6 +91,11 @@ class ProductDetailActivity : AppCompatActivity() {
             }
 
             btnAddToCart.setOnClickListener {
+                if (orderAmount == 0){
+                    toast("Stok produk habis")
+                    return@setOnClickListener
+                }
+
                 product?.let {
                     val cart = Cart(it, orderAmount)
                     viewModel.addUpdateProductToCart(cart)
@@ -135,13 +147,18 @@ class ProductDetailActivity : AppCompatActivity() {
             when (it) {
                 is State.Loading -> {
                     binding.progressBar.show()
+                    binding.btnAddToCart.text = ""
                 }
+
                 is State.Success -> {
                     binding.progressBar.hide()
+                    binding.btnAddToCart.text = getString(R.string.pesan)
                     toast("Barang berhasil ditambahkan")
                 }
+
                 is State.Error -> {
                     binding.progressBar.hide()
+                    binding.btnAddToCart.text = getString(R.string.pesan)
                     toast(it.message.toString())
                 }
             }

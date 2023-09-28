@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.upnvjt.trashcare.data.tacommerce.Cart
+import com.upnvjt.trashcare.data.tacommerce.Product
 import com.upnvjt.trashcare.util.Constants.CART
+import com.upnvjt.trashcare.util.Constants.PRODUCTS
 import com.upnvjt.trashcare.util.Constants.USER_COLLECTION
 import com.upnvjt.trashcare.util.FirebaseCommon
 import com.upnvjt.trashcare.util.State
@@ -42,9 +44,35 @@ class CartViewModel @Inject constructor(
                     return@addSnapshotListener
                 }
 
+
                 val cart = value?.toObjects(Cart::class.java)
-                _cart.value = State.Success(cart!!)
+                checkProduct(cart!!)
             }
+    }
+
+    private fun checkProduct(cart: List<Cart>) {
+        val cartProducts = mutableListOf<Cart>()
+        val limit = cart.size.toLong() + 2
+        firestore.collection(PRODUCTS).limit(limit).addSnapshotListener { value, error ->
+            if (error != null) {
+                _cart.value = State.Error(error.message.toString())
+                return@addSnapshotListener
+            }
+
+            val products = value?.toObjects(Product::class.java)
+            cart.forEach { cart ->
+                products!!.forEach { product ->
+                    if (cart.product.id == product.id) {
+                        if (product.stock != 0) {
+                            cartProducts.add(cart)
+                        } else {
+                            deleteCartProduct(cart.product.id)
+                        }
+                    }
+                }
+            }
+            _cart.value = State.Success(cartProducts)
+        }
     }
 
     fun changeQuantity(cart: Cart, addQuantity: Boolean) {
