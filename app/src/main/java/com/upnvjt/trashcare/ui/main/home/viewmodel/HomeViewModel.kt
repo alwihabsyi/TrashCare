@@ -34,6 +34,8 @@ class HomeViewModel @Inject constructor(
     private val _searchProducts = MutableLiveData<State<List<Product>>>()
     val searchProducts: LiveData<State<List<Product>>> = _searchProducts
 
+    private val pagingInfo = PagingInfo()
+
     init {
         getAllTask()
         getUser()
@@ -67,14 +69,20 @@ class HomeViewModel @Inject constructor(
             }
     }
 
-    private fun getAllProducts() {
+    fun getAllProducts() {
         _allProducts.value = State.Loading()
-        firestore.collection(Constants.PRODUCTS).get().addOnSuccessListener {
-            val products = it.toObjects(Product::class.java)
-            _allProducts.value = State.Success(products)
-        }.addOnFailureListener {
-            _allProducts.value = State.Error(it.message.toString())
-        }
+        firestore.collection(Constants.PRODUCTS).limit(pagingInfo.productsPage * 10)
+            .addSnapshotListener { value, error ->
+                if (error != null) {
+                    _allProducts.value = State.Error(error.message.toString())
+                }
+
+                val products = value!!.toObjects(Product::class.java)
+                pagingInfo.isPagingEnd = products == pagingInfo.oldProducts
+                pagingInfo.oldProducts = products
+                _allProducts.value = State.Success(products)
+                pagingInfo.productsPage++
+            }
     }
 
     fun getSearchedProducts(productName: String) {
@@ -82,10 +90,13 @@ class HomeViewModel @Inject constructor(
         firestore.collection(Constants.PRODUCTS)
             .whereEqualTo("name", productName.replaceFirstChar {
                 it.uppercase()
-            }).get()
+            }).limit(pagingInfo.productsPage * 10).get()
             .addOnSuccessListener {
                 val products = it.toObjects(Product::class.java)
+                pagingInfo.isPagingEnd = products == pagingInfo.oldProducts
+                pagingInfo.oldProducts = products
                 _searchProducts.value = State.Success(products)
+                pagingInfo.productsPage++
             }.addOnFailureListener {
                 _searchProducts.value = State.Error(it.message.toString())
             }
@@ -96,10 +107,14 @@ class HomeViewModel @Inject constructor(
         val filter = if (isAscending) Query.Direction.ASCENDING else Query.Direction.DESCENDING
         firestore.collection(Constants.PRODUCTS)
             .orderBy("price", filter)
+            .limit(pagingInfo.productsPage * 10)
             .get()
             .addOnSuccessListener {
                 val products = it.toObjects(Product::class.java)
+                pagingInfo.isPagingEnd = products == pagingInfo.oldProducts
+                pagingInfo.oldProducts = products
                 _allProducts.value = State.Success(products)
+                pagingInfo.productsPage++
             }.addOnFailureListener {
                 _allProducts.value = State.Error(it.message.toString())
             }
@@ -110,3 +125,9 @@ class HomeViewModel @Inject constructor(
     }
 
 }
+
+internal data class PagingInfo(
+    var productsPage: Long = 1,
+    var oldProducts: List<Product> = emptyList(),
+    var isPagingEnd: Boolean = false
+)

@@ -73,7 +73,10 @@ class MyCartFragment : Fragment() {
 
                 is State.Success -> {
                     binding.progressBar.hide()
-                    setupRvData(it.data!!)
+                    if (it.data!!.isEmpty()){
+                        binding.ivNoData.show()
+                    }
+                    setupRvData(it.data)
                 }
 
                 is State.Error -> {

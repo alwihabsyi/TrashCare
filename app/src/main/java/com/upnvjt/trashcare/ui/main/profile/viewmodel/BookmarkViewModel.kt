@@ -33,7 +33,38 @@ class BookmarkViewModel @Inject constructor(
             }
 
             val bookmark = value!!.toObjects(Product::class.java)
-            _getBookmark.value = State.Success(bookmark)
+            checkProduct(bookmark)
+        }
+    }
+
+    private fun checkProduct(bookmark: List<Product>) {
+        val bookmarkedProducts = mutableListOf<Product>()
+        val limit = bookmark.size.toLong() + 2
+        firestore.collection(Constants.PRODUCTS).limit(limit).get()
+            .addOnSuccessListener {
+                val products = it?.toObjects(Product::class.java)
+                bookmark.forEach { bookmark ->
+                    products!!.forEach { product ->
+                        if (bookmark.id == product.id) {
+                            if (product.stock != 0) {
+                                bookmarkedProducts.add(bookmark)
+                            } else {
+                                deleteBookmarkedProduct(bookmark.id)
+                            }
+                        }
+                    }
+                }
+                _getBookmark.value = State.Success(bookmarkedProducts)
+            }.addOnFailureListener {
+                _getBookmark.value = State.Error(it.message.toString())
+            }
+    }
+
+    private fun deleteBookmarkedProduct(id: String) {
+        firestore.collection(Constants.USER_COLLECTION).document(auth.uid!!).collection(
+            Constants.BOOKMARKED_PRODUCTS
+        ).document(id).delete().addOnFailureListener {
+            _getBookmark.value = State.Error(it.message.toString())
         }
     }
 

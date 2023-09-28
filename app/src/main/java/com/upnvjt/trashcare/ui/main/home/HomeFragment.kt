@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
@@ -56,12 +57,14 @@ class HomeFragment : Fragment() {
         binding.apply {
             rvTacampaign.apply {
                 adapter = taskAdapter
-                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             }
 
             rvListProduct.apply {
                 adapter = productAdapter
-                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             }
         }
     }
@@ -101,10 +104,12 @@ class HomeFragment : Fragment() {
                 is State.Loading -> {
                     binding.taskProgressBar.show()
                 }
+
                 is State.Success -> {
                     binding.taskProgressBar.hide()
                     taskAdapter.differ.submitList(it.data)
                 }
+
                 is State.Error -> {
                     binding.taskProgressBar.hide()
                     toast(it.message.toString())
@@ -117,15 +122,18 @@ class HomeFragment : Fragment() {
                 is State.Loading -> {
                     binding.userProgressBar.show()
                 }
+
                 is State.Success -> {
                     binding.userProgressBar.hide()
                     val user = it.data
                     user?.let { data ->
-                        val nama = if (data.lastname == null) data.firstname else "${data.firstname} ${data.lastname}"
+                        val nama =
+                            if (data.lastname == null) data.firstname else "${data.firstname} ${data.lastname}"
                         binding.welcomeUser.text = "Hello, $nama"
                         binding.tacoins.text = data.taCoins.toString()
                     }
                 }
+
                 is State.Error -> {
                     binding.userProgressBar.hide()
                     toast(it.message.toString())
@@ -139,16 +147,24 @@ class HomeFragment : Fragment() {
                 is State.Loading -> {
                     binding.productsProgressBar.show()
                 }
+
                 is State.Success -> {
                     binding.productsProgressBar.hide()
                     productAdapter.differ.submitList(it.data)
                 }
+
                 is State.Error -> {
                     binding.productsProgressBar.hide()
                     toast(it.message.toString())
                 }
             }
         }
+
+        binding.nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, _, _, _ ->
+            if (v.getChildAt(0).right <= v.width + scrollX) {
+                viewModel.getAllProducts()
+            }
+        })
     }
 
     override fun onDestroyView() {
