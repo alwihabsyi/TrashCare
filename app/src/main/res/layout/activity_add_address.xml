@@ -158,7 +158,6 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
             android:hint="@string/detail_alamat"
-            android:paddingBottom="100dp"
             app:boxBackgroundMode="outline"
             app:hintEnabled="true"
             app:layout_constraintTop_toBottomOf="@id/layoutKodePos">
@@ -167,6 +166,27 @@
                 android:id="@+id/et_detail_alamat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:maxLength="50" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutJudulAlamat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:paddingBottom="150dp"
+            android:hint="@string/judul_alamat"
+            app:boxBackgroundMode="outline"
+            app:hintEnabled="true"
+            app:layout_constraintTop_toBottomOf="@id/layoutDetailAlamat">
+
+            <EditText
+                android:id="@+id/et_judul_alamat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text"
                 android:maxLength="10" />
 
         </com.google.android.material.textfield.TextInputLayout>

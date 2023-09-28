@@ -54,7 +54,8 @@ class AddAddressActivity : AppCompatActivity() {
                 etKota.setText(it.kota)
                 etProvinsi.setText(it.provinsi)
                 etKodePos.setText(it.kodePos)
-                etDetailAlamat.setText(it.judulAlamat)
+                etDetailAlamat.setText(it.detailAlamat)
+                etJudulAlamat.setText(it.judulAlamat)
                 btnHapusAlamat.show()
             }
         }
@@ -73,9 +74,19 @@ class AddAddressActivity : AppCompatActivity() {
                 val kota = etKota.string().trim()
                 val provinsi = etProvinsi.string().trim()
                 val kodePos = etKodePos.string().trim()
-                val judulAlamat = etDetailAlamat.string().trim()
+                val detailAlamat = etDetailAlamat.string().trim()
+                val judulAlamat = etJudulAlamat.string().trim()
 
-                val address = UserAddress(namaJalan, kelurahan, kecamatan, kota, provinsi, kodePos, judulAlamat)
+                val address = UserAddress(
+                    namaJalan,
+                    kelurahan,
+                    kecamatan,
+                    kota,
+                    provinsi,
+                    kodePos,
+                    detailAlamat,
+                    judulAlamat
+                )
                 viewModel.addAddress(address)
             }
 
@@ -98,12 +109,14 @@ class AddAddressActivity : AppCompatActivity() {
                     binding.btnTambahAlamat.text = ""
                     binding.progressBar.show()
                 }
+
                 is State.Success -> {
                     binding.progressBar.hide()
                     clearFields()
                     toast("Alamat ${result.data!!.judulAlamat} Berhasil Ditambahkan")
                     finish()
                 }
+
                 is State.Error -> {
                     binding.progressBar.hide()
                     clearFields()
@@ -120,12 +133,14 @@ class AddAddressActivity : AppCompatActivity() {
                     binding.btnHapusAlamat.hide()
                     binding.progressBar.show()
                 }
+
                 is State.Success -> {
                     binding.progressBar.hide()
                     clearFields()
                     toast(it.data.toString())
                     finish()
                 }
+
                 is State.Error -> {
                     binding.progressBar.hide()
                     binding.btnHapusAlamat.show()
@@ -144,7 +159,8 @@ class AddAddressActivity : AppCompatActivity() {
             etProvinsi.setText("")
             etKodePos.setText("")
             etDetailAlamat.setText("")
-            etDetailAlamat.clearFocus()
+            etJudulAlamat.setText("")
+            etJudulAlamat.clearFocus()
         }
     }
 
@@ -156,7 +172,8 @@ class AddAddressActivity : AppCompatActivity() {
                 .isNotEmpty() &&
                     etKelurahan.string().trim().isNotEmpty() && etProvinsi.string().trim()
                 .isNotEmpty() &&
-                    etKodePos.string().trim().isNotEmpty()
+                    etKodePos.string().trim().isNotEmpty() && etJudulAlamat.string().trim()
+                .isNotEmpty()
         }
     }
 

@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.google.android.material.tabs.TabLayoutMediator
 import com.upnvjt.trashcare.databinding.ActivityCommerceHistoryBinding
 import com.upnvjt.trashcare.data.ViewPagerAdapter
+import com.upnvjt.trashcare.ui.main.commerce.cart.CommerceDeclinedFragment
 import com.upnvjt.trashcare.ui.main.commerce.cart.CommerceDoneFragment
 import com.upnvjt.trashcare.ui.main.commerce.cart.CommerceOnGoingFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,7 +30,8 @@ class CommerceHistoryActivity : AppCompatActivity() {
     private fun setUpTacycleTabLayout() {
         val statusFragment = arrayListOf(
             CommerceOnGoingFragment(),
-            CommerceDoneFragment()
+            CommerceDoneFragment(),
+            CommerceDeclinedFragment()
         )
 
         binding.viewPager2.isUserInputEnabled = false
@@ -41,6 +43,7 @@ class CommerceHistoryActivity : AppCompatActivity() {
             when (position) {
                 0 -> tab.text = "OnGoing"
                 1 -> tab.text = "Done"
+                2 -> tab.text = "Declined"
             }
         }.attach()
     }

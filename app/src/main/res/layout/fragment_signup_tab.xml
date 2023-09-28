@@ -29,7 +29,7 @@
                 app:boxCornerRadiusBottomStart="10dp"
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
-                app:boxStrokeColor="@color/grey"
+                app:boxStrokeColor="@color/greenYoung"
                 app:boxStrokeWidth=".5dp"
                 app:hintEnabled="false">
 
@@ -37,12 +37,10 @@
                     android:id="@+id/etFirstName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:cursorVisible="false"
                     android:fontFamily="@font/plusjakartasans"
                     android:hint="@string/nama_depan"
                     android:inputType="text"
                     android:textColorHint="@color/grey"
-                    android:textCursorDrawable="@null"
                     android:textSize="14sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -59,7 +57,7 @@
                 app:boxCornerRadiusBottomStart="10dp"
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
-                app:boxStrokeColor="@color/grey"
+                app:boxStrokeColor="@color/greenYoung"
                 app:boxStrokeWidth=".5dp"
                 app:hintEnabled="false">
 
@@ -67,12 +65,10 @@
                     android:id="@+id/etLastName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:cursorVisible="false"
                     android:fontFamily="@font/plusjakartasans"
                     android:hint="@string/nama_belakang"
                     android:inputType="text"
                     android:textColorHint="@color/grey"
-                    android:textCursorDrawable="@null"
                     android:textSize="14sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -89,7 +85,7 @@
                 app:boxCornerRadiusBottomStart="10dp"
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
-                app:boxStrokeColor="@color/grey"
+                app:boxStrokeColor="@color/greenYoung"
                 app:boxStrokeWidth=".5dp"
                 app:hintEnabled="false">
 
@@ -97,12 +93,10 @@
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:cursorVisible="false"
                     android:fontFamily="@font/plusjakartasans"
                     android:hint="@string/email"
                     android:inputType="text"
                     android:textColorHint="@color/grey"
-                    android:textCursorDrawable="@null"
                     android:textSize="14sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -119,7 +113,7 @@
                 app:boxCornerRadiusBottomStart="10dp"
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
-                app:boxStrokeColor="@color/grey"
+                app:boxStrokeColor="@color/greenYoung"
                 app:boxStrokeWidth=".5dp"
                 app:hintEnabled="false">
 
@@ -127,12 +121,10 @@
                     android:id="@+id/et_nomor_telepon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:cursorVisible="false"
                     android:fontFamily="@font/plusjakartasans"
                     android:hint="@string/no_telepon"
                     android:inputType="number"
                     android:textColorHint="@color/grey"
-                    android:textCursorDrawable="@null"
                     android:textSize="14sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -150,7 +142,7 @@
                 app:boxCornerRadiusBottomStart="10dp"
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
-                app:boxStrokeColor="@color/grey"
+                app:boxStrokeColor="@color/greenYoung"
                 app:boxStrokeWidth=".5dp"
                 app:hintEnabled="false">
 
@@ -158,12 +150,10 @@
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:cursorVisible="false"
                     android:fontFamily="@font/plusjakartasans"
                     android:hint="@string/password"
                     android:inputType="textPassword"
                     android:textColorHint="@color/grey"
-                    android:textCursorDrawable="@null"
                     android:textSize="14sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -182,7 +172,7 @@
                 app:boxCornerRadiusBottomStart="10dp"
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
-                app:boxStrokeColor="@color/grey"
+                app:boxStrokeColor="@color/greenYoung"
                 app:boxStrokeWidth=".5dp"
                 app:hintEnabled="false">
 
@@ -190,12 +180,10 @@
                     android:id="@+id/etConfirmPassword"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:cursorVisible="false"
                     android:fontFamily="@font/plusjakartasans"
                     android:hint="@string/confirm_password"
                     android:inputType="textPassword"
                     android:textColorHint="@color/grey"
-                    android:textCursorDrawable="@null"
                     android:textSize="14sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
