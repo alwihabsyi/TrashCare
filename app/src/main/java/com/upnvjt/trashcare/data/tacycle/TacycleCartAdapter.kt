@@ -18,6 +18,7 @@ class TacycleCartAdapter: RecyclerView.Adapter<TacycleCartAdapter.TacycleCartVie
                 tvIdPesanan.text = "ID: ${item.orderId}"
                 tvStatusPesanan.text = when (getCycleStatus(item.statusOrder)) {
                     is TaCycleStatus.OnGoing -> "On Process"
+                    is TaCycleStatus.Declined -> "Declined"
                     else -> "Done"
                 }
                 tvAlamatUser.text = item.lokasiPengambilan.namaJalan

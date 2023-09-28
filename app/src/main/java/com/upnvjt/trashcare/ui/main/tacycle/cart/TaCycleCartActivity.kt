@@ -54,7 +54,8 @@ class TaCycleCartActivity : AppCompatActivity() {
     private fun setUpTacycleTabLayout() {
         val statusFragment = arrayListOf(
             OnGoingFragment(),
-            DoneFragment()
+            DoneFragment(),
+            DeclinedFragment()
         )
 
         binding.viewPager2.isUserInputEnabled = false
@@ -66,6 +67,7 @@ class TaCycleCartActivity : AppCompatActivity() {
             when (position) {
                 0 -> tab.text = "OnGoing"
                 1 -> tab.text = "Done"
+                2 -> tab.text = "Declined"
             }
         }.attach()
     }

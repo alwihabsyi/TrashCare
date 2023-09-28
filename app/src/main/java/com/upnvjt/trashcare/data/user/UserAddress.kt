@@ -12,8 +12,9 @@ data class UserAddress(
     val kota: String,
     val provinsi: String,
     val kodePos: String,
+    val detailAlamat: String,
     val judulAlamat: String,
     val addressId: String = UUID.randomUUID().toString() + judulAlamat
 ) : Parcelable {
-    constructor(): this("", "", "", "" , "", "", "")
+    constructor(): this("", "", "", "" , "", "", "", "")
 }

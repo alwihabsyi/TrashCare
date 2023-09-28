@@ -31,7 +31,7 @@
     <string name="kecamatan">Kecamatan</string>
     <string name="kota">Kota</string>
     <string name="provinsi">Provinsi</string>
-    <string name="detail_alamat">Detail Alamat (ex: Rumah, Kantor)</string>
+    <string name="detail_alamat">Detail Alamat</string>
     <string name="kode_pos">Kode Pos</string>
     <string name="hapus_alamat">Hapus Alamat</string>
     <string name="pilih_alamat">Pilih Alamat</string>
@@ -85,5 +85,6 @@
     <string name="update">Update</string>
     <string name="tacommerce">TaCommerce</string>
     <string name="anda_mendapatkan_10_tacoins">Anda mendapatkan 10 TaCoins</string>
+    <string name="judul_alamat">Judul Alamat (ex: Rumah, Kantor)</string>
 
 </resources>

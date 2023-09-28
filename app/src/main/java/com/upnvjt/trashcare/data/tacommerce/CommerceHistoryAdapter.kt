@@ -21,6 +21,7 @@ class CommerceHistoryAdapter :
                 tvIdPesanan.text = "ID: ${item.orderId}"
                 tvStatusPesanan.text = when (getOrderStatus(item.orderStatus)) {
                     is OrderStatus.OnGoing -> "On Process"
+                    is OrderStatus.Declined -> "Declined"
                     else -> "Done"
                 }
                 tvAlamatUser.text = item.address.namaJalan
