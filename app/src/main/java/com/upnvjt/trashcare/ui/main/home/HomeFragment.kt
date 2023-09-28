@@ -75,7 +75,7 @@ class HomeFragment : Fragment() {
                 startActivity(Intent(requireContext(), TaCycleCartActivity::class.java))
             }
 
-            viewPager.setOnClickListener {
+            cvviewPager.setOnClickListener {
                 Intent(requireActivity(), TaCycleActivity::class.java).also {
                     startActivity(it)
                 }

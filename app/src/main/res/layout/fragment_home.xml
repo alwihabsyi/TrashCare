@@ -232,10 +232,11 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/tv_see_all_task"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/plusjakartasans_bold"
-                    android:text="See all"
+                    tools:text="See all"
                     android:textColor="@color/greenSplash"
                     android:textSize="16sp" />
 
@@ -289,10 +290,11 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/tv_see_all_products"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/plusjakartasans_bold"
-                    android:text="See all"
+                    tools:text="See all"
                     android:textColor="@color/greenSplash"
                     android:textSize="16sp" />
 

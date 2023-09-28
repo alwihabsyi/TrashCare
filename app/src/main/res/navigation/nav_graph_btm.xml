@@ -22,7 +22,7 @@
             app:exitAnim="@anim/nav_default_exit_anim" />
         <action
             android:id="@+id/action_homeFragment_to_taskFragment"
-            app:destination="@id/taskFragment" />
+            app:destination="@id/taskFragment"/>
     </fragment>
     <fragment
         android:id="@+id/commerceFragment"

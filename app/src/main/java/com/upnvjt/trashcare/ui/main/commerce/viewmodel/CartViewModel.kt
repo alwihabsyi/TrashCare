@@ -1,5 +1,6 @@
 package com.upnvjt.trashcare.ui.main.commerce.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -44,34 +45,38 @@ class CartViewModel @Inject constructor(
                     return@addSnapshotListener
                 }
 
-
-                val cart = value?.toObjects(Cart::class.java)
-                checkProduct(cart!!)
+                val cart = value!!.toObjects(Cart::class.java)
+                cart.forEach {
+                    checkProduct(it)
+                }
+                _cart.value = State.Success(cart)
             }
     }
 
-    private fun checkProduct(cart: List<Cart>) {
-        val cartProducts = mutableListOf<Cart>()
-        val limit = cart.size.toLong() + 2
-        firestore.collection(PRODUCTS).limit(limit).addSnapshotListener { value, error ->
-            if (error != null) {
-                _cart.value = State.Error(error.message.toString())
-                return@addSnapshotListener
-            }
-
-            val products = value?.toObjects(Product::class.java)
-            cart.forEach { cart ->
-                products!!.forEach { product ->
-                    if (cart.product.id == product.id) {
-                        if (product.stock != 0) {
-                            cartProducts.add(cart)
-                        } else {
-                            deleteCartProduct(cart.product.id)
-                        }
+    private fun checkProduct(cart: Cart) {
+        firestore.runTransaction { transaction ->
+            val cartRef =
+                firestore.collection(USER_COLLECTION).document(auth.uid!!).collection(
+                    CART
+                ).document(cart.product.id)
+            val docRef = firestore.collection(PRODUCTS).document(cart.product.id)
+            val document = transaction.get(docRef)
+            val docObj = document.toObject(Product::class.java)
+            docObj?.let { product ->
+                if (product.stock != cart.product.stock) {
+                    if (product.stock == 0) {
+                        deleteCartProduct(cart.product.id)
+                        return@runTransaction
                     }
+
+                    val cartData = cart.copy(product = product)
+                    transaction.set(cartRef, cartData)
+                } else {
+                    return@runTransaction
                 }
             }
-            _cart.value = State.Success(cartProducts)
+        }.addOnFailureListener {
+            Log.e("Cart Error", it.message.toString())
         }
     }
 

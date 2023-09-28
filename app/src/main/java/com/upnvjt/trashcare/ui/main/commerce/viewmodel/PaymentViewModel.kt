@@ -56,17 +56,6 @@ class PaymentViewModel @Inject constructor(
 
     private fun storeData(order: Orders) {
         firestore.runBatch {
-            firestore.collection(USER_COLLECTION)
-                .document(auth.uid!!)
-                .collection(ORDER)
-                .document(order.orderId)
-                .set(order)
-
-            val adminOrder = order.copy(userId = auth.uid)
-            firestore.collection(ORDER)
-                .document(order.orderId)
-                .set(adminOrder)
-
             order.products.forEach {
                 firestore.collection(USER_COLLECTION)
                     .document(auth.uid!!)
@@ -80,6 +69,17 @@ class PaymentViewModel @Inject constructor(
                     .document(it.product.id)
                     .set(product)
             }
+
+            firestore.collection(USER_COLLECTION)
+                .document(auth.uid!!)
+                .collection(ORDER)
+                .document(order.orderId)
+                .set(order)
+
+            val adminOrder = order.copy(userId = auth.uid)
+            firestore.collection(ORDER)
+                .document(order.orderId)
+                .set(adminOrder)
         }.addOnSuccessListener {
             _submitOrder.value = State.Success(order)
         }.addOnFailureListener {

@@ -14,6 +14,7 @@ import com.upnvjt.trashcare.util.toPrice
 class CartAdapter : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
     private var allSelected: Boolean = false
+
     @SuppressLint("NotifyDataSetChanged")
     fun allSelected(b: Boolean) {
         allSelected = b
@@ -39,7 +40,6 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
                 }
             }
         }
-
     }
 
     private val diffUtil = object : DiffUtil.ItemCallback<Cart>() {
