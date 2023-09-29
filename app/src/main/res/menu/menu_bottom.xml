@@ -24,7 +24,7 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/profileFragment"
-        android:icon="@drawable/ic_profile"
+        android:icon="@drawable/ic_profile_fix"
         android:title="Profile"
         app:showAsAction="ifRoom" />
 </menu>

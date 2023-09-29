@@ -16,7 +16,6 @@ import com.upnvjt.trashcare.data.tacampaign.TaskAdapter
 import com.upnvjt.trashcare.data.tacommerce.TaCommerceAdapter
 import com.upnvjt.trashcare.databinding.FragmentHomeBinding
 import com.upnvjt.trashcare.ui.main.home.viewmodel.HomeViewModel
-import com.upnvjt.trashcare.ui.main.tacycle.TaCycleActivity
 import com.upnvjt.trashcare.ui.main.tacycle.cart.TaCycleCartActivity
 import com.upnvjt.trashcare.util.State
 import com.upnvjt.trashcare.util.hide
@@ -73,12 +72,6 @@ class HomeFragment : Fragment() {
         binding.apply {
             btnTacycleCart.setOnClickListener {
                 startActivity(Intent(requireContext(), TaCycleCartActivity::class.java))
-            }
-
-            cvviewPager.setOnClickListener {
-                Intent(requireActivity(), TaCycleActivity::class.java).also {
-                    startActivity(it)
-                }
             }
         }
     }
@@ -138,6 +131,8 @@ class HomeFragment : Fragment() {
                     binding.userProgressBar.hide()
                     toast(it.message.toString())
                 }
+
+                else -> {}
             }
         }
 
