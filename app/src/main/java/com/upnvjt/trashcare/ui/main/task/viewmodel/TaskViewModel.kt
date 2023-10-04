@@ -61,7 +61,7 @@ class TaskViewModel @Inject constructor(
             firestore.collection(USER_COLLECTION).document(auth.uid!!).collection(TASK)
                 .document(task.id).set(task)
 
-            firestore.collection(TASK).document(task.id)
+            firestore.collection(TASK).document(task.id + task.userId)
                 .set(task)
         }.addOnSuccessListener {
             _submitTask.value = State.Success(task)
