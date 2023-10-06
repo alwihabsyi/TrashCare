@@ -1,6 +1,7 @@
 package com.upnvjt.trashcare.ui.main.home
 
 import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.upnvjt.trashcare.R
 import com.upnvjt.trashcare.ui.main.tacycle.TaCycleActivity
+import com.upnvjt.trashcare.util.Constants.GUIDE_BOOK_LINK
 
 class BannerAdapter(
     private val images: List<Int>
@@ -31,6 +33,13 @@ class BannerAdapter(
 
         val context = holder.itemView.context
         holder.itemView.setOnClickListener {
+            if (currentImage == images[0]){
+                Intent(Intent.ACTION_VIEW, Uri.parse(GUIDE_BOOK_LINK)).also {
+                    context.startActivity(it)
+                }
+                return@setOnClickListener
+            }
+
             Intent(context, TaCycleActivity::class.java).also {
                 context.startActivity(it)
             }

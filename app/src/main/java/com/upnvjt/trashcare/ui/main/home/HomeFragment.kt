@@ -78,6 +78,7 @@ class HomeFragment : Fragment() {
 
     private fun setViewPager() {
         val images = listOf(
+            R.drawable.poster_guidebook,
             R.drawable.poster_three,
             R.drawable.poster_one,
             R.drawable.poster_two

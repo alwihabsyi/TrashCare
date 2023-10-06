@@ -2,6 +2,8 @@ package com.upnvjt.trashcare.data.tacampaign
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.util.Date
+import kotlin.random.Random
 
 @Parcelize
 data class TaskData(
@@ -10,7 +12,9 @@ data class TaskData(
     val tugas: List<String> = emptyList(),
     val campaignNo: Int = 0,
     val photoUrl: String? = null,
-    val userId: String? = null
+    val userId: String? = null,
+    val dateSubmitted: Date? = null,
+    val taskId: String = Random.nextLong(0, 1_000_000_000_000).toString()
 ): Parcelable
 
 val dailyTask1 = arrayListOf(

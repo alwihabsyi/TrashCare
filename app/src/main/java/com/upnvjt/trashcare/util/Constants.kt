@@ -13,6 +13,7 @@ object Constants {
     const val USER_TACYCLE_COLLECTION = "tacycle"
     const val TACYCLE_ORDER_COLLECTION = "tacycle"
     const val REQUEST_ADDRESS = 101
+    const val GUIDE_BOOK_LINK = "https://drive.google.com/drive/folders/14xRPblZVj8GMFq_cTQLqxv86JtRh3sj6?usp=share_link"
     val storagePermission = arrayOf(
         Manifest.permission.CAMERA,
         Manifest.permission.READ_EXTERNAL_STORAGE,

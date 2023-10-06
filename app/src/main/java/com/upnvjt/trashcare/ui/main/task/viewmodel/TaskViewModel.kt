@@ -17,6 +17,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.lang.Exception
+import java.util.Date
 import java.util.UUID
 import javax.inject.Inject
 
@@ -49,11 +50,10 @@ class TaskViewModel @Inject constructor(
             }
 
             val task = taskData.copy(
-                photoUrl = image, taskStatus = TaskStatus.Submitted.taskStatus, userId = auth.uid
+                photoUrl = image, taskStatus = TaskStatus.Submitted.taskStatus, userId = auth.uid, dateSubmitted = Date()
             )
             submitToDatabase(task)
         }
-
     }
 
     private fun submitToDatabase(task: TaskData) {
@@ -61,7 +61,7 @@ class TaskViewModel @Inject constructor(
             firestore.collection(USER_COLLECTION).document(auth.uid!!).collection(TASK)
                 .document(task.id).set(task)
 
-            firestore.collection(TASK).document(task.id + task.userId)
+            firestore.collection(TASK).document(task.taskId)
                 .set(task)
         }.addOnSuccessListener {
             _submitTask.value = State.Success(task)

@@ -1,7 +1,7 @@
 package com.upnvjt.trashcare.util
 
 
-sealed class Validation() {
+sealed class Validation {
     object Success: Validation()
     data class Failed(val message: String): Validation()
 }
