@@ -9,21 +9,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.gms.auth.api.identity.Identity
 import com.upnvjt.trashcare.R
 import com.upnvjt.trashcare.data.tacampaign.TaskAdapter
 import com.upnvjt.trashcare.data.tacommerce.TaCommerceAdapter
 import com.upnvjt.trashcare.databinding.FragmentHomeBinding
+import com.upnvjt.trashcare.ui.auth.AuthActivity
 import com.upnvjt.trashcare.ui.main.home.viewmodel.HomeViewModel
 import com.upnvjt.trashcare.ui.main.tacycle.TaCycleActivity
 import com.upnvjt.trashcare.ui.main.tacycle.cart.TaCycleCartActivity
+import com.upnvjt.trashcare.util.GoogleAuthUiClient
 import com.upnvjt.trashcare.util.State
 import com.upnvjt.trashcare.util.hide
 import com.upnvjt.trashcare.util.show
 import com.upnvjt.trashcare.util.showBottomNavView
 import com.upnvjt.trashcare.util.toast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import me.relex.circleindicator.CircleIndicator3
 
 @AndroidEntryPoint
@@ -35,6 +40,11 @@ class HomeFragment : Fragment() {
     private val taskAdapter by lazy { TaskAdapter(true) }
     private val productAdapter by lazy { TaCommerceAdapter(true) }
     private val viewModel by viewModels<HomeViewModel>()
+    private val googleAuthUiClient by lazy {
+        GoogleAuthUiClient(
+            Identity.getSignInClient(requireActivity().applicationContext)
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -85,6 +95,7 @@ class HomeFragment : Fragment() {
 
     private fun setViewPager() {
         val images = listOf(
+            R.drawable.poster_guidebook,
             R.drawable.poster_three,
             R.drawable.poster_one,
             R.drawable.poster_two
@@ -137,6 +148,13 @@ class HomeFragment : Fragment() {
                 is State.Error -> {
                     binding.userProgressBar.hide()
                     toast(it.message.toString())
+                    lifecycleScope.launch {
+                        googleAuthUiClient.signOut()
+                    }
+                    viewModel.logout()
+                    val intent = Intent(requireContext(), AuthActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().finish()
                 }
             }
         }

@@ -65,7 +65,11 @@ class HomeViewModel @Inject constructor(
                 }
 
                 val user = value?.toObject(User::class.java)
-                _user.value = State.Success(user!!)
+                if (user == null) {
+                    _user.value = State.Error("User is an admin")
+                }else {
+                    _user.value = State.Success(user)
+                }
             }
     }
 
